@@ -1,26 +1,28 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import React, { ReactElement, ReactNode } from 'react';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 import './app.css';
-import Navbar from './components/Navbar';
+import Layout from './components/Layout';
 import ErrorPage from './pages/ErrorPage';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+interface iChildren {
+  children: JSX.Element;
+}
+
 function App() {
-  function Layout() {
-    return (
-      <div>
-        <Navbar />
-        <Outlet />
-      </div>
-    );
-  }
+  const currentUser = true; // TODO: fetch this from backend
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Layout />,
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: '/',
@@ -38,6 +40,14 @@ function App() {
       element: <Register />,
     },
   ]);
+
+  function ProtectedRoute({ children }: iChildren) {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+
+    return children;
+  }
 
   return (
     <div>
