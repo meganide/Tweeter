@@ -1,7 +1,7 @@
 
 function Home() {
   return (
-    <div>Home</div>
+    <div className="max-w-7xl mx-auto py-4">Home</div>
   )
 }
 

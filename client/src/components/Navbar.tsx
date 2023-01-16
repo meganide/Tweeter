@@ -11,33 +11,35 @@ function Navbar() {
           <img className="w-[40px] cursor-pointer" src="images/icons/icon.png" alt="icon" />
         </Link>
         <MediaQuery minWidth={768}>
-          <Link
-            className={`font-[poppins] font-semibold text-[#828282] ${
-              location.pathname === '/' &&
-              'underline decoration-accent decoration-2 underline-offset-8'
-            }`}
-            to="/"
-          >
-            Home
-          </Link>
-          <Link
-            className={`font-[poppins] font-semibold text-[#828282] ${
-              location.pathname === '/explore' &&
-              'underline decoration-accent decoration-2 underline-offset-8'
-            }`}
-            to="/explore"
-          >
-            Explore
-          </Link>
-          <Link
-            className={`font-[poppins] font-semibold text-[#828282] ${
-              location.pathname === '/bookmarks' &&
-              'underline decoration-accent decoration-2 underline-offset-8'
-            }`}
-            to="/bookmarks"
-          >
-            Bookmarks
-          </Link>
+          <section className="flex gap-20">
+            <Link
+              className={`font-[poppins] font-semibold text-[#828282] ${
+                location.pathname === '/' &&
+                'underline decoration-accent decoration-2 underline-offset-8'
+              }`}
+              to="/"
+            >
+              Home
+            </Link>
+            <Link
+              className={`font-[poppins] font-semibold text-[#828282] ${
+                location.pathname === '/explore' &&
+                'underline decoration-accent decoration-2 underline-offset-8'
+              }`}
+              to="/explore"
+            >
+              Explore
+            </Link>
+            <Link
+              className={`font-[poppins] font-semibold text-[#828282] ${
+                location.pathname === '/bookmarks' &&
+                'underline decoration-accent decoration-2 underline-offset-8'
+              }`}
+              to="/bookmarks"
+            >
+              Bookmarks
+            </Link>
+          </section>
         </MediaQuery>
         <img className="w-[40px] cursor-pointer" src="images/icons/avatar.png" alt="avatar" />
       </section>
