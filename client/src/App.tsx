@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div className={`${darkToggle && 'dark'}`}>
-      <div className="bg-main-default dark:bg-main-dark">
+      <div className="min-h-screen bg-main-default dark:bg-main-dark">
         <RouterProvider router={router} />
       </div>
     </div>
