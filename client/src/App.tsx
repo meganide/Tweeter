@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 import './app.css';
@@ -13,6 +13,7 @@ interface iChildren {
 }
 
 function App() {
+  const [darkToggle, setDarkToggle] = useState(true); // TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
   const currentUser = true; // TODO: fetch this from backend
 
   const router = createBrowserRouter([
@@ -50,8 +51,10 @@ function App() {
   }
 
   return (
-    <div>
-      <RouterProvider router={router} />
+    <div className={`${darkToggle && 'dark'}`}>
+      <div className="bg-main-default dark:bg-main-dark">
+        <RouterProvider router={router} />
+      </div>
     </div>
   );
 }
