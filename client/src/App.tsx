@@ -1,26 +1,29 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { ReactElement, ReactNode, useState } from 'react';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 import './app.css';
-import Navbar from './components/Navbar';
+import Layout from './components/Layout';
 import ErrorPage from './pages/ErrorPage';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+interface iChildren {
+  children: JSX.Element;
+}
+
 function App() {
-  function Layout() {
-    return (
-      <div>
-        <Navbar />
-        <Outlet />
-      </div>
-    );
-  }
+  const [darkToggle, setDarkToggle] = useState(true); // TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
+  const currentUser = true; // TODO: fetch this from backend
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Layout />,
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: '/',
@@ -39,9 +42,19 @@ function App() {
     },
   ]);
 
+  function ProtectedRoute({ children }: iChildren) {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+
+    return children;
+  }
+
   return (
-    <div>
-      <RouterProvider router={router} />
+    <div className={`${darkToggle && 'dark'}`}>
+      <div className="min-h-screen bg-main-default dark:bg-main-dark">
+        <RouterProvider router={router} />
+      </div>
     </div>
   );
 }

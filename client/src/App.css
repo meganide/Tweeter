@@ -2,21 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
-  background: #252329;
+  /* background: #252329; */
   line-height: 1.5;
   font-family: 'Noto Sans', sans-serif;
-  color: rgba(224, 224, 224, 1);
+  color: #4F4F4F;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #333333;
 }
 
 img,
@@ -40,21 +55,42 @@ a {
   color: inherit;
 }
 
-::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #1f1b20;
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #1f1b20;
 }
 
-::-webkit-scrollbar
-{
-	width: 12px;
-	background-color: #1f1b20;
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #1f1b20;
 }
 
-::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #322f36;
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #322f36;
+}
+
+@layer utilities {
+
+  .line {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .line::before,
+  .line::after {
+    content: "";
+    flex: 1 1;
+    border-bottom: 1px solid;
+    margin: auto;
+  }
+
+  .line::before {
+    margin-right: 10px
+  }
+
+  .line::after {
+    margin-left: 10px
+  }
 }
