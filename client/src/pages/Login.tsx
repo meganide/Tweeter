@@ -1,4 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const isDesktopOrLaptop = useMediaQuery({
@@ -19,14 +20,14 @@ function Login() {
           <h2 className="mb-5 w-full text-xl dark:text-white sm:max-w-[75%]">Sign in</h2>
           <form action="" className="flex w-full flex-col gap-4 sm:max-w-[75%] sm:p-0">
             <input
-              className="w-full rounded-md border p-2 text-white dark:border-gray-700 dark:bg-transparent"
+              className="w-full rounded-md border p-2 dark:text-white dark:border-gray-700 dark:bg-transparent"
               type="text"
               name="email"
               id="email"
               placeholder="Email"
             />
             <input
-              className="w-full rounded-md border p-2 text-white dark:border-gray-700 dark:bg-transparent"
+              className="w-full rounded-md border p-2 dark:text-white dark:border-gray-700 dark:bg-transparent"
               type="password"
               name="password"
               id="password"
@@ -38,7 +39,10 @@ function Login() {
               value="Login"
             />
             <p className="text-right font-semibold dark:text-white">
-              Don't have an account? <span className="cursor-pointer text-accent">Register</span>
+              Don't have an account?&nbsp;
+              <Link to="/register" className="cursor-pointer text-accent">
+                Register
+              </Link>
             </p>
           </form>
           <div className="relative inline-flex w-full items-center justify-center">
