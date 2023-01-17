@@ -7,7 +7,7 @@ function Register() {
   });
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-blue-100 p-3 dark:bg-main-dark">
+    <section className="flex min-h-screen items-center justify-center bg-slate-100 p-3 dark:bg-main-dark">
       <section className="flex h-full max-h-[80%] w-full max-w-7xl overflow-hidden rounded-lg">
         <article className="flex h-full flex-1 flex-col items-center justify-center bg-sky-100 py-16 px-4 dark:bg-zinc-800">
           <article className="mb-16 flex items-center justify-center gap-5">

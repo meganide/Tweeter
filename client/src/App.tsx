@@ -13,7 +13,7 @@ interface iChildren {
 }
 
 function App() {
-  const [darkToggle, setDarkToggle] = useState(true); // TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
+  const [darkToggle, setDarkToggle] = useState(false); // TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
   const currentUser = true; // TODO: fetch this from backend
 
   const router = createBrowserRouter([
