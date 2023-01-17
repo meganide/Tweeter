@@ -72,32 +72,17 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
         </section>
       </section>
       <MediaQuery maxWidth={768}>
-        <section className="fixed w-full bottom-0 flex h-[60px] items-center justify-center bg-main-default p-1 px-3 dark:bg-main-dark">
+        <section className="fixed bottom-0 flex h-[60px] w-full items-center justify-center bg-main-default p-1 px-3 shadow-sm shadow-black dark:bg-main-dark dark:shadow-white">
           <section className="flex w-full items-center justify-center">
-            <section className="flex justify-around w-full">
-              <Link
-                className=''
-                to="/"
-              >
-                <HomeIcon style={{fontSize: '2rem'}} />
+            <section className="flex w-full justify-around">
+              <Link to="/">
+                <HomeIcon style={{ fontSize: '2rem' }} />
               </Link>
-              <Link
-                className={`bg-gray] ${
-                  location.pathname === '/explore' &&
-                  'underline decoration-accent decoration-2 underline-offset-8'
-                }`}
-                to="/explore"
-              >
-                <ExploreIcon style={{fontSize: '2rem'}} />
+              <Link to="/explore">
+                <ExploreIcon style={{ fontSize: '2rem' }} />
               </Link>
-              <Link
-                className={`bg-gray] ${
-                  location.pathname === '/bookmarks' &&
-                  'underline decoration-accent decoration-2 underline-offset-8'
-                }`}
-                to="/bookmarks"
-              >
-                <BookmarkIcon style={{fontSize: '2rem'}} />
+              <Link to="/bookmarks">
+                <BookmarkIcon style={{ fontSize: '2rem' }} />
               </Link>
             </section>
           </section>
