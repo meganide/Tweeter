@@ -7,6 +7,7 @@ import ReplyToolTip from './ReplyTooltip';
 
 function Tweet() {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [replyStatus, setReplyStatus] = useState('Everyone can reply');
 
   return (
     <section className="flex w-full flex-col gap-3 rounded-xl p-3 shadow-lg">
@@ -23,7 +24,7 @@ function Tweet() {
           required
         ></textarea>
       </section>
-      <section className="flex justify-between">
+      <section className="flex justify-between lg:ml-[64px]">
         <section className="flex items-center gap-2">
           <ImageIcon className="cursor-pointer text-accent hover:text-sky-700" />
           <article className="relative">
@@ -37,11 +38,11 @@ function Tweet() {
                   setShowTooltip(!showTooltip);
                 }}
               >
-                <ReplyToolTip />
+                <ReplyToolTip setReplyStatus={setReplyStatus}/>
               </OutsideClickHandler>
             )}
           </article>
-          <span className="text-xs text-accent">Everyone can reply</span>
+          <span className="text-xs text-accent">{replyStatus}</span>
         </section>
         <input
           className="cursor-pointer rounded-md bg-accent px-4 py-2 text-white hover:bg-sky-700"
