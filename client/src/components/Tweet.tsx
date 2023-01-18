@@ -4,9 +4,10 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import ImageIcon from '@mui/icons-material/Image';
 import PublicIcon from '@mui/icons-material/Public';
 import ReplyToolTip from './ReplyTooltip';
+import { useToggle } from '../hooks/useToggle';
 
 function Tweet() {
-  const [showTooltip, setShowTooltip] = useState(false);
+  const { toggle: showTooltip, toggleShow: toggleShowTooltip } = useToggle();
   const [replyStatus, setReplyStatus] = useState('Everyone can reply');
 
   return (
@@ -30,15 +31,11 @@ function Tweet() {
           <article className="relative">
             <PublicIcon
               className="cursor-pointer text-accent hover:text-sky-700"
-              onClick={() => setShowTooltip(!showTooltip)}
+              onClick={toggleShowTooltip}
             />
             {showTooltip && (
-              <OutsideClickHandler
-                onOutsideClick={() => {
-                  setShowTooltip(!showTooltip);
-                }}
-              >
-                <ReplyToolTip setReplyStatus={setReplyStatus}/>
+              <OutsideClickHandler onOutsideClick={toggleShowTooltip}>
+                <ReplyToolTip setReplyStatus={setReplyStatus} />
               </OutsideClickHandler>
             )}
           </article>

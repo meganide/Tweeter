@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import MediaQuery from 'react-responsive';
 import OutsideClickHandler from 'react-outside-click-handler';
 
@@ -7,15 +6,16 @@ import UserTooltip from './UserTooltip';
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useToggle } from '../hooks/useToggle';
 
 interface iProps {
-  setDarkToggle: React.Dispatch<React.SetStateAction<boolean>>;
+  setDarkToggle: () => void
   darkToggle: boolean;
 }
 
 function Navbar({ setDarkToggle, darkToggle }: iProps) {
   const location = useLocation();
-  const [showUserTooltip, setShowUserTooltip] = useState(false);
+  const {toggle: showTooltip, toggleShow: toggleShowTooltip} = useToggle();
 
   const links = [
     {
@@ -61,19 +61,17 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
               className="h-[40px] cursor-pointer"
               src={darkToggle ? 'images/icons/dark.png' : 'images/icons/light.png'}
               alt="theme"
-              onClick={() => setDarkToggle(!darkToggle)}
+              onClick={setDarkToggle}
             />
             <img
               className="ml-5 h-[40px] cursor-pointer rounded-md"
               src="images/icons/avatar.png"
               alt="avatar"
-              onClick={() => setShowUserTooltip(!showUserTooltip)}
+              onClick={toggleShowTooltip}
             />
-            {showUserTooltip && (
+            {showTooltip && (
               <OutsideClickHandler
-                onOutsideClick={() => {
-                  setShowUserTooltip(!UserTooltip);
-                }}
+                onOutsideClick={toggleShowTooltip}
               >
                 <UserTooltip />
               </OutsideClickHandler>

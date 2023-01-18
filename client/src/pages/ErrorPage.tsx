@@ -2,7 +2,7 @@ import { useRouteError } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
 interface iProps {
-  setDarkToggle: React.Dispatch<React.SetStateAction<boolean>>;
+  setDarkToggle: () => void;
   darkToggle: boolean;
 }
 
