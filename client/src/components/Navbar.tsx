@@ -17,6 +17,21 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
   const location = useLocation();
   const [showUserTooltip, setShowUserTooltip] = useState(false);
 
+  const links = [
+    {
+      pathname: '/',
+      name: 'Home',
+    },
+    {
+      pathname: '/explore',
+      name: 'Explore',
+    },
+    {
+      pathname: '/boomarks',
+      name: 'Bookmarks',
+    },
+  ];
+
   return (
     <>
       <section className="sticky top-0 flex h-[60px] items-center justify-center bg-main-default p-1 px-3 shadow-[0_2px_2px_rgba(0,0,0,0.05)] dark:bg-main-dark dark:shadow-[0_2px_2px_rgba(255,255,255,0.05)]">
@@ -26,33 +41,19 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
           </Link>
           <MediaQuery minWidth={768}>
             <section className="flex gap-20">
-              <Link
-                className={`font-[poppins] font-semibold text-[#828282] ${
-                  location.pathname === '/' &&
-                  'underline decoration-accent decoration-2 underline-offset-8'
-                }`}
-                to="/"
-              >
-                Home
-              </Link>
-              <Link
-                className={`font-[poppins] font-semibold text-[#828282] ${
-                  location.pathname === '/explore' &&
-                  'underline decoration-accent decoration-2 underline-offset-8'
-                }`}
-                to="/explore"
-              >
-                Explore
-              </Link>
-              <Link
-                className={`font-[poppins] font-semibold text-[#828282] ${
-                  location.pathname === '/bookmarks' &&
-                  'underline decoration-accent decoration-2 underline-offset-8'
-                }`}
-                to="/bookmarks"
-              >
-                Bookmarks
-              </Link>
+              {links.map((link) => {
+                return (
+                  <Link
+                    className={`font-[poppins] font-semibold text-[#828282] ${
+                      location.pathname === link.pathname &&
+                      'underline decoration-accent decoration-2 underline-offset-8'
+                    }`}
+                    to={link.pathname}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
             </section>
           </MediaQuery>
           <section className="relative flex">
@@ -63,7 +64,7 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
               onClick={() => setDarkToggle(!darkToggle)}
             />
             <img
-              className="h-[40px] cursor-pointer ml-5"
+              className="ml-5 h-[40px] cursor-pointer"
               src="images/icons/avatar.png"
               alt="avatar"
               onClick={() => setShowUserTooltip(!showUserTooltip)}
