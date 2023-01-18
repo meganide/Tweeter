@@ -29,7 +29,7 @@ function UserTooltip() {
         return (
           <article
             className={`flex cursor-pointer items-center gap-3 rounded-md p-3 hover:bg-slate-200 dark:hover:bg-zinc-800 ${
-              link.text === 'Settings' && 'border-b border-gray-700 mb-2'
+              link.text === 'Settings' && 'mb-2 border-b border-gray-300 dark:border-gray-800'
             }`}
           >
             {link.icon}

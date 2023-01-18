@@ -37,7 +37,7 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
       <section className="sticky top-0 flex h-[60px] items-center justify-center bg-main-default p-1 px-3 shadow-[0_2px_2px_rgba(0,0,0,0.05)] dark:bg-main-dark dark:shadow-[0_2px_2px_rgba(255,255,255,0.05)]">
         <section className="flex w-full max-w-7xl items-center justify-between">
           <Link to="/">
-            <img className="w-[40px] cursor-pointer" src="images/icons/icon.png" alt="icon" />
+            <img className="w-[30px] cursor-pointer" src="images/icons/icon.png" alt="icon" />
           </Link>
           <MediaQuery minWidth={768}>
             <section className="flex gap-20">
@@ -64,7 +64,7 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
               onClick={() => setDarkToggle(!darkToggle)}
             />
             <img
-              className="ml-5 h-[40px] cursor-pointer"
+              className="ml-5 h-[40px] cursor-pointer rounded-md"
               src="images/icons/avatar.png"
               alt="avatar"
               onClick={() => setShowUserTooltip(!showUserTooltip)}

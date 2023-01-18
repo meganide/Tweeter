@@ -35,7 +35,7 @@ function ReplyToolTip({ setReplyStatus }: iProps) {
             onClick={(e) => handleOnClick(e, option.text)}
           >
             {option.icon}
-            <p className="min-w-[150px] dark:text-gray-400">{option.text}</p>
+            <p className="min-w-[190px] whitespace-nowrap dark:text-gray-400">{option.text}</p>
           </article>
         );
       })}
