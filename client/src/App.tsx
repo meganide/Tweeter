@@ -1,20 +1,23 @@
-import { ReactElement, ReactNode, useState } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 import './app.css';
 import Layout from './components/Layout';
+import { useToggle } from './hooks/useToggle';
 import ErrorPage from './pages/ErrorPage';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
-interface iChildren {
+interface IChildren {
   children: JSX.Element;
 }
 
 function App() {
-  const [darkToggle, setDarkToggle] = useState(true); // TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
+  const {toggle: darkToggle, toggleShow: setDarkToggle} = useToggle(true); //TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
+  
   const currentUser = true; // TODO: fetch this from backend
+
+
 
   const router = createBrowserRouter([
     {
@@ -42,7 +45,7 @@ function App() {
     },
   ]);
 
-  function ProtectedRoute({ children }: iChildren) {
+  function ProtectedRoute({ children }: IChildren) {
     if (!currentUser) {
       return <Navigate to="/login" />;
     }
