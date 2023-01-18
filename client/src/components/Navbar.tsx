@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import MediaQuery from 'react-responsive';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 import UserTooltip from './UserTooltip';
 import HomeIcon from '@mui/icons-material/Home';
@@ -54,7 +55,7 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
               </Link>
             </section>
           </MediaQuery>
-          <section className="relative flex gap-10">
+          <section className="relative flex">
             <img
               className="h-[40px] cursor-pointer"
               src={darkToggle ? 'images/icons/dark.png' : 'images/icons/light.png'}
@@ -62,12 +63,20 @@ function Navbar({ setDarkToggle, darkToggle }: iProps) {
               onClick={() => setDarkToggle(!darkToggle)}
             />
             <img
-              className="h-[40px] cursor-pointer"
+              className="h-[40px] cursor-pointer ml-5"
               src="images/icons/avatar.png"
               alt="avatar"
               onClick={() => setShowUserTooltip(!showUserTooltip)}
             />
-            {showUserTooltip && <UserTooltip />}
+            {showUserTooltip && (
+              <OutsideClickHandler
+                onOutsideClick={() => {
+                  setShowUserTooltip(!UserTooltip);
+                }}
+              >
+                <UserTooltip />
+              </OutsideClickHandler>
+            )}
           </section>
         </section>
       </section>
