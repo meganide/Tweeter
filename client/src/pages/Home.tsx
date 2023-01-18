@@ -1,7 +1,7 @@
-import Follow from '../components/Follow';
-import Post from '../components/Post';
-import Trends from '../components/Trends';
-import Tweet from '../components/Tweet';
+import Follow from '../features/Follow';
+import Post from '../features/Post';
+import Trends from '../features/Trends';
+import Tweet from '../features/Tweet';
 
 function Home() {
   return (

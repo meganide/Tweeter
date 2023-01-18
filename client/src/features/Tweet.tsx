@@ -3,7 +3,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import ImageIcon from '@mui/icons-material/Image';
 import PublicIcon from '@mui/icons-material/Public';
-import ReplyToolTip from './ReplyTooltip';
+import ReplyToolTip from '../components/ReplyTooltip';
 import { useToggle } from '../hooks/useToggle';
 
 function Tweet() {
