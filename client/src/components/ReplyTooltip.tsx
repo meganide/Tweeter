@@ -6,6 +6,18 @@ interface iProps {
 }
 
 function ReplyToolTip({ setReplyStatus }: iProps) {
+  return (
+    <aside className="absolute top-14 left-0 flex flex-col rounded-md border bg-main-default p-2 shadow-lg dark:border-gray-700 dark:bg-main-dark">
+      <h2 className="px-3 py-1 text-xs text-gray-700 dark:text-gray-300">Who can reply?</h2>
+      <p className="mb-2 px-3 text-xs text-gray-400 dark:text-gray-400">
+        Choose who can reply to this Tweet.
+      </p>
+      <TooltipOptions setReplyStatus={setReplyStatus} />
+    </aside>
+  );
+}
+
+function TooltipOptions({ setReplyStatus }: iProps) {
   const options = [
     {
       icon: <PublicIcon className="h-[30px]" />,
@@ -23,11 +35,7 @@ function ReplyToolTip({ setReplyStatus }: iProps) {
   }
 
   return (
-    <aside className="absolute top-14 left-0 flex flex-col rounded-md border bg-main-default p-2 shadow-lg dark:border-gray-700 dark:bg-main-dark">
-      <h2 className="px-3 py-1 text-xs text-gray-700 dark:text-gray-300">Who can reply?</h2>
-      <p className="mb-2 px-3 text-xs text-gray-400 dark:text-gray-400">
-        Choose who can reply to this Tweet.
-      </p>
+    <section>
       {options.map((option) => {
         return (
           <article
@@ -39,7 +47,7 @@ function ReplyToolTip({ setReplyStatus }: iProps) {
           </article>
         );
       })}
-    </aside>
+    </section>
   );
 }
 
