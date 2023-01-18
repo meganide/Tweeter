@@ -2,10 +2,15 @@ import { Outlet } from 'react-router-dom';
 
 import Navbar from './Navbar';
 
-function Layout() {
+interface iProps {
+  setDarkToggle: React.Dispatch<React.SetStateAction<boolean>>;
+  darkToggle: boolean;
+}
+
+function Layout({ setDarkToggle, darkToggle }: iProps) {
   return (
     <div>
-      <Navbar />
+      <Navbar setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
       <Outlet />
     </div>
   );

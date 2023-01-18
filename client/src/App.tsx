@@ -21,7 +21,7 @@ function App() {
       path: '/',
       element: (
         <ProtectedRoute>
-          <Layout />
+          <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
         </ProtectedRoute>
       ),
       children: [
@@ -30,7 +30,7 @@ function App() {
           element: <Home />,
         },
       ],
-      errorElement: <ErrorPage />,
+      errorElement: <ErrorPage setDarkToggle={setDarkToggle} darkToggle={darkToggle} />,
     },
     {
       path: '/login',

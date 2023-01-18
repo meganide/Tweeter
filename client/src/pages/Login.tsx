@@ -7,7 +7,7 @@ function Login() {
   });
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-blue-100 p-3 dark:bg-main-dark">
+    <section className="flex min-h-screen items-center justify-center bg-slate-100 p-3 dark:bg-main-dark">
       <section className="flex h-full max-h-[80%] w-full max-w-7xl overflow-hidden rounded-lg">
         {isDesktopOrLaptop && (
           <aside className="flex flex-1 items-center justify-center bg-login bg-cover bg-center dark:bg-loginDark"></aside>
