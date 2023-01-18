@@ -5,6 +5,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import PublicIcon from '@mui/icons-material/Public';
 import ReplyToolTip from '../components/ReplyTooltip';
 import { useToggle } from '../hooks/useToggle';
+import Button from '../components/Button';
 
 function Tweet() {
   return (
@@ -62,11 +63,8 @@ function TweetFooter() {
         </article>
         <span className="text-xs text-accent">{replyStatus}</span>
       </section>
-      <input
-        className="cursor-pointer rounded-md bg-accent px-4 py-2 text-white hover:bg-sky-700"
-        type="submit"
-        value="Tweet"
-      />
+      <Button type='button' text='Tweet' />
+
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
+import Button from '../components/Button';
 import HorizontalLine from '../components/HorizontalLine';
 import SocialLogins from '../components/SocialLogins';
 
@@ -59,11 +60,7 @@ function RegisterInputs() {
         id="password"
         placeholder="Password"
       />
-      <input
-        className="w-full cursor-pointer rounded-md border-none bg-accent p-2 text-white hover:bg-sky-700"
-        type="submit"
-        value="Register"
-      />
+      <Button type="submit" text="Register" />
       <p className="text-right font-semibold dark:text-white">
         Already have an account?&nbsp;
         <Link to="/login" className="cursor-pointer text-accent">

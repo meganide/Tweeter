@@ -8,12 +8,14 @@ import ExploreIcon from '@mui/icons-material/Explore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useToggle } from '../hooks/useToggle';
 
-interface iProps {
+interface IProps {
   setDarkToggle: () => void;
   darkToggle: boolean;
 }
 
-function Navbar({ setDarkToggle, darkToggle }: iProps) {
+function Navbar(props: IProps) {
+  const { setDarkToggle, darkToggle } = props;
+
   return (
     <>
       <section className="sticky top-0 flex h-[60px] items-center justify-center bg-main-default p-1 px-3 shadow-[0_2px_2px_rgba(0,0,0,0.05)] dark:bg-main-dark dark:shadow-[0_2px_2px_rgba(255,255,255,0.05)]">
@@ -69,7 +71,9 @@ function DesktopLinks() {
   );
 }
 
-function NavbarIcons({ setDarkToggle, darkToggle }: iProps) {
+function NavbarIcons(props: IProps) {
+  const { setDarkToggle, darkToggle } = props;
+  
   const { toggle: showTooltip, toggleShow: toggleShowTooltip } = useToggle();
 
   return (

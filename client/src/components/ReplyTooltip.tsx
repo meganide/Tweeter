@@ -1,11 +1,12 @@
 import PublicIcon from '@mui/icons-material/Public';
 import PeopleIcon from '@mui/icons-material/People';
 
-interface iProps {
+interface IProps {
   setReplyStatus: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function ReplyToolTip({ setReplyStatus }: iProps) {
+function ReplyToolTip(props: IProps) {
+  const { setReplyStatus } = props;
   return (
     <aside className="absolute top-14 left-0 flex flex-col rounded-md border bg-main-default p-2 shadow-lg dark:border-gray-700 dark:bg-main-dark">
       <h2 className="px-3 py-1 text-xs text-gray-700 dark:text-gray-300">Who can reply?</h2>
@@ -17,7 +18,9 @@ function ReplyToolTip({ setReplyStatus }: iProps) {
   );
 }
 
-function TooltipOptions({ setReplyStatus }: iProps) {
+function TooltipOptions(props: IProps) {
+  const { setReplyStatus } = props;
+
   const options = [
     {
       icon: <PublicIcon className="h-[30px]" />,

@@ -8,7 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
-interface iChildren {
+interface IChildren {
   children: JSX.Element;
 }
 
@@ -45,7 +45,7 @@ function App() {
     },
   ]);
 
-  function ProtectedRoute({ children }: iChildren) {
+  function ProtectedRoute({ children }: IChildren) {
     if (!currentUser) {
       return <Navigate to="/login" />;
     }

@@ -1,12 +1,14 @@
 import { useRouteError } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 
-interface iProps {
+interface IProps {
   setDarkToggle: () => void;
   darkToggle: boolean;
 }
 
-function ErrorPage({ setDarkToggle, darkToggle }: iProps) {
+function ErrorPage(props: IProps) {
+  const { setDarkToggle, darkToggle } = props;
+  
   const error: any = useRouteError();
   console.error(error);
 
