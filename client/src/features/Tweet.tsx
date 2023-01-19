@@ -3,10 +3,10 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import ImageIcon from '@mui/icons-material/Image';
 import PublicIcon from '@mui/icons-material/Public';
-import ReplyToolTip from '../components/ReplyTooltip';
+import ReplyToolTip from '../components/tooltips/ReplyTooltip';
 import { useToggle } from '../hooks/useToggle';
-import Button from '../components/Button';
-import { imagePaths } from '../utils/Data';
+import Button from '../components/common/Button';
+import { imagePaths } from '../utils/data';
 
 function Tweet() {
   return (

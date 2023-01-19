@@ -2,9 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import UserTooltip from './UserTooltip';
-import { useToggle } from '../hooks/useToggle';
-import { imagePaths, links } from '../utils/Data';
+import UserTooltip from '../tooltips/UserTooltip';
+import { useToggle } from '../../hooks/useToggle';
+import { imagePaths, links } from '../../utils/data';
 
 interface IProps {
   setDarkToggle: () => void;

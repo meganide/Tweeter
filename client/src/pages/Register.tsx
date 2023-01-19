@@ -1,9 +1,9 @@
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
-import HorizontalLine from '../components/HorizontalLine';
-import SocialLogins from '../components/SocialLogins';
-import { imagePaths } from '../utils/Data';
+import Button from '../components/common/Button';
+import HorizontalLine from '../components/common/HorizontalLine';
+import SocialLogins from '../components/common/SocialLogins';
+import { imagePaths } from '../utils/data';
 
 function Register() {
   const isDesktopOrLaptop = useMediaQuery({
