@@ -6,11 +6,11 @@ import PublicIcon from '@mui/icons-material/Public';
 import ReplyToolTip from '../components/tooltips/ReplyTooltip';
 import { useToggle } from '../hooks/useToggle';
 import Button from '../components/common/Button';
-import { imagePaths } from '../utils/data';
+import Avatar from '../components/common/Avatar';
 
 function Tweet() {
   return (
-    <section className="flex w-full flex-col gap-3 rounded-xl p-3 shadow-lg">
+    <section className="flex w-full flex-col gap-3 rounded-xl p-3 shadow-lg dark:bg-secondary-dark">
       <TweetHeader />
       <TweetBody />
       <TweetFooter />
@@ -30,7 +30,7 @@ function TweetHeader() {
 function TweetBody() {
   return (
     <section className="mb-3 flex w-full gap-3">
-      <img className="h-[40px] rounded-md" src={imagePaths.avatar} alt="avatar" />
+      <Avatar />
       <textarea
         className="shadow-md] w-full resize-none rounded-md bg-transparent px-3 py-1 placeholder:text-gray-400 focus:outline-none dark:text-gray-200"
         placeholder="What's happening?"

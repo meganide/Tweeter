@@ -1,6 +1,10 @@
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
+import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 
 const imagePaths = {
   logo: 'images/icons/icon.png',
@@ -8,7 +12,7 @@ const imagePaths = {
   lightMode: 'images/icons/light.png',
   avatar: 'images/icons/avatar.png',
   googleIcon: 'images/icons/Google.svg',
-}
+};
 
 const links = [
   {
@@ -28,4 +32,23 @@ const links = [
   },
 ];
 
-export {imagePaths, links}
+const postOptionsData = [
+  {
+    icon: <ModeCommentOutlinedIcon />,
+    text: 'Comment',
+  },
+  {
+    icon: <AutorenewOutlinedIcon />,
+    text: 'Retweeted',
+  },
+  {
+    icon: <FavoriteBorderOutlinedIcon />,
+    text: 'Liked',
+  },
+  {
+    icon: <BookmarkBorderOutlinedIcon />,
+    text: 'Saved',
+  },
+];
+
+export { imagePaths, links, postOptionsData };
