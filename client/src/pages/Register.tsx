@@ -1,8 +1,9 @@
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
-import Button from '../components/Button';
-import HorizontalLine from '../components/HorizontalLine';
-import SocialLogins from '../components/SocialLogins';
+import Button from '../components/common/Button';
+import HorizontalLine from '../components/common/HorizontalLine';
+import Logo from '../components/common/Logo';
+import SocialLogins from '../components/common/SocialLogins';
 
 function Register() {
   const isDesktopOrLaptop = useMediaQuery({
@@ -30,7 +31,7 @@ function Register() {
 function RegisterHeader() {
   return (
     <article className="mb-16 flex items-center justify-center gap-5">
-      <img className="h-[40px]" src="images/icons/icon.png" alt="icon" />
+      <Logo />
       <h1 className="text-2xl dark:text-white md:text-3xl">Tweeter</h1>
     </article>
   );

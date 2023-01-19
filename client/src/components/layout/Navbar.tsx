@@ -2,11 +2,10 @@ import { Link, useLocation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import UserTooltip from './UserTooltip';
-import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { useToggle } from '../hooks/useToggle';
+import UserTooltip from '../tooltips/UserTooltip';
+import { useToggle } from '../../hooks/useToggle';
+import { imagePaths, links } from '../../utils/data';
+import Logo from '../common/Logo';
 
 interface IProps {
   setDarkToggle: () => void;
@@ -20,9 +19,7 @@ function Navbar(props: IProps) {
     <>
       <section className="sticky top-0 flex h-[60px] items-center justify-center bg-main-default p-1 px-3 shadow-[0_2px_2px_rgba(0,0,0,0.05)] dark:bg-main-dark dark:shadow-[0_2px_2px_rgba(255,255,255,0.05)]">
         <section className="flex w-full max-w-7xl items-center justify-between">
-          <Link to="/">
-            <img className="w-[30px] cursor-pointer" src="images/icons/icon.png" alt="logo" />
-          </Link>
+          <Logo />
           <DesktopLinks />
           <NavbarIcons setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
         </section>
@@ -34,21 +31,6 @@ function Navbar(props: IProps) {
 
 function DesktopLinks() {
   const location = useLocation();
-
-  const links = [
-    {
-      pathname: '/',
-      name: 'Home',
-    },
-    {
-      pathname: '/explore',
-      name: 'Explore',
-    },
-    {
-      pathname: '/boomarks',
-      name: 'Bookmarks',
-    },
-  ];
 
   return (
     <MediaQuery minWidth={768}>
@@ -73,20 +55,20 @@ function DesktopLinks() {
 
 function NavbarIcons(props: IProps) {
   const { setDarkToggle, darkToggle } = props;
-  
+
   const { toggle: showTooltip, toggleShow: toggleShowTooltip } = useToggle();
 
   return (
     <section className="relative flex">
       <img
         className="h-[40px] cursor-pointer"
-        src={darkToggle ? 'images/icons/dark.png' : 'images/icons/light.png'}
+        src={darkToggle ? imagePaths.darkMode : imagePaths.lightMode}
         alt="theme"
         onClick={setDarkToggle}
       />
       <img
         className="ml-5 h-[40px] cursor-pointer rounded-md"
-        src="images/icons/avatar.png"
+        src={imagePaths.avatar}
         alt="avatar"
         onClick={toggleShowTooltip}
       />
@@ -105,15 +87,9 @@ function MobileBottomBar() {
       <section className="fixed bottom-0 flex h-[60px] w-full items-center justify-center bg-main-default p-1 px-3 shadow-sm shadow-black dark:bg-main-dark dark:shadow-white">
         <section className="flex w-full items-center justify-center">
           <section className="flex w-full justify-around">
-            <Link to="/">
-              <HomeIcon style={{ fontSize: '2rem' }} />
-            </Link>
-            <Link to="/explore">
-              <ExploreIcon style={{ fontSize: '2rem' }} />
-            </Link>
-            <Link to="/bookmarks">
-              <BookmarkIcon style={{ fontSize: '2rem' }} />
-            </Link>
+            {links.map((link) => {
+              return <Link to={link.pathname}>{link.icon}</Link>;
+            })}
           </section>
         </section>
       </section>

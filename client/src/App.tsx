@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 import './app.css';
-import Layout from './components/Layout';
+import Layout from './components/layout/Layout';
 import { useToggle } from './hooks/useToggle';
 import ErrorPage from './pages/ErrorPage';
 import Home from './pages/Home';

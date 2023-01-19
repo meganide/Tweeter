@@ -7,6 +7,7 @@ interface IProps {
 
 function ReplyToolTip(props: IProps) {
   const { setReplyStatus } = props;
+  
   return (
     <aside className="absolute top-14 left-0 flex flex-col rounded-md border bg-main-default p-2 shadow-lg dark:border-gray-700 dark:bg-main-dark">
       <h2 className="px-3 py-1 text-xs text-gray-700 dark:text-gray-300">Who can reply?</h2>
