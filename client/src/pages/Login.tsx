@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import HorizontalLine from '../components/HorizontalLine';
 import SocialLogins from '../components/SocialLogins';
+import { imagePaths } from '../utils/Data';
 
 function Login() {
   const isDesktopOrLaptop = useMediaQuery({
@@ -30,7 +31,7 @@ function Login() {
 function LoginHeader() {
   return (
     <article className="mb-16 flex items-center justify-center gap-5">
-      <img className="h-[40px]" src="images/icons/icon.png" alt="icon" />
+      <img className="h-[40px]" src={imagePaths.logo} alt="logo" />
       <h1 className="text-2xl dark:text-white md:text-3xl">Tweeter</h1>
     </article>
   );
