@@ -5,6 +5,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import UserTooltip from '../tooltips/UserTooltip';
 import { useToggle } from '../../hooks/useToggle';
 import { imagePaths, links } from '../../utils/data';
+import Logo from '../common/Logo';
 
 interface IProps {
   setDarkToggle: () => void;
@@ -18,9 +19,7 @@ function Navbar(props: IProps) {
     <>
       <section className="sticky top-0 flex h-[60px] items-center justify-center bg-main-default p-1 px-3 shadow-[0_2px_2px_rgba(0,0,0,0.05)] dark:bg-main-dark dark:shadow-[0_2px_2px_rgba(255,255,255,0.05)]">
         <section className="flex w-full max-w-7xl items-center justify-between">
-          <Link to="/">
-            <img className="w-[30px] cursor-pointer" src={imagePaths.logo} alt="logo" />
-          </Link>
+          <Logo />
           <DesktopLinks />
           <NavbarIcons setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
         </section>
