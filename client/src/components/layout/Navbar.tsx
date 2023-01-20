@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { v4 as uuidv4 } from 'uuid';
 
 import UserTooltip from '../tooltips/UserTooltip';
 import { useToggle } from '../../hooks/useToggle';
@@ -39,6 +40,7 @@ function DesktopLinks() {
         {links.map((link) => {
           return (
             <Link
+              key={uuidv4()}
               className={`font-[poppins] font-semibold text-[#828282] ${
                 location.pathname === link.pathname &&
                 'underline decoration-accent decoration-2 underline-offset-8'
@@ -84,7 +86,11 @@ function MobileBottomBar() {
         <section className="flex w-full items-center justify-center">
           <section className="flex w-full justify-around">
             {links.map((link) => {
-              return <Link to={link.pathname}>{link.icon}</Link>;
+              return (
+                <Link key={uuidv4()} to={link.pathname}>
+                  {link.icon}
+                </Link>
+              );
             })}
           </section>
         </section>

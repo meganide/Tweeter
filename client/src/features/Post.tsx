@@ -1,8 +1,10 @@
 import MediaQuery from 'react-responsive';
+import { v4 as uuidv4 } from 'uuid';
 
 import Avatar from '../components/common/Avatar';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import { postOptionsData } from '../utils/data';
+import Card from '../components/common/Card';
 
 interface IProps {
   postData: IPostData;
@@ -12,20 +14,22 @@ interface IPostData {
   username: string;
   date: string;
   text: string;
-  image: string;
+  image?: string;
 }
 
 function Post(props: IProps) {
   const { postData } = props;
 
   return (
-    <article className="my-7 rounded-lg bg-white p-5 shadow-md dark:bg-secondary-dark">
-      <PostHeader postData={postData} />
-      <PostBody postData={postData} />
-      <PostInfo />
-      <PostOptions />
-      <PostFooter />
-    </article>
+    <section className="my-7">
+      <Card>
+        <PostHeader postData={postData} />
+        <PostBody postData={postData} />
+        <PostInfo />
+        <PostOptions />
+        <PostFooter />
+      </Card>
+    </section>
   );
 }
 
@@ -69,7 +73,10 @@ function PostOptions() {
     <section className="my-3 flex border-b border-t dark:border-border-dark">
       {postOptionsData.map((option) => {
         return (
-          <article className="my-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg py-3 hover:bg-gray-200 dark:hover:bg-neutral-800">
+          <article
+            key={uuidv4()}
+            className="my-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg py-3 hover:bg-gray-200 dark:hover:bg-neutral-800"
+          >
             {option.icon}
             <MediaQuery minWidth={640}>
               <p className={`text-[${option.color}]`}>{option.text}</p>
