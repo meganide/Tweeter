@@ -6,6 +6,7 @@ import UserTooltip from '../tooltips/UserTooltip';
 import { useToggle } from '../../hooks/useToggle';
 import { imagePaths, links } from '../../utils/data';
 import Logo from '../common/Logo';
+import Avatar from '../common/Avatar';
 
 interface IProps {
   setDarkToggle: () => void;
@@ -61,17 +62,12 @@ function NavbarIcons(props: IProps) {
   return (
     <section className="relative flex">
       <img
-        className="h-[40px] cursor-pointer"
+        className="mr-5 h-[40px] cursor-pointer"
         src={darkToggle ? imagePaths.darkMode : imagePaths.lightMode}
         alt="theme"
         onClick={setDarkToggle}
       />
-      <img
-        className="ml-5 h-[40px] cursor-pointer rounded-md"
-        src={imagePaths.avatar}
-        alt="avatar"
-        onClick={toggleShowTooltip}
-      />
+      <Avatar toggleShowTooltip={toggleShowTooltip} />
       {showTooltip && (
         <OutsideClickHandler onOutsideClick={toggleShowTooltip}>
           <UserTooltip />
