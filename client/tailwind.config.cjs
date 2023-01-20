@@ -12,6 +12,9 @@ module.exports = {
         secondary: {
           dark: '#1D1D1D'
         },
+        border: {
+          dark: 'rgb(37,37,37)'
+        },
         accent: '#2F80ED',
       },
       backgroundImage: {

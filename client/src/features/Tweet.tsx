@@ -10,7 +10,7 @@ import Avatar from '../components/common/Avatar';
 
 function Tweet() {
   return (
-    <section className="flex w-full flex-col gap-3 rounded-xl p-3 shadow-lg dark:bg-secondary-dark">
+    <section className="flex w-full flex-col gap-3 rounded-xl p-3 shadow-lg bg-white dark:bg-secondary-dark">
       <TweetHeader />
       <TweetBody />
       <TweetFooter />
