@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -24,11 +25,12 @@ function UserTooltip() {
   ];
 
   return (
-    <aside className="absolute top-14 right-0 flex flex-col rounded-md border bg-main-default p-2 shadow-lg dark:border-gray-700 dark:bg-main-dark">
+    <aside className="absolute top-14 right-0 flex flex-col rounded-md border bg-white p-2 shadow-lg dark:border-gray-700 dark:bg-main-dark">
       {links.map((link) => {
         return (
           <article
-            className={`flex cursor-pointer items-center gap-3 rounded-md p-3 hover:bg-slate-200 dark:hover:bg-zinc-800 ${
+            key={uuidv4()}
+            className={`flex cursor-pointer items-center gap-3 rounded-md p-3 hover:bg-gray-200 dark:hover:bg-neutral-800 ${
               link.text === 'Settings' && 'mb-2 border-b border-gray-300 dark:border-gray-800'
             }`}
           >

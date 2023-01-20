@@ -66,14 +66,58 @@ const postsData = [
     username: 'Jane Moe',
     date: '30 August at 15:20',
     text: '“We travel, some of us forever, to seek other places, other lives, other souls.” – Anais Nin',
-    image: 'https://images.pexels.com/photos/1007901/pexels-photo-1007901.jpeg?cs=srgb&dl=pexels-oleksandr-pidvalnyi-1007901.jpg&fm=jpg',
+    image:
+      'https://images.pexels.com/photos/1007901/pexels-photo-1007901.jpeg?cs=srgb&dl=pexels-oleksandr-pidvalnyi-1007901.jpg&fm=jpg',
   },
   {
     username: 'Mr Troll',
     date: '2 September at 16:20',
     text: 'top notch lol',
-    image: 'https://assets-global.website-files.com/5f3c19f18169b62a0d0bf387/60d33be8cf4ba7565123c8bc_YPD3ulQQAGQpOcnqIm3QzSTRgzmr1SexpW9ZjMpJ1mAnUxx4iF05XOTu44sk0qQG-8XgBcYmGZGAD-5SAZvJl3TjtmhgWnn-w0C2XKwhBscV78RVvhwZfyp0v_Pa6sNj5zxpOvRW.png',
+    image:
+      'https://assets-global.website-files.com/5f3c19f18169b62a0d0bf387/60d33be8cf4ba7565123c8bc_YPD3ulQQAGQpOcnqIm3QzSTRgzmr1SexpW9ZjMpJ1mAnUxx4iF05XOTu44sk0qQG-8XgBcYmGZGAD-5SAZvJl3TjtmhgWnn-w0C2XKwhBscV78RVvhwZfyp0v_Pa6sNj5zxpOvRW.png',
   },
 ];
 
-export { imagePaths, links, postOptionsData, postsData };
+const trendsData = [
+  {
+    name: '#programming',
+    tweets: 5120,
+  },
+  {
+    name: '#frontend',
+    tweets: 3000,
+  },
+  {
+    name: '#learntocode',
+    tweets: 1000,
+  },
+  {
+    name: '#stoicism',
+    tweets: 1201,
+  },
+];
+
+const followData = [
+  {
+    username: 'Rick Sanchez',
+    followers: 5120,
+    bio: 'Genius, scientist and fulltime alcoholist.',
+    backgroundImg: 'https://images8.alphacoders.com/103/1033651.jpg',
+  },
+  {
+    username: 'Morty Smith',
+    followers: 5,
+    bio: "Rick's sidekick.",
+    backgroundImg:
+      'https://i5.walmartimages.com/asr/c56fb9dc-6748-427f-89d4-5a9bf8c7b2aa_1.de05d46b2d3b93a7f2ebdb2e8b092e27.jpeg',
+  },
+  {
+    username: 'Homer Simpson',
+    followers: 324,
+    bio: 'I love beer.',
+    backgroundImg:
+      'https://cdn.vox-cdn.com/thumbor/sgPVmq-SzYpLHwjpcYrzYKp1Kjk=/0x0:939x704/1400x788/filters:focal(0x0:939x704):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/49610677/homersimpson.0.0.jpg',
+  },
+];
+
+export { imagePaths, links, postOptionsData, postsData, trendsData, followData };

@@ -7,23 +7,14 @@ import ReplyToolTip from '../components/tooltips/ReplyTooltip';
 import { useToggle } from '../hooks/useToggle';
 import Button from '../components/common/Button';
 import Avatar from '../components/common/Avatar';
+import Card from '../components/common/Card';
 
 function Tweet() {
   return (
-    <section className="flex w-full flex-col gap-3 rounded-xl p-3 shadow-lg bg-white dark:bg-secondary-dark">
-      <TweetHeader />
+    <Card headerTitle='Tweet something'>
       <TweetBody />
       <TweetFooter />
-    </section>
-  );
-}
-
-function TweetHeader() {
-  return (
-    <section>
-      <h2 className="text-xs text-gray-700 dark:text-white">Tweet something</h2>
-      <hr className="my-3 border-zinc-300 dark:border-gray-800" />
-    </section>
+    </Card>
   );
 }
 
@@ -64,8 +55,7 @@ function TweetFooter() {
         </article>
         <span className="text-xs text-accent">{replyStatus}</span>
       </section>
-      <Button type='button' text='Tweet' />
-
+      <Button type="button" text="Tweet" />
     </section>
   );
 }
