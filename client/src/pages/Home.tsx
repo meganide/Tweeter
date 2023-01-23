@@ -1,6 +1,7 @@
 import MediaQuery from 'react-responsive';
+import CreatedBy from '../components/common/CreatedBy';
 import Follow from '../features/Follow';
-import Posts from '../features/Posts';
+import Posts from '../features/Posts/Posts';
 import Trends from '../features/Trends';
 import Tweet from '../features/Tweet';
 
@@ -17,6 +18,7 @@ function Home() {
           <Follow />
         </section>
       </MediaQuery>
+      <CreatedBy />
     </section>
   );
 }

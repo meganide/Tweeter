@@ -120,4 +120,28 @@ const followData = [
   },
 ];
 
-export { imagePaths, links, postOptionsData, postsData, trendsData, followData };
+const postCommentsData = [
+  {
+    username: 'Naruto',
+    date: '24 August at 20:45',
+    text: 'Cool bro.',
+    image: '',
+    likes: 10,
+  },
+  {
+    username: 'Sasuke',
+    date: '30 August at 15:25',
+    text: 'Lit',
+    image: '',
+    likes: 5,
+  },
+  {
+    username: 'Mr Troll',
+    date: '2 September at 16:20',
+    text: 'Goodiez',
+    image: 'https://i.imgflip.com/4k39g9.jpg',
+    likes: 7,
+  },
+];
+
+export { imagePaths, links, postOptionsData, postsData, trendsData, followData, postCommentsData };
