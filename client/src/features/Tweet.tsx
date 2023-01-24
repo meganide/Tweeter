@@ -23,7 +23,7 @@ function TweetBody() {
     <section className="mb-3 flex w-full gap-3">
       <Avatar />
       <textarea
-        className="shadow-md] w-full resize-none rounded-md bg-transparent px-3 py-1 placeholder:text-gray-400 focus:outline-none dark:text-gray-200"
+        className="shadow-md] w-full resize-none rounded-md bg-transparent px-3 py-1 placeholder:text-gray-400 dark:placeholder:text-neutral-400 focus:outline-none dark:text-gray-200"
         placeholder="What's happening?"
         name="tweet"
         id="tweet"
