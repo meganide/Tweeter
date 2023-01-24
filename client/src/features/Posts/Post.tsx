@@ -35,7 +35,7 @@ function Post(props: IProps) {
         <PostInfo />
         <PostOptions />
         <PostFooter />
-        <PostComments />
+        {postCommentsData && <PostComments />}
       </Card>
     </section>
   );
@@ -129,7 +129,7 @@ function PostComment(props: IProps) {
               <p className="text-xs text-gray-500 dark:text-neutral-500">{commentData?.date}</p>
             </section>
             <section>
-              <p className="dark:text-neutral-400s text-sm sm:text-base">{commentData?.text}</p>
+              <p className="dark:text-neutral-400 text-sm sm:text-base">{commentData?.text}</p>
               {commentData?.image && <img className="mt-2" src={commentData.image} alt="" />}
             </section>
           </section>
