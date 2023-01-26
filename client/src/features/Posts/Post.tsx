@@ -158,7 +158,7 @@ function PostComments() {
     <section>
       <hr className="mt-5 mb-5 border-zinc-300 dark:border-border-dark" />
       {postCommentsData.map((comment) => {
-        return <PostComment commentData={comment} />;
+        return <PostComment key={uuidv4()} commentData={comment} />;
       })}
     </section>
   );

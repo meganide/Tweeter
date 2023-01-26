@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 
 import './app.css';
 import Layout from './components/layout/Layout';
+import Profile from './pages/Profile';
 import { useToggle } from './hooks/useToggle';
 import ErrorPage from './pages/ErrorPage';
 import Home from './pages/Home';
@@ -13,11 +14,9 @@ interface IChildren {
 }
 
 function App() {
-  const {toggle: darkToggle, toggleShow: setDarkToggle} = useToggle(true); //TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
-  
+  const { toggle: darkToggle, toggleShow: setDarkToggle } = useToggle(true); //TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
+
   const currentUser = true; // TODO: fetch this from backend
-
-
 
   const router = createBrowserRouter([
     {
@@ -42,6 +41,20 @@ function App() {
     {
       path: '/register',
       element: <Register />,
+    },
+    {
+      path: '/profile',
+      element: (
+        <ProtectedRoute>
+          <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
+        </ProtectedRoute>
+      ),
+      children: [
+        {
+          path: '/profile/',
+          element: <Profile />,
+        },
+      ],
     },
   ]);
 

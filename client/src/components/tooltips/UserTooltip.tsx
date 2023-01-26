@@ -9,17 +9,17 @@ function UserTooltip() {
   const links = [
     {
       icon: <AccountCircleIcon className="h-[30px]" />,
-      link: 'profile',
+      link: '/profile',
       text: 'My Profile',
     },
     {
       icon: <SettingsIcon className="h-[30px]" />,
-      link: 'settings',
+      link: '/settings',
       text: 'Settings',
     },
     {
       icon: <LogoutIcon className="h-[30px] text-red-500" />,
-      link: 'logout',
+      link: '/logout',
       text: 'Logout',
     },
   ];
@@ -30,12 +30,15 @@ function UserTooltip() {
         return (
           <article
             key={uuidv4()}
-            className={`flex cursor-pointer items-center gap-3 rounded-md p-3 hover:bg-gray-200 dark:hover:bg-neutral-800 ${
+            className={`flex cursor-pointer items-center gap-3 rounded-md hover:bg-gray-200 dark:hover:bg-neutral-800 ${
               link.text === 'Settings' && 'mb-2 border-b border-gray-300 dark:border-gray-800'
             }`}
           >
-            {link.icon}
-            <Link to={link.link} className="min-w-[150px] dark:text-[#828282]">
+            <Link
+              to={link.link}
+              className=" flex h-full min-w-[150px] place-items-end gap-2 p-3 dark:text-[#828282]"
+            >
+              {link.icon}
               {link.text}
             </Link>
           </article>
