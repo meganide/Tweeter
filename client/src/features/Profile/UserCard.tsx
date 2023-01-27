@@ -4,7 +4,6 @@ import Avatar from '../../components/common/Avatar';
 import Button from '../../components/common/Button';
 import Card from '../../components/common/Card';
 
-
 function UserCard() {
   const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
@@ -21,10 +20,9 @@ function UserCard() {
         src="https://www.bsr.org/images/heroes/bsr-travel-hero..jpg"
         alt="background"
       />
-      <section className={`-translate-y-8" m-auto ${isBigScreen ? 'max-w-[75%]' : 'px-3'}`}>
+      <section className='-translate-y-8" m-auto max-w-7xl px-3 lg:px-3 pb-4 xl:px-0'>
         <Card>
-          
-          <section className="flex flex-col place-items-center gap-5 p-4 lg:flex-row lg:p-10 lg:pb-0">
+          <section className="flex flex-col place-items-center gap-5 p-4 pb-0 lg:flex-row lg:p-10 lg:pb-0">
             <section className="shrink-0 -translate-y-[50%] place-items-start rounded-lg border-2 border-white shadow-lg dark:border-secondary-dark dark:shadow-sm dark:shadow-gray-500">
               <Avatar height={imgHeight} />
             </section>
@@ -37,7 +35,7 @@ function UserCard() {
 }
 
 function UserInfo() {
-const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
+  const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
   return (
     <section className="flex w-full -translate-y-10 flex-col">
@@ -64,7 +62,7 @@ const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
           </section>
         )}
       </section>
-      <p className="text-sm dark:text-neutral-400 lg:max-w-[60%] lg:text-base mt-2">
+      <p className="mt-2 text-sm dark:text-neutral-400 lg:max-w-[60%] lg:text-base">
         Rayquaza is the game mascot of Pokémon Emerald, appearing on the boxart of the game. It
         serves to end the conflict between Kyogre and Groudon when Team Magma's leader Maxie and
         Team Aqua's leader Archie awakened them.
