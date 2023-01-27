@@ -2,14 +2,17 @@ import { imagePaths } from '../../utils/data';
 
 interface IProps {
   toggleShowTooltip?: () => void;
+  height?: string;
 }
 
 function Avatar(props: IProps) {
-  const { toggleShowTooltip } = props;
+  const { toggleShowTooltip, height } = props;
 
   return (
     <img
-      className={`h-[40px] ${toggleShowTooltip && 'cursor-pointer'} rounded-md`}
+      className={`${height ? height : 'h-[40px]'} ${
+        toggleShowTooltip && 'cursor-pointer'
+      } rounded-md`}
       src={imagePaths.avatar}
       alt="avatar"
       onClick={toggleShowTooltip ? () => toggleShowTooltip() : undefined}
