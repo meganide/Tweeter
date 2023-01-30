@@ -7,6 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 import { app } from './app.js';
 const PORT = process.env.PORT || 8000;
 function startServer() {
@@ -17,3 +19,4 @@ function startServer() {
     });
 }
 startServer();
+export { prisma };
