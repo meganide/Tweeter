@@ -1,8 +1,8 @@
+import bcrypt from 'bcrypt';
+
 import { prisma } from '../server.js';
-import bcrypt from "bcrypt";
-
-
 import { IUserCredentials } from '../routes/auth/auth.controller.js';
+import { create } from 'domain';
 
 interface IUserTable {
   id: string;
@@ -22,6 +22,35 @@ interface IUserProfile {
 }
 
 async function register(userCredentials: IUserCredentials) {
+  const userExists = await findUser(userCredentials);
+
+  if (userExists) {
+    return { message: 'Username or email already exists!' };
+  }
+
+  const user = await createUser(userCredentials);
+
+  return user;
+}
+
+async function findUser(userCredentials: IUserCredentials) {
+  const { name, email } = userCredentials;
+
+  try {
+    const userExists = await prisma.user.findFirst({
+      where: {
+        OR: [{ name }, { email }],
+      },
+    });
+
+    return userExists;
+  } catch (error) {
+    console.log(error);
+    return { message: 'There was an error looking up user!' };
+  }
+}
+
+async function createUser(userCredentials: IUserCredentials) {
   const { name, email, password } = userCredentials;
 
   const hashedPassword = await hashPassword(password);

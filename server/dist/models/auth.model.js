@@ -18,9 +18,36 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+import bcrypt from 'bcrypt';
 import { prisma } from '../server.js';
-import bcrypt from "bcrypt";
 function register(userCredentials) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userExists = yield findUser(userCredentials);
+        if (userExists) {
+            return { message: 'Username or email already exists!' };
+        }
+        const user = yield createUser(userCredentials);
+        return user;
+    });
+}
+function findUser(userCredentials) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { name, email } = userCredentials;
+        try {
+            const userExists = yield prisma.user.findFirst({
+                where: {
+                    OR: [{ name }, { email }],
+                },
+            });
+            return userExists;
+        }
+        catch (error) {
+            console.log(error);
+            return { message: 'There was an error looking up user!' };
+        }
+    });
+}
+function createUser(userCredentials) {
     return __awaiter(this, void 0, void 0, function* () {
         const { name, email, password } = userCredentials;
         const hashedPassword = yield hashPassword(password);

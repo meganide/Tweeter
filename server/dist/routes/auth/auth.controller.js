@@ -8,11 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { register } from '../../models/auth.model.js';
-import bcrypt from "bcrypt";
 function httpRegister(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userCredentials = req.body;
-        userCredentials.password = yield hashPassword(userCredentials.password);
         const user = yield register(userCredentials);
         if (user.message === 'User successfully created!') {
             return res.status(200).json(user);
@@ -20,13 +18,6 @@ function httpRegister(req, res) {
         else {
             return res.status(400).json(user);
         }
-    });
-}
-function hashPassword(password) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const saltRounds = 10;
-        const hashedPassword = yield bcrypt.hash(password, saltRounds);
-        return hashedPassword;
     });
 }
 export { httpRegister };

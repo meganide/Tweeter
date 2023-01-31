@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+
 import { register } from '../../models/auth.model.js';
-import bcrypt from "bcrypt";
 
 export interface IUserCredentials {
   name: string;
@@ -11,7 +11,6 @@ export interface IUserCredentials {
 async function httpRegister(req: Request, res: Response) {
   const userCredentials: IUserCredentials = req.body;
 
-  userCredentials.password = await hashPassword(userCredentials.password)
   const user = await register(userCredentials);
 
   if (user.message === 'User successfully created!') {
@@ -21,10 +20,6 @@ async function httpRegister(req: Request, res: Response) {
   }
 }
 
-async function hashPassword(password: string) {
-  const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  return hashedPassword;
-}
+
 
 export { httpRegister };
