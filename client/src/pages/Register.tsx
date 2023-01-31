@@ -1,3 +1,5 @@
+import axios, { AxiosError } from 'axios';
+import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import Button from '../components/common/Button';
@@ -38,14 +40,42 @@ function RegisterHeader() {
 }
 
 function RegisterInputs() {
+  const [inputs, setInputs] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const [error, setError] = useState<null | string>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  async function handleRegister(e: React.ChangeEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      await axios.post('http://localhost:8000/api/auth/register', inputs);
+    } catch (err) {
+      console.log(err)
+      if (axios.isAxiosError(err)) {
+        const axiosError = err.response?.data.error;
+        setError(axiosError);
+      }
+    }
+  }
+
   return (
-    <form action="" className="flex w-full flex-col gap-4 sm:max-w-[75%] sm:p-0">
+    <form onSubmit={handleRegister} className="flex w-full flex-col gap-4 sm:max-w-[75%] sm:p-0">
       <input
         className="w-full rounded-md border p-2 dark:border-gray-700 dark:bg-transparent dark:text-white"
         type="text"
         name="name"
         id="name"
         placeholder="Name"
+        onChange={handleChange}
       />
       <input
         className="w-full rounded-md border p-2 dark:border-gray-700 dark:bg-transparent dark:text-white"
@@ -53,6 +83,7 @@ function RegisterInputs() {
         name="email"
         id="email"
         placeholder="Email"
+        onChange={handleChange}
       />
       <input
         className="w-full rounded-md border p-2 dark:border-gray-700 dark:bg-transparent dark:text-white"
@@ -60,7 +91,9 @@ function RegisterInputs() {
         name="password"
         id="password"
         placeholder="Password"
+        onChange={handleChange}
       />
+      {error && <p className='text-red-700'>{error}</p>}
       <Button type="submit" text="Register" />
       <p className="text-right font-semibold dark:text-white">
         Already have an account?&nbsp;
