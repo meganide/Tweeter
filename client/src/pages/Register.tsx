@@ -59,9 +59,8 @@ function RegisterInputs() {
     try {
       await axios.post('http://localhost:8000/api/auth/register', inputs);
     } catch (err) {
-      console.log(err)
       if (axios.isAxiosError(err)) {
-        const axiosError = err.response?.data.error;
+        const axiosError = err.response?.data?.error;
         setError(axiosError);
       }
     }
