@@ -1,4 +1,4 @@
-import { prisma } from '../server.js';
+import { prisma } from '../services/db.services.js';
 import { IUserCredentials } from '../routes/auth/auth.controller.js';
 import { hashPassword } from '../services/auth.services.js';
 
@@ -25,6 +25,9 @@ async function findUser(userCredentials: IUserCredentials) {
   const userExists = await prisma.user.findFirst({
     where: {
       OR: [{ name }, { email }],
+    },
+    include: {
+      profile: { select: { bio: true, backgroundImg: true } },
     },
   });
 
@@ -54,5 +57,7 @@ async function createUser(userCredentials: IUserCredentials) {
 
   return { user: userWithoutPassword };
 }
+
+async function checkEmailAndPassword() {}
 
 export { findUser, createUser };

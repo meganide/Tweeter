@@ -18,7 +18,7 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import { prisma } from '../server.js';
+import { prisma } from '../services/db.services.js';
 import { hashPassword } from '../services/auth.services.js';
 function findUser(userCredentials) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -26,6 +26,9 @@ function findUser(userCredentials) {
         const userExists = yield prisma.user.findFirst({
             where: {
                 OR: [{ name }, { email }],
+            },
+            include: {
+                profile: { select: { bio: true, backgroundImg: true } },
             },
         });
         return userExists;
@@ -51,5 +54,8 @@ function createUser(userCredentials) {
         const { password: hash } = user, userWithoutPassword = __rest(user, ["password"]);
         return { user: userWithoutPassword };
     });
+}
+function checkEmailAndPassword() {
+    return __awaiter(this, void 0, void 0, function* () { });
 }
 export { findUser, createUser };
