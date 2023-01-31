@@ -69,7 +69,9 @@ function httpLogin(req, res) {
             }
         }
         const { password: hashedPassword } = existingUser, userWithoutPassword = __rest(existingUser, ["password"]);
-        const token = jwt.sign({ userId: existingUser.id }, config.JSON_SECRET);
+        const token = jwt.sign({ userId: existingUser.id }, config.JSON_SECRET, {
+            expiresIn: '3d',
+        });
         res
             .cookie('accessToken', token, {
             httpOnly: true,

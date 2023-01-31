@@ -69,7 +69,9 @@ async function httpLogin(req: Request, res: Response) {
 
   const { password: hashedPassword, ...userWithoutPassword } = existingUser;
 
-  const token = jwt.sign({ userId: existingUser.id }, config.JSON_SECRET);
+  const token = jwt.sign({ userId: existingUser.id }, config.JSON_SECRET, {
+    expiresIn: '3d',
+  });
 
   res
     .cookie('accessToken', token, {
