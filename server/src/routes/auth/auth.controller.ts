@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { register } from '../../models/auth.model.js';
+import { createUser, findUser } from '../../models/auth.model.js';
 
 export interface IUserCredentials {
   name: string;
@@ -9,17 +9,32 @@ export interface IUserCredentials {
 }
 
 async function httpRegister(req: Request, res: Response) {
-  const userCredentials: IUserCredentials = req.body;
+  try {
+    const userCredentials: IUserCredentials = req.body;
 
-  const user = await register(userCredentials);
+    const { name, email, password } = userCredentials;
 
-  if (user.message === 'User successfully created!') {
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        error: 'You must provide a name, email and password!',
+      });
+    }
+
+    const existingUser = await findUser(userCredentials);
+
+    if (existingUser) {
+      return res.status(409).json({ error: 'Username or email already exists!' });
+    }
+
+    const user = await createUser(userCredentials);
+
     return res.status(200).json(user);
-  } else {
-    return res.status(400).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({
+      error: 'Something went wrong registering user! Please try again!',
+    });
   }
 }
-
-
 
 export { httpRegister };

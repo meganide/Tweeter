@@ -18,73 +18,38 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
-import bcrypt from 'bcrypt';
 import { prisma } from '../server.js';
-function register(userCredentials) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const userExists = yield findUser(userCredentials);
-        if (userExists) {
-            return { message: 'Username or email already exists!' };
-        }
-        const user = yield createUser(userCredentials);
-        return user;
-    });
-}
+import { hashPassword } from '../services/auth.services.js';
 function findUser(userCredentials) {
     return __awaiter(this, void 0, void 0, function* () {
         const { name, email } = userCredentials;
-        try {
-            const userExists = yield prisma.user.findFirst({
-                where: {
-                    OR: [{ name }, { email }],
-                },
-            });
-            return userExists;
-        }
-        catch (error) {
-            console.log(error);
-            return { message: 'There was an error looking up user!' };
-        }
+        const userExists = yield prisma.user.findFirst({
+            where: {
+                OR: [{ name }, { email }],
+            },
+        });
+        return userExists;
     });
 }
 function createUser(userCredentials) {
     return __awaiter(this, void 0, void 0, function* () {
         const { name, email, password } = userCredentials;
         const hashedPassword = yield hashPassword(password);
-        try {
-            const user = yield prisma.user.create({
-                data: {
-                    name,
-                    password: hashedPassword,
-                    email,
-                    profile: {
-                        create: {},
-                    },
+        const user = yield prisma.user.create({
+            data: {
+                name,
+                password: hashedPassword,
+                email,
+                profile: {
+                    create: {},
                 },
-                include: {
-                    profile: { select: { bio: true, backgroundImg: true } },
-                },
-            });
-            const { password: hash } = user, userWithoutPassword = __rest(user, ["password"]);
-            return { message: 'User successfully created!', user: userWithoutPassword };
-        }
-        catch (error) {
-            console.log(error);
-            return { message: 'There was an error creating user!' };
-        }
+            },
+            include: {
+                profile: { select: { bio: true, backgroundImg: true } },
+            },
+        });
+        const { password: hash } = user, userWithoutPassword = __rest(user, ["password"]);
+        return { user: userWithoutPassword };
     });
 }
-function hashPassword(password) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const saltRounds = 10;
-        const hashedPassword = yield bcrypt.hash(password, saltRounds);
-        return hashedPassword;
-    });
-}
-function verifyPassword(password, hashedPassword) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const isMatch = yield bcrypt.compare(password, hashedPassword);
-        return isMatch;
-    });
-}
-export { register };
+export { findUser, createUser };
