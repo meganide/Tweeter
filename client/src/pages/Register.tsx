@@ -7,6 +7,7 @@ import HorizontalLine from '../components/common/HorizontalLine';
 import Logo from '../components/common/Logo';
 import SocialLogins from '../components/common/SocialLogins';
 import { AuthContext, IAuthContext } from '../contexts/authContext';
+import { BASE_URL } from '../utils/baseUrl';
 
 function Register() {
   const isDesktopOrLaptop = useMediaQuery({
@@ -50,7 +51,7 @@ function RegisterInputs() {
 
   const [error, setError] = useState<null | string>(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -61,7 +62,7 @@ function RegisterInputs() {
     setError(null);
 
     try {
-      await axios.post('http://localhost:8000/api/auth/register', inputs);
+      await axios.post(BASE_URL + '/api/auth/register', inputs);
       await login(inputs);
       navigate('/');
     } catch (err) {
@@ -98,7 +99,7 @@ function RegisterInputs() {
         placeholder="Password"
         onChange={handleChange}
       />
-      {error && <p className='text-red-700'>{error}</p>}
+      {error && <p className="text-red-700">{error}</p>}
       <Button type="submit" text="Register" />
       <p className="text-right font-semibold dark:text-white">
         Already have an account?&nbsp;

@@ -12,7 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { AuthContext, IAuthContext } from './contexts/authContext';
 import Spinner from './components/common/Spinner';
-
+import { BASE_URL } from './utils/baseUrl';
 interface IChildren {
   children: JSX.Element;
 }
@@ -24,8 +24,7 @@ function App() {
   useEffect(() => {
     async function getUser() {
       try {
-        const user = await axios.get('http://localhost:8000/api/user');
-        console.log(user);
+        const user = await axios.get(BASE_URL + '/api/user');
         setCurrentUser(user.data);
       } catch (error) {
         console.log('error', error);

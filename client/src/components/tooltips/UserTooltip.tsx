@@ -5,6 +5,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from 'axios';
+import { BASE_URL } from '../../utils/baseUrl';
 
 function UserTooltip() {
   const links = [
@@ -27,7 +28,7 @@ function UserTooltip() {
 
   async function handleLogout() {
     try {
-      await axios.post('http://localhost:8000/api/auth/logout', undefined, {
+      await axios.post(BASE_URL + '/api/auth/logout', undefined, {
         withCredentials: true,
       });
     } catch (err) {

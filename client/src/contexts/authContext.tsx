@@ -1,5 +1,6 @@
 import { createContext, ReactElement, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../utils/baseUrl';
 
 export interface IAuthContext {
   currentUser: null | ICurrentUser;
@@ -37,12 +38,12 @@ export function AuthContextProvider({ children }: iProps): ReactElement {
   const [currentUser, setCurrentUser] = useState<null | ICurrentUser>(null);
 
   async function login(inputs: ILoginInputs) {
-    const res = await axios.post('http://localhost:8000/api/auth/login', inputs, {
+    const res = await axios.post(BASE_URL + '/api/auth/login', inputs, {
       withCredentials: true,
     });
 
     setCurrentUser(res.data);
-    console.log(currentUser)
+    console.log(currentUser);
   }
 
   const value = {
