@@ -1,11 +1,12 @@
-import axios, { AxiosError } from 'axios';
-import { useState } from 'react';
+import axios from 'axios';
+import { useContext, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button';
 import HorizontalLine from '../components/common/HorizontalLine';
 import Logo from '../components/common/Logo';
 import SocialLogins from '../components/common/SocialLogins';
+import { AuthContext, IAuthContext } from '../contexts/authContext';
 
 function Register() {
   const isDesktopOrLaptop = useMediaQuery({
@@ -40,6 +41,7 @@ function RegisterHeader() {
 }
 
 function RegisterInputs() {
+  const { login } = useContext(AuthContext) as IAuthContext;
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -47,6 +49,8 @@ function RegisterInputs() {
   });
 
   const [error, setError] = useState<null | string>(null);
+
+  const navigate = useNavigate()
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -58,6 +62,8 @@ function RegisterInputs() {
 
     try {
       await axios.post('http://localhost:8000/api/auth/register', inputs);
+      await login(inputs);
+      navigate('/');
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err.response?.data?.error;

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from '../components/common/Button';
@@ -47,8 +47,9 @@ function LoginInputs() {
     email: '',
     password: '',
   });
-
   const [error, setError] = useState<null | string>(null);
+
+  const navigate = useNavigate()
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -59,6 +60,7 @@ function LoginInputs() {
 
     try {
       await login(inputs);
+      navigate('/');
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const axiosError = err.response?.data?.error;
