@@ -25,6 +25,7 @@ app.use(
 app.use(cookieParser());
 app.use('/api', api);
 
+
 app.get('/', jwtAuth, (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
