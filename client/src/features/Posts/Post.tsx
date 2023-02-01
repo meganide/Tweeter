@@ -14,13 +14,22 @@ interface IProps {
 }
 
 interface IPostData {
+  author: IAuthor;
+  createdAt: string;
+  content: string;
+  image?: string;
+}
+
+interface IAuthor {
+  name: string;
+  profilePic: string;
+}
+
+interface ICommentData {
   username: string;
   date: string;
   text: string;
   image?: string;
-}
-
-interface ICommentData extends IPostData {
   likes: number | 0;
 }
 
@@ -48,8 +57,8 @@ function PostHeader(props: IProps) {
     <header className="flex items-center gap-6">
       <Avatar />
       <section className="flex flex-col">
-        <h2 className="text-neutral-900 dark:text-neutral-300">{postData?.username}</h2>
-        <p className="text-xs text-gray-500 dark:text-neutral-500">{postData?.date}</p>
+        <h2 className="text-neutral-900 dark:text-neutral-300">{postData?.author.name}</h2>
+        <p className="text-xs text-gray-500 dark:text-neutral-500">{postData?.createdAt}</p>
       </section>
     </header>
   );
@@ -60,7 +69,7 @@ function PostBody(props: IProps) {
 
   return (
     <section>
-      <p className="my-5 text-sm dark:text-neutral-400 md:text-lg">{postData?.text}</p>
+      <p className="my-5 text-sm dark:text-neutral-400 md:text-lg">{postData?.content}</p>
       <img className="w-full rounded-lg" crossOrigin="anonymous" src={postData?.image} alt="" />
     </section>
   );
