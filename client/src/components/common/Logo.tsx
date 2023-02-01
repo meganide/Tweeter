@@ -1,12 +1,7 @@
-import { Link } from 'react-router-dom';
 import { imagePaths } from '../../utils/data';
 
 function Logo() {
-  return (
-    <Link to="/">
-      <img className="w-[30px] cursor-pointer" src={imagePaths.logo} alt="logo" />
-    </Link>
-  );
+  return <img className="w-[30px]" src={imagePaths.logo} alt="logo" />;
 }
 
 export default Logo;
