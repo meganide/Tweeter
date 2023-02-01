@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { AuthContext, IAuthContext } from './contexts/authContext';
+import Spinner from './components/common/Spinner';
 
 interface IChildren {
   children: JSX.Element;
@@ -20,13 +21,11 @@ function App() {
   const { currentUser, setCurrentUser } = useContext(AuthContext) as IAuthContext;
   const { toggle: darkToggle, toggleShow: setDarkToggle } = useToggle(true); //TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
 
-  // const currentUser = true; // TODO: fetch this from backend
-
   useEffect(() => {
     async function getUser() {
       try {
         const user = await axios.get('http://localhost:8000/api/user');
-        console.log(user)
+        console.log(user);
         setCurrentUser(user.data);
       } catch (error) {
         console.log('error', error);
@@ -89,7 +88,7 @@ function App() {
   return (
     <div className={`${darkToggle && 'dark'}`}>
       <div className="min-h-screen bg-main-default dark:bg-main-dark">
-        <RouterProvider router={router} />
+        {currentUser ? <RouterProvider router={router} /> : <Spinner />}
       </div>
     </div>
   );

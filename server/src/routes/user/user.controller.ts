@@ -3,7 +3,6 @@ import { getUserById } from '../../models/user.model.js';
 
 async function httpGetUserById(req: any, res: Response) {
   const userId: string = req.user;
-  console.log(userId);
   try {
     const user = await getUserById(userId);
 

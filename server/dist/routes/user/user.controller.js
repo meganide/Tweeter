@@ -11,7 +11,6 @@ import { getUserById } from '../../models/user.model.js';
 function httpGetUserById(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
-        console.log(userId);
         try {
             const user = yield getUserById(userId);
             return res.status(200).json(user);
