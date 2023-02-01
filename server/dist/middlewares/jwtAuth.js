@@ -4,7 +4,7 @@ function jwtAuth(req, res, next) {
     const token = req.cookies.accessToken;
     try {
         const user = jwt.verify(token, config.JSON_SECRET);
-        req.user = user;
+        req.user = user.userId;
         next();
     }
     catch (error) {

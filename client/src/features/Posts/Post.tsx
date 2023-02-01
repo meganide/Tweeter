@@ -61,7 +61,7 @@ function PostBody(props: IProps) {
   return (
     <section>
       <p className="my-5 text-sm dark:text-neutral-400 md:text-lg">{postData?.text}</p>
-      <img className="w-full rounded-lg" src={postData?.image} alt="" />
+      <img className="w-full rounded-lg" crossOrigin="anonymous" src={postData?.image} alt="" />
     </section>
   );
 }
@@ -129,7 +129,7 @@ function PostComment(props: IProps) {
               <p className="text-xs text-gray-500 dark:text-neutral-500">{commentData?.date}</p>
             </section>
             <section>
-              <p className="dark:text-neutral-400 text-sm sm:text-base">{commentData?.text}</p>
+              <p className="text-sm dark:text-neutral-400 sm:text-base">{commentData?.text}</p>
               {commentData?.image && <img className="mt-2" src={commentData.image} alt="" />}
             </section>
           </section>

@@ -84,7 +84,7 @@ function RegisterInputs() {
       />
       <input
         className="w-full rounded-md border p-2 dark:border-gray-700 dark:bg-transparent dark:text-white"
-        type="text"
+        type="email"
         name="email"
         id="email"
         placeholder="Email"

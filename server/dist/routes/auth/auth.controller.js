@@ -69,13 +69,15 @@ function httpLogin(req, res) {
             }
         }
         const { password: hashedPassword } = existingUser, userWithoutPassword = __rest(existingUser, ["password"]);
+        const maxAge = 3 * 24 * 60 * 60; // 3 days
         const token = jwt.sign({ userId: existingUser.id }, config.JSON_SECRET, {
-            expiresIn: '3d',
+            expiresIn: maxAge,
         });
         res
             .cookie('accessToken', token, {
             httpOnly: true,
             secure: true,
+            maxAge: maxAge * 1000,
         })
             .status(200)
             .json(userWithoutPassword);

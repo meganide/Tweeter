@@ -2,7 +2,7 @@ import { prisma } from '../services/db.services.js';
 import { IUserCredentials } from '../routes/auth/auth.controller.js';
 import { hashPassword } from '../services/auth.services.js';
 
-interface IUserTable {
+export interface IUserTable {
   id: string;
   name: string;
   email: string;

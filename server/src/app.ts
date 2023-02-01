@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import { fileURLToPath } from 'url';
 import { api } from './routes/api.js';
 import { allowShareCookies } from './middlewares/allowShareCookies.js';
+import { jwtAuth } from './middlewares/jwtAuth.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +15,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 app.use(allowShareCookies);
-app.use(helmet());
+// app.use(helmet());
 app.use(express.json());
 app.use(
   cors({
@@ -22,12 +23,19 @@ app.use(
   })
 );
 app.use(cookieParser());
+app.use('/api', api);
+
+app.get('/', jwtAuth, (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use('/api', api);
+app.get(['/login', '/register'], (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 
-app.get('/*', (req: Request, res: Response) => {
+app.get('/*', jwtAuth, (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
