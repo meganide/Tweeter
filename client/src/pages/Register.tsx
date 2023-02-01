@@ -1,9 +1,12 @@
+import axios from 'axios';
+import { useContext, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button';
 import HorizontalLine from '../components/common/HorizontalLine';
 import Logo from '../components/common/Logo';
 import SocialLogins from '../components/common/SocialLogins';
+import { AuthContext, IAuthContext } from '../contexts/authContext';
 
 function Register() {
   const isDesktopOrLaptop = useMediaQuery({
@@ -38,21 +41,54 @@ function RegisterHeader() {
 }
 
 function RegisterInputs() {
+  const { login } = useContext(AuthContext) as IAuthContext;
+  const [inputs, setInputs] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const [error, setError] = useState<null | string>(null);
+
+  const navigate = useNavigate()
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  async function handleRegister(e: React.ChangeEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      await axios.post('http://localhost:8000/api/auth/register', inputs);
+      await login(inputs);
+      navigate('/');
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const axiosError = err.response?.data?.error;
+        setError(axiosError);
+      }
+    }
+  }
+
   return (
-    <form action="" className="flex w-full flex-col gap-4 sm:max-w-[75%] sm:p-0">
+    <form onSubmit={handleRegister} className="flex w-full flex-col gap-4 sm:max-w-[75%] sm:p-0">
       <input
         className="w-full rounded-md border p-2 dark:border-gray-700 dark:bg-transparent dark:text-white"
         type="text"
         name="name"
         id="name"
         placeholder="Name"
+        onChange={handleChange}
       />
       <input
         className="w-full rounded-md border p-2 dark:border-gray-700 dark:bg-transparent dark:text-white"
-        type="text"
+        type="email"
         name="email"
         id="email"
         placeholder="Email"
+        onChange={handleChange}
       />
       <input
         className="w-full rounded-md border p-2 dark:border-gray-700 dark:bg-transparent dark:text-white"
@@ -60,7 +96,9 @@ function RegisterInputs() {
         name="password"
         id="password"
         placeholder="Password"
+        onChange={handleChange}
       />
+      {error && <p className='text-red-700'>{error}</p>}
       <Button type="submit" text="Register" />
       <p className="text-right font-semibold dark:text-white">
         Already have an account?&nbsp;

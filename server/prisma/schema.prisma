@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  content   String?
+  image     String?
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
+  comments  Comment[]
+  likes     Like[]
+}
+
+model Comment {
+  id       String @id @default(uuid())
+  comment  String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @unique
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   String
+}
+
+model Like {
+  id      String @id @default(uuid())
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String
+  likedBy User   @relation(fields: [userId], references: [id])
+  userId  String
+}
+
+model Profile {
+  id            String  @id @default(uuid())
+  bio           String? @default("No bio assigned yet...")
+  backgroundImg String? @default("http://wallpaperset.com/w/full/9/3/b/224224.jpg")
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String  @unique
+}
+
+model User {
+  id         String    @id @default(uuid())
+  name       String    @unique
+  email      String    @unique
+  password   String?
+  profilePic String?   @default("https://variety.com/wp-content/uploads/2022/11/Screen-Shot-2022-11-02-at-8.33.52-AM.png?w=681&h=383&crop=1")
+  provider   String    @default("local")
+  createdAt  DateTime  @default(now())
+  role       Role      @default(USER)
+  posts      Post[]
+  profile    Profile?
+  comments   Comment[]
+  likes      Like[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
