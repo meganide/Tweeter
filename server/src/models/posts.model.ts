@@ -1,6 +1,6 @@
 import { prisma } from "../services/db.services.js";
 
-async function getPosts() {
+async function getFollowersPosts() {
   const posts = await prisma.post.findMany({
     include: {
       author: {select: {name: true, profilePic: true}}
@@ -12,4 +12,4 @@ async function getPosts() {
   return posts;
 }
 
-export {getPosts}
+export {getFollowersPosts}

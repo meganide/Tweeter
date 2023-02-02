@@ -7,11 +7,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getPosts } from '../../models/posts.model.js';
-function httpGetPosts(req, res) {
+import { getFollowersPosts } from '../../models/posts.model.js';
+function httpGetFollowersPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const posts = yield getPosts();
+            const posts = yield getFollowersPosts();
             console.log(posts);
             return res.status(200).json(posts);
         }
@@ -21,4 +21,4 @@ function httpGetPosts(req, res) {
         }
     });
 }
-export { httpGetPosts };
+export { httpGetFollowersPosts };

@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { getPosts } from '../../models/posts.model.js';
+import { getFollowersPosts } from '../../models/posts.model.js';
 
-async function httpGetPosts(req: Request, res: Response) {
+async function httpGetFollowersPosts(req: Request, res: Response) {
   try {
-    const posts = await getPosts();
+    const posts = await getFollowersPosts();
     console.log(posts);
     return res.status(200).json(posts);
   } catch (error) {
@@ -13,4 +13,4 @@ async function httpGetPosts(req: Request, res: Response) {
   }
 }
 
-export { httpGetPosts };
+export { httpGetFollowersPosts };

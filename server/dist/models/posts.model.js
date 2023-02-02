@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { prisma } from "../services/db.services.js";
-function getPosts() {
+function getFollowersPosts() {
     return __awaiter(this, void 0, void 0, function* () {
         const posts = yield prisma.post.findMany({
             include: {
@@ -19,4 +19,4 @@ function getPosts() {
         return posts;
     });
 }
-export { getPosts };
+export { getFollowersPosts };

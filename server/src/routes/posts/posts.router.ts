@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { httpGetPosts } from './posts.controller.js';
+import { httpGetFollowersPosts } from './posts.controller.js';
 
 const postsRouter = express.Router();
 
-postsRouter.get('/', httpGetPosts)
+postsRouter.get('/', httpGetFollowersPosts);
 
 export { postsRouter };
