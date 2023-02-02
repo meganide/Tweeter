@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "concurrently \"tsc\" \"nodemon dist/server.js\""
+    "dev": "concurrently \"tsc\" \"nodemon dist/server.js\"",
+    "deploy": "npx prisma migrate deploy && node dist/server.js"
   },
   "type": "module",
   "keywords": [],
