@@ -7,20 +7,33 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { postCommentsData, postOptionsData } from '../../utils/data';
 import Card from '../../components/common/Card';
 import { useToggle } from '../../hooks/useToggle';
+import { convertToLocaleTimezone } from '../../utils/date';
 
 interface IProps {
-  postData?: IPostData;
+  postData: IPostData;
+}
+
+interface ICommentProps {
   commentData?: ICommentData;
 }
 
 interface IPostData {
+  author: IAuthor;
+  createdAt: string;
+  content: string;
+  image?: string;
+}
+
+interface IAuthor {
+  name: string;
+  profilePic: string;
+}
+
+interface ICommentData {
   username: string;
   date: string;
   text: string;
   image?: string;
-}
-
-interface ICommentData extends IPostData {
   likes: number | 0;
 }
 
@@ -46,10 +59,12 @@ function PostHeader(props: IProps) {
 
   return (
     <header className="flex items-center gap-6">
-      <Avatar />
+      <Avatar imgSrc={postData?.author.profilePic} />
       <section className="flex flex-col">
-        <h2 className="text-neutral-900 dark:text-neutral-300">{postData?.username}</h2>
-        <p className="text-xs text-gray-500 dark:text-neutral-500">{postData?.date}</p>
+        <h2 className="text-neutral-900 dark:text-neutral-300">{postData?.author.name}</h2>
+        <p className="text-xs text-gray-500 dark:text-neutral-500">
+          {convertToLocaleTimezone(postData?.createdAt)}
+        </p>
       </section>
     </header>
   );
@@ -60,8 +75,8 @@ function PostBody(props: IProps) {
 
   return (
     <section>
-      <p className="my-5 text-sm dark:text-neutral-400 md:text-lg">{postData?.text}</p>
-      <img className="w-full rounded-lg" crossOrigin="anonymous" src={postData?.image} alt="" />
+      <p className="my-5 text-sm dark:text-neutral-400 md:text-lg">{postData?.content}</p>
+      <img className="h-full max-h-[600px] rounded-lg object-contain" crossOrigin="anonymous" src={postData?.image} loading='lazy' alt="" />
     </section>
   );
 }
@@ -114,7 +129,7 @@ function PostFooter() {
   );
 }
 
-function PostComment(props: IProps) {
+function PostComment(props: ICommentProps) {
   const { commentData } = props;
   const { toggle: likeToggle, toggleShow: toggleShowLike } = useToggle();
 
@@ -130,7 +145,7 @@ function PostComment(props: IProps) {
             </section>
             <section>
               <p className="text-sm dark:text-neutral-400 sm:text-base">{commentData?.text}</p>
-              {commentData?.image && <img className="mt-2" src={commentData.image} alt="" />}
+              {commentData?.image && <img className="mt-2" src={commentData.image} alt="" loading='lazy' />}
             </section>
           </section>
           <section className="mt-2 flex place-items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">

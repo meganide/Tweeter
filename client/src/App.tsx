@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, Navigate, useNavigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import './app.css';
 import Layout from './components/layout/Layout';
@@ -88,12 +89,16 @@ function App() {
     return children;
   }
 
+  const queryClient = new QueryClient();
+
   return (
-    <div className={`${darkToggle && 'dark'}`}>
-      <div className="min-h-screen bg-main-default dark:bg-main-dark">
-        {currentUser ? <RouterProvider router={router} /> : <Spinner />}
+    <QueryClientProvider client={queryClient}>
+      <div className={`${darkToggle && 'dark'}`}>
+        <div className="min-h-screen bg-main-default dark:bg-main-dark">
+          {currentUser ? <RouterProvider router={router} /> : <Spinner />}
+        </div>
       </div>
-    </div>
+    </QueryClientProvider>
   );
 }
 
