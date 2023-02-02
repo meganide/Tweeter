@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
+import { useMutation, useQueryClient } from 'react-query';
 
 import ImageIcon from '@mui/icons-material/Image';
 import PublicIcon from '@mui/icons-material/Public';
@@ -8,19 +9,31 @@ import { useToggle } from '../hooks/useToggle';
 import Button from '../components/common/Button';
 import Avatar from '../components/common/Avatar';
 import Card from '../components/common/Card';
+import { makeRequest } from '../utils/axios';
+
+interface ITweetProps {
+  setTweet: React.Dispatch<React.SetStateAction<string>>;
+  tweet: string;
+}
+
+interface IMutationPayload {
+  tweet: string;
+  image?: string;
+}
 
 function Tweet() {
+  const [tweet, setTweet] = useState('');
+
   return (
     <Card headerTitle="Tweet something">
-      <TweetBody />
-      <TweetFooter />
+      <TweetBody setTweet={setTweet} tweet={tweet} />
+      <TweetFooter tweet={tweet} setTweet={setTweet} />
     </Card>
   );
 }
 
-function TweetBody() {
-  const [tweet, setTweet] = useState('');
-
+function TweetBody(props: ITweetProps) {
+  const { setTweet, tweet } = props;
 
   return (
     <section className="mb-3 flex w-full gap-3">
@@ -31,24 +44,60 @@ function TweetBody() {
         name="tweet"
         rows={3}
         required
+        value={tweet}
         onChange={(e) => setTweet(e.target.value)}
       ></textarea>
     </section>
   );
 }
 
-function TweetFooter() {
+function TweetFooter(props: ITweetProps) {
+  const { tweet, setTweet } = props;
+
+  const inputFileRef = useRef<any>(null);
+
   const { toggle: showTooltip, toggleShow: toggleShowTooltip } = useToggle();
   const [replyStatus, setReplyStatus] = useState('Everyone can reply');
 
+  function chooseImage() {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  }
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    (tweet: IMutationPayload) => {
+      return makeRequest.post('/api/posts', tweet);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('followersPosts');
+      },
+    }
+  );
+
   function submitTweet() {
-    console.log("click")
+    mutation.mutate({ tweet });
+    setTweet('');
   }
 
   return (
     <section className="flex justify-between lg:ml-[64px]">
       <section className="flex items-center gap-2">
-        <ImageIcon className="cursor-pointer text-accent hover:text-sky-700" />
+        <ImageIcon
+          className="cursor-pointer text-accent hover:text-sky-700"
+          onClick={chooseImage}
+        />
+        <input
+        className='hidden'
+          type="file"
+          name="profilePic"
+          accept=".jpg, .jpeg, .png, "
+          ref={inputFileRef}
+          // onChange={handleFileInputChange}
+        />
         <article className="relative">
           <PublicIcon
             className="cursor-pointer text-accent hover:text-sky-700"
@@ -62,7 +111,7 @@ function TweetFooter() {
         </article>
         <span className="text-xs text-accent">{replyStatus}</span>
       </section>
-      <Button type="button" text="Tweet" onClick={submitTweet}/>
+      <Button type="button" text="Tweet" onClick={submitTweet} />
     </section>
   );
 }
