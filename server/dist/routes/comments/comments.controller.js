@@ -7,14 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { cloudinaryV2 } from '../services/cloudinary.services.js';
-function uploadImageToCloudinary(userId, fileStr) {
+import { addComment } from '../../models/comments.model.js';
+function httpAddComment(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const uploadedResponse = yield cloudinaryV2.uploader.upload(fileStr, {
-            upload_preset: 'profile',
-            folder: 'tweeter/' + userId,
-        });
-        return uploadedResponse;
+        const commentsData = { commentData: req.body, userId: req.user };
+        try {
+            const comment = yield addComment(commentsData);
+            return res.status(200).json({ message: 'Comment created!' });
+        }
+        catch (err) {
+            console.log(err);
+            return res.status(400).json({ error: 'Something went wrong posting comment!' });
+        }
     });
 }
-export { uploadImageToCloudinary };
+export { httpAddComment };

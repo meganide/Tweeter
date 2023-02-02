@@ -6,7 +6,6 @@ async function uploadImageToCloudinary(userId: string, fileStr: string) {
     folder: 'tweeter/' + userId,
   });
 
-  console.log(uploadedResponse)
 
   return uploadedResponse;
 }

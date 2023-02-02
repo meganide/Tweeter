@@ -7,14 +7,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { cloudinaryV2 } from '../services/cloudinary.services.js';
-function uploadImageToCloudinary(userId, fileStr) {
+import { prisma } from '../services/db.services.js';
+function addComment(commentsData) {
     return __awaiter(this, void 0, void 0, function* () {
-        const uploadedResponse = yield cloudinaryV2.uploader.upload(fileStr, {
-            upload_preset: 'profile',
-            folder: 'tweeter/' + userId,
+        const comment = yield prisma.comment.create({
+            data: {
+                comment: commentsData.commentData.reply,
+                authorId: commentsData.userId,
+                postId: commentsData.commentData.postId,
+            },
         });
-        return uploadedResponse;
+        return comment;
     });
 }
-export { uploadImageToCloudinary };
+export { addComment };

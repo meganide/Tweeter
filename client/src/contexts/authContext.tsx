@@ -43,7 +43,6 @@ export function AuthContextProvider({ children }: iProps): ReactElement {
     });
 
     setCurrentUser(res.data);
-    console.log(currentUser);
   }
 
   const value = {

@@ -12,12 +12,25 @@ async function getFollowedPosts(userId: string, skip: any) {
       OR: [{ authorId: { in: followedUserIds } }, { authorId: userId }],
     },
     include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
       author: { select: { name: true, profilePic: true } },
     },
     orderBy: { createdAt: 'desc' },
     take: 7,
     skip: parseInt(skip),
   });
+
+  console.log(posts);
 
   return posts;
 }

@@ -86,8 +86,8 @@ function TweetFooter(props: ITweetProps) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
-    (tweet: IMutationPayload) => {
-      return makeRequest.post('/api/posts', tweet);
+    async (tweet: IMutationPayload) => {
+      return await makeRequest.post('/api/posts', tweet);
     },
     {
       onSuccess: () => {

@@ -23,13 +23,11 @@ function App() {
   const { currentUser, setCurrentUser } = useContext(AuthContext) as IAuthContext;
   const { toggle: darkToggle, toggleShow: setDarkToggle } = useToggle(true); //TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
 
-  console.log(currentUser);
 
   useEffect(() => {
     async function getUser() {
       try {
         const user = await axios.get(BASE_URL + '/api/user');
-        console.log('user', user);
         setCurrentUser(user.data);
       } catch (error) {
         console.log('error', error);

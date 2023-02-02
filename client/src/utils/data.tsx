@@ -33,11 +33,11 @@ const links = [
 ];
 
 const postOptionsData = [
-  {
-    icon: <ModeCommentOutlinedIcon className="text-[#4F4F4F]" />,
-    text: 'Comment',
-    color: '#4F4F4F',
-  },
+  // {
+  //   icon: <ModeCommentOutlinedIcon className="text-[#4F4F4F]" />,
+  //   text: 'Comment',
+  //   color: '#4F4F4F',
+  // },
   {
     icon: <AutorenewOutlinedIcon className="text-[#27AE60]" />,
     text: 'Retweeted',
