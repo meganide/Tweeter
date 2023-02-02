@@ -7,16 +7,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { prisma } from "../services/db.services.js";
-function getFollowersPosts() {
+import { prisma } from '../services/db.services.js';
+import { getFollowers } from './followers.model.js';
+function getFollowedPosts(userId) {
     return __awaiter(this, void 0, void 0, function* () {
+        const followedUsers = yield getFollowers(userId);
+        const followedUserIds = followedUsers.map((user) => user.followedId);
         const posts = yield prisma.post.findMany({
+            where: {
+                OR: [{ authorId: { in: followedUserIds } }, { authorId: userId }],
+            },
             include: {
-                author: { select: { name: true, profilePic: true } }
-            }
+                author: { select: { name: true, profilePic: true } },
+            },
         });
-        console.log(posts);
         return posts;
     });
 }
-export { getFollowersPosts };
+function getAllPosts() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const posts = yield prisma.post.findMany({
+            include: {
+                author: { select: { name: true, profilePic: true } },
+            },
+        });
+        return posts;
+    });
+}
+export { getFollowedPosts, getAllPosts };

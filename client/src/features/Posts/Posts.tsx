@@ -7,8 +7,8 @@ import { makeRequest } from '../../utils/axios';
 import Spinner from '../../components/common/Spinner';
 
 function Posts() {
-  const { isLoading, isError, data, error } = useQuery('posts', async () => {
-    const res = await makeRequest.get('/api/posts');
+  const { isLoading, isError, data, error } = useQuery('followersPosts', async () => {
+    const res = await makeRequest.get('/api/posts/followed');
     console.log(res.data);
     return res.data;
   });

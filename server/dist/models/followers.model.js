@@ -7,18 +7,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getFollowedPosts } from '../../models/posts.model.js';
-function httpGetFollowedPosts(req, res) {
+import { prisma } from '../services/db.services.js';
+function getFollowers(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
-        try {
-            const followedPosts = yield getFollowedPosts(userId);
-            return res.status(200).json(followedPosts);
-        }
-        catch (error) {
-            console.log(error);
-            return res.status(404).json({ error: "Couldn't find any posts" });
-        }
+        const followers = yield prisma.followers.findMany({
+            where: { followerId: userId },
+            select: { followedId: true },
+        });
+        return followers;
     });
 }
-export { httpGetFollowedPosts };
+export { getFollowers };

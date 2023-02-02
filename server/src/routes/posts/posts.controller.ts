@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 
-import { getFollowersPosts } from '../../models/posts.model.js';
+import { getFollowedPosts } from '../../models/posts.model.js';
 
-async function httpGetFollowersPosts(req: Request, res: Response) {
+async function httpGetFollowedPosts(req: any, res: Response) {
+  const userId: string = req.user;
   try {
-    const posts = await getFollowersPosts();
-    console.log(posts);
-    return res.status(200).json(posts);
+    const followedPosts = await getFollowedPosts(userId);
+    return res.status(200).json(followedPosts);
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: "Couldn't find any posts" });
   }
 }
 
-export { httpGetFollowersPosts };
+export { httpGetFollowedPosts };
