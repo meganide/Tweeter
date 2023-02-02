@@ -7,9 +7,13 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { postCommentsData, postOptionsData } from '../../utils/data';
 import Card from '../../components/common/Card';
 import { useToggle } from '../../hooks/useToggle';
+import { convertToLocaleTimezone } from '../../utils/date';
 
 interface IProps {
-  postData?: IPostData;
+  postData: IPostData;
+}
+
+interface ICommentProps {
   commentData?: ICommentData;
 }
 
@@ -55,10 +59,12 @@ function PostHeader(props: IProps) {
 
   return (
     <header className="flex items-center gap-6">
-      <Avatar imgSrc={postData?.author.profilePic}/>
+      <Avatar imgSrc={postData?.author.profilePic} />
       <section className="flex flex-col">
         <h2 className="text-neutral-900 dark:text-neutral-300">{postData?.author.name}</h2>
-        <p className="text-xs text-gray-500 dark:text-neutral-500">{postData?.createdAt}</p>
+        <p className="text-xs text-gray-500 dark:text-neutral-500">
+          {convertToLocaleTimezone(postData?.createdAt)}
+        </p>
       </section>
     </header>
   );
@@ -123,7 +129,7 @@ function PostFooter() {
   );
 }
 
-function PostComment(props: IProps) {
+function PostComment(props: ICommentProps) {
   const { commentData } = props;
   const { toggle: likeToggle, toggleShow: toggleShowLike } = useToggle();
 

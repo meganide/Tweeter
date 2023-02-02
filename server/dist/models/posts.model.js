@@ -20,6 +20,7 @@ function getFollowedPosts(userId) {
             include: {
                 author: { select: { name: true, profilePic: true } },
             },
+            orderBy: { createdAt: 'desc' },
         });
         return posts;
     });
@@ -34,4 +35,16 @@ function getAllPosts() {
         return posts;
     });
 }
-export { getFollowedPosts, getAllPosts };
+function addPost(userId, tweetData) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const createdPost = yield prisma.post.create({
+            data: {
+                authorId: userId,
+                content: tweetData.tweet,
+                image: tweetData.image,
+            }
+        });
+        return createdPost;
+    });
+}
+export { getFollowedPosts, getAllPosts, addPost };

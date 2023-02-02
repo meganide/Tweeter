@@ -1,3 +1,4 @@
+import { ITweetData } from '../routes/posts/posts.controller.js';
 import { prisma } from '../services/db.services.js';
 import { getFollowers } from './followers.model.js';
 
@@ -13,6 +14,7 @@ async function getFollowedPosts(userId: string) {
     include: {
       author: { select: { name: true, profilePic: true } },
     },
+    orderBy: { createdAt: 'desc' },
   });
 
   return posts;
@@ -28,4 +30,16 @@ async function getAllPosts() {
   return posts;
 }
 
-export { getFollowedPosts, getAllPosts };
+async function addPost(userId: string, tweetData: ITweetData) {
+  const createdPost = await prisma.post.create({
+    data: {
+      authorId: userId,
+      content: tweetData.tweet,
+      image: tweetData.image,
+    }
+  })
+
+  return createdPost;
+}
+
+export { getFollowedPosts, getAllPosts, addPost };

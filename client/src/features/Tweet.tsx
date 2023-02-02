@@ -11,7 +11,7 @@ import Card from '../components/common/Card';
 
 function Tweet() {
   return (
-    <Card headerTitle='Tweet something'>
+    <Card headerTitle="Tweet something">
       <TweetBody />
       <TweetFooter />
     </Card>
@@ -19,16 +19,19 @@ function Tweet() {
 }
 
 function TweetBody() {
+  const [tweet, setTweet] = useState('');
+
+
   return (
     <section className="mb-3 flex w-full gap-3">
       <Avatar />
       <textarea
-        className="shadow-md] w-full resize-none rounded-md bg-transparent px-3 py-1 placeholder:text-gray-400 dark:placeholder:text-neutral-400 focus:outline-none dark:text-gray-200"
+        className="shadow-md] w-full resize-none rounded-md bg-transparent px-3 py-1 placeholder:text-gray-400 focus:outline-none dark:text-gray-200 dark:placeholder:text-neutral-400"
         placeholder="What's happening?"
         name="tweet"
-        id="tweet"
         rows={3}
         required
+        onChange={(e) => setTweet(e.target.value)}
       ></textarea>
     </section>
   );
@@ -37,6 +40,10 @@ function TweetBody() {
 function TweetFooter() {
   const { toggle: showTooltip, toggleShow: toggleShowTooltip } = useToggle();
   const [replyStatus, setReplyStatus] = useState('Everyone can reply');
+
+  function submitTweet() {
+    console.log("click")
+  }
 
   return (
     <section className="flex justify-between lg:ml-[64px]">
@@ -55,7 +62,7 @@ function TweetFooter() {
         </article>
         <span className="text-xs text-accent">{replyStatus}</span>
       </section>
-      <Button type="button" text="Tweet" />
+      <Button type="button" text="Tweet" onClick={submitTweet}/>
     </section>
   );
 }
