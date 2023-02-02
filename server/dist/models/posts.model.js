@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { prisma } from '../services/db.services.js';
 import { getFollowers } from './followers.model.js';
-function getFollowedPosts(userId) {
+function getFollowedPosts(userId, skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const followedUsers = yield getFollowers(userId);
         const followedUserIds = followedUsers.map((user) => user.followedId);
@@ -21,6 +21,8 @@ function getFollowedPosts(userId) {
                 author: { select: { name: true, profilePic: true } },
             },
             orderBy: { createdAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
         });
         return posts;
     });
@@ -42,7 +44,7 @@ function addPost(userId, tweetData) {
                 authorId: userId,
                 content: tweetData.tweet,
                 image: tweetData.image,
-            }
+            },
         });
         return createdPost;
     });

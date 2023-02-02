@@ -9,9 +9,10 @@ export interface ITweetData {
 
 async function httpGetFollowedPosts(req: any, res: Response) {
   const userId: string = req.user;
+  const { skip }: any = req.query;
 
   try {
-    const followedPosts = await getFollowedPosts(userId);
+    const followedPosts = await getFollowedPosts(userId, skip);
     return res.status(200).json(followedPosts);
   } catch (error) {
     console.log(error);
@@ -25,12 +26,11 @@ async function httpAddPost(req: any, res: Response) {
 
   try {
     await addPost(userId, tweetData);
-    return res.status(200).json({message: 'Post has been created!'})
+    return res.status(200).json({ message: 'Post has been created!' });
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error: "Couldn't create tweet!" });
   }
 }
-
 
 export { httpGetFollowedPosts, httpAddPost };

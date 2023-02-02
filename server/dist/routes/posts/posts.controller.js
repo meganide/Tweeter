@@ -11,8 +11,9 @@ import { addPost, getFollowedPosts } from '../../models/posts.model.js';
 function httpGetFollowedPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
+        const { skip } = req.query;
         try {
-            const followedPosts = yield getFollowedPosts(userId);
+            const followedPosts = yield getFollowedPosts(userId, skip);
             return res.status(200).json(followedPosts);
         }
         catch (error) {

@@ -1,30 +1,57 @@
 import { v4 as uuidv4 } from 'uuid';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { postsData } from '../../utils/data';
 import Post from './Post';
 import { makeRequest } from '../../utils/axios';
 import Spinner from '../../components/common/Spinner';
 
 function Posts() {
-  const { isLoading, isError, data, error } = useQuery('followersPosts', async () => {
-    const res = await makeRequest.get('/api/posts/followed');
-    console.log(res.data);
-    return res.data;
-  });
+  const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
+    'followersPosts',
+    async ({ pageParam = 0 }) => {
+      const res = await makeRequest.get(`/api/posts/followed?skip=${pageParam}`);
+      return res.data;
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length == 7) { // 7 is the amount of posts we fetch aka the limit/"take"
+          return allPages.length * 7;
+        }
+      },
+    }
+  );
 
-  return (
+  return status === 'loading' ? (
+    <Spinner />
+  ) : status === 'error' ? (
+    <p>Something went wrong!</p>
+  ) : (
     <section>
-      {error ? (
-        'Something went wrong!'
-      ) : isLoading ? (
-        <Spinner />
-      ) : (
-        data.map((post: any) => {
-          return <Post key={uuidv4()} postData={post} />;
-        })
-      )}
+      <InfiniteScroll
+        hasMore={hasNextPage || false}
+        next={fetchNextPage}
+        dataLength={data?.pages.length || 7}
+        loader={<Spinner />}
+        endMessage={<EndMessage />}
+      >
+        {data?.pages.map((pages: any) => {
+          return pages.map((post: any) => {
+            return <Post key={uuidv4()} postData={post} />;
+          });
+        })}
+      </InfiniteScroll>
     </section>
+  );
+}
+
+export function EndMessage() {
+  return (
+    <div className="px-4 py-3">
+      <div className="flex flex-col items-center justify-center">
+        <p className="font-medium ">No more posts! Try going to Explore!</p>
+      </div>
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@ import { ITweetData } from '../routes/posts/posts.controller.js';
 import { prisma } from '../services/db.services.js';
 import { getFollowers } from './followers.model.js';
 
-async function getFollowedPosts(userId: string) {
+async function getFollowedPosts(userId: string, skip: any) {
   const followedUsers = await getFollowers(userId);
 
   const followedUserIds = followedUsers.map((user) => user.followedId);
@@ -15,6 +15,8 @@ async function getFollowedPosts(userId: string) {
       author: { select: { name: true, profilePic: true } },
     },
     orderBy: { createdAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
   });
 
   return posts;
@@ -36,8 +38,8 @@ async function addPost(userId: string, tweetData: ITweetData) {
       authorId: userId,
       content: tweetData.tweet,
       image: tweetData.image,
-    }
-  })
+    },
+  });
 
   return createdPost;
 }
