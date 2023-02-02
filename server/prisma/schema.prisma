@@ -10,49 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        String    @id @default(uuid())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  content   String?
-  image     String?
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  String
-  comments  Comment[]
-  likes     Like[]
-}
-
-model Comment {
-  id       String @id @default(uuid())
-  comment  String
-  user     User   @relation(fields: [authorId], references: [id])
-  authorId String @unique
-  post     Post   @relation(fields: [postId], references: [id])
-  postId   String
-}
-
-model Like {
-  id      String @id @default(uuid())
-  post    Post   @relation(fields: [postId], references: [id])
-  postId  String
-  likedBy User   @relation(fields: [userId], references: [id])
-  userId  String
-}
-
-model Followers {
-  id         String @id @default(uuid())
-  follower   User   @relation(name: "FollowerUser", fields: [followerId], references: [id])
-  followerId String
-  followed   User   @relation(name: "FollowedUser", fields: [followedId], references: [id])
-  followedId String
-}
-
-model Profile {
-  id            String  @id @default(uuid())
-  bio           String? @default("No bio assigned yet...")
-  backgroundImg String? @default("http://wallpaperset.com/w/full/9/3/b/224224.jpg")
-  user          User    @relation(fields: [userId], references: [id])
-  userId        String  @unique
+enum Role {
+  USER
+  ADMIN
 }
 
 model User {
@@ -72,7 +32,47 @@ model User {
   Following  Followers[] @relation("FollowedUser")
 }
 
-enum Role {
-  USER
-  ADMIN
+model Followers {
+  id         String @id @default(uuid())
+  follower   User   @relation(name: "FollowerUser", fields: [followerId], references: [id])
+  followerId String
+  followed   User   @relation(name: "FollowedUser", fields: [followedId], references: [id])
+  followedId String
+}
+
+model Profile {
+  id            String  @id @default(uuid())
+  bio           String? @default("No bio assigned yet...")
+  backgroundImg String? @default("http://wallpaperset.com/w/full/9/3/b/224224.jpg")
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String  @unique
+}
+
+model Comment {
+  id       String @id @default(uuid())
+  comment  String
+  user     User   @relation(fields: [authorId], references: [id])
+  authorId String @unique
+  post     Post   @relation(fields: [postId], references: [id])
+  postId   String
+}
+
+model Like {
+  id      String @id @default(uuid())
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String
+  likedBy User   @relation(fields: [userId], references: [id])
+  userId  String
+}
+
+model Post {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  content   String?
+  image     String?
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
+  comments  Comment[]
+  likes     Like[]
 }
