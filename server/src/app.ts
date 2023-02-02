@@ -19,7 +19,7 @@ app.use(allowShareCookies);
 app.use(express.json({ limit: '10mb' }));
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: ['https://tweeter-ps0r.onrender.com', 'http://localhost:5173'],
   })
 );
 app.use(cookieParser());
