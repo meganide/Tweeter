@@ -76,7 +76,7 @@ function PostBody(props: IProps) {
   return (
     <section>
       <p className="my-5 text-sm dark:text-neutral-400 md:text-lg">{postData?.content}</p>
-      <img className="h-full rounded-lg object-contain" crossOrigin="anonymous" src={postData?.image} alt="" />
+      <img className="h-full max-h-[600px] rounded-lg object-contain" crossOrigin="anonymous" src={postData?.image} loading='lazy' alt="" />
     </section>
   );
 }
@@ -145,7 +145,7 @@ function PostComment(props: ICommentProps) {
             </section>
             <section>
               <p className="text-sm dark:text-neutral-400 sm:text-base">{commentData?.text}</p>
-              {commentData?.image && <img className="mt-2" src={commentData.image} alt="" />}
+              {commentData?.image && <img className="mt-2" src={commentData.image} alt="" loading='lazy' />}
             </section>
           </section>
           <section className="mt-2 flex place-items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">

@@ -98,10 +98,13 @@ function TweetFooter(props: ITweetProps) {
 
   async function submitTweet() {
     try {
-      const imageUploadResponse = await makeRequest.post('/api/cloudinary/upload', {
-        data: uploadFile,
-      });
-      const imgUrl = imageUploadResponse.data.url;
+      let imgUrl = '';
+      if (uploadFile) {
+        const imageUploadResponse = await makeRequest.post('/api/cloudinary/upload', {
+          data: uploadFile,
+        });
+        imgUrl = imageUploadResponse.data.url;
+      }
       mutation.mutate({ tweet, image: imgUrl });
       setTweet('');
       setUploadFile('');
