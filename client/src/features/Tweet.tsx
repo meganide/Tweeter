@@ -14,26 +14,29 @@ import { makeRequest } from '../utils/axios';
 interface ITweetProps {
   setTweet: React.Dispatch<React.SetStateAction<string>>;
   tweet: string;
+  previewImage?: string;
+  setPreviewImage?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface IMutationPayload {
   tweet: string;
-  image?: string;
+  image?: string | ArrayBuffer | null;
 }
 
 function Tweet() {
   const [tweet, setTweet] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
 
   return (
     <Card headerTitle="Tweet something">
-      <TweetBody setTweet={setTweet} tweet={tweet} />
-      <TweetFooter tweet={tweet} setTweet={setTweet} />
+      <TweetBody setTweet={setTweet} tweet={tweet} previewImage={previewImage} />
+      <TweetFooter tweet={tweet} setTweet={setTweet} setPreviewImage={setPreviewImage} />
     </Card>
   );
 }
 
 function TweetBody(props: ITweetProps) {
-  const { setTweet, tweet } = props;
+  const { setTweet, tweet, previewImage } = props;
 
   return (
     <section className="mb-3 flex w-full gap-3">
@@ -47,21 +50,36 @@ function TweetBody(props: ITweetProps) {
         value={tweet}
         onChange={(e) => setTweet(e.target.value)}
       ></textarea>
+      <img className="w-16 object-cover" src={previewImage} alt="" />
     </section>
   );
 }
 
 function TweetFooter(props: ITweetProps) {
-  const { tweet, setTweet } = props;
+  const { tweet, setTweet, setPreviewImage } = props;
 
-  const inputFileRef = useRef<any>(null);
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
+  const [uploadFile, setUploadFile] = useState<string | ArrayBuffer | null>('');
   const { toggle: showTooltip, toggleShow: toggleShowTooltip } = useToggle();
   const [replyStatus, setReplyStatus] = useState('Everyone can reply');
 
   function chooseImage() {
     if (inputFileRef.current) {
       inputFileRef.current.click();
+    }
+  }
+
+  function handleFileInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      const imgURL = URL.createObjectURL(e.target?.files[0]);
+      setPreviewImage && setPreviewImage(imgURL);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target?.files[0]);
+      reader.onloadend = () => {
+        setUploadFile(reader.result);
+      };
     }
   }
 
@@ -78,9 +96,19 @@ function TweetFooter(props: ITweetProps) {
     }
   );
 
-  function submitTweet() {
-    mutation.mutate({ tweet });
-    setTweet('');
+  async function submitTweet() {
+    try {
+      const imageUploadResponse = await makeRequest.post('/api/cloudinary/upload', {
+        data: uploadFile,
+      });
+      const imgUrl = imageUploadResponse.data.url;
+      mutation.mutate({ tweet, image: imgUrl });
+      setTweet('');
+      setUploadFile('');
+      setPreviewImage && setPreviewImage('');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -91,12 +119,12 @@ function TweetFooter(props: ITweetProps) {
           onClick={chooseImage}
         />
         <input
-        className='hidden'
+          className="hidden"
           type="file"
           name="profilePic"
-          accept=".jpg, .jpeg, .png, "
+          accept=".jpg, .jpeg, .png"
           ref={inputFileRef}
-          // onChange={handleFileInputChange}
+          onChange={handleFileInputChange}
         />
         <article className="relative">
           <PublicIcon

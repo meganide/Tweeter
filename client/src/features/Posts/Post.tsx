@@ -76,7 +76,7 @@ function PostBody(props: IProps) {
   return (
     <section>
       <p className="my-5 text-sm dark:text-neutral-400 md:text-lg">{postData?.content}</p>
-      <img className="w-full rounded-lg" crossOrigin="anonymous" src={postData?.image} alt="" />
+      <img className="h-full rounded-lg object-contain" crossOrigin="anonymous" src={postData?.image} alt="" />
     </section>
   );
 }

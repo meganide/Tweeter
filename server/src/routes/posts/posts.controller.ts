@@ -32,4 +32,5 @@ async function httpAddPost(req: any, res: Response) {
   }
 }
 
+
 export { httpGetFollowedPosts, httpAddPost };
