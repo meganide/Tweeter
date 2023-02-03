@@ -2,9 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { useInfiniteQuery } from 'react-query';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import Post from './Post';
-import { makeRequest } from '../../utils/axios';
+import Post from '../Post/Post';
 import Spinner from '../../components/common/Spinner';
+import { makeRequest } from '../../utils/axios';
 
 function Posts() {
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
@@ -49,7 +49,7 @@ export function EndMessage() {
   return (
     <div className="px-4 py-3">
       <div className="flex flex-col items-center justify-center">
-        <p className="font-medium ">No more posts! Try going to Explore!</p>
+        <p className="font-medium ">No more posts! Tweet something, follow people or  go to explore!</p>
       </div>
     </div>
   );
