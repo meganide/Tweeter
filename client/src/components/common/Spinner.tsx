@@ -1,6 +1,6 @@
 function Spinner() {
   return (
-    <div className="h-screen flex place-items-center justify-center">
+    <div className="flex h-screen place-items-center justify-center">
       <div className="text-center">
         <div role="status">
           <svg

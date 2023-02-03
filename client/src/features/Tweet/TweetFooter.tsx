@@ -4,7 +4,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { useToggle } from '../../hooks/useToggle';
 import { makeRequest } from '../../utils/axios';
-import ReplyToolTip from '../../components/tooltips/ReplyTooltip';
+import ReplyToolTip from '../../components/tooltips/ReplyTooltip/ReplyTooltip';
 import ImageIcon from '@mui/icons-material/Image';
 import PublicIcon from '@mui/icons-material/Public';
 import Button from '../../components/common/Button';

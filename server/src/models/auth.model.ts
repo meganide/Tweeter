@@ -58,6 +58,4 @@ async function createUser(userCredentials: IUserCredentials) {
   return { user: userWithoutPassword };
 }
 
-async function checkEmailAndPassword() {}
-
 export { findUser, createUser };

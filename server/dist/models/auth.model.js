@@ -55,7 +55,4 @@ function createUser(userCredentials) {
         return { user: userWithoutPassword };
     });
 }
-function checkEmailAndPassword() {
-    return __awaiter(this, void 0, void 0, function* () { });
-}
 export { findUser, createUser };

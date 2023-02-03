@@ -35,7 +35,6 @@ function getFollowedPosts(userId, skip) {
             take: 7,
             skip: parseInt(skip),
         });
-        console.log(posts);
         return posts;
     });
 }

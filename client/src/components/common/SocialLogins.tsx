@@ -1,4 +1,4 @@
-import { imagePaths } from "../../utils/data";
+import { imagePaths } from '../../utils/data';
 
 function SocialLogins() {
   return (
