@@ -3,7 +3,7 @@ import CreatedBy from '../components/common/CreatedBy';
 import Follow from '../features/Follow';
 import Posts from '../features/Posts/Posts';
 import Trends from '../features/Trends';
-import Tweet from '../features/Tweet';
+import Tweet from '../features/Tweet/Tweet';
 
 function Home() {
   return (
