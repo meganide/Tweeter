@@ -1,11 +1,10 @@
-import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import Avatar from "../../components/common/Avatar";
-import { makeRequest } from "../../utils/axios";
-import { IProps } from "./Post";
+import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import Avatar from '../../components/common/Avatar';
+import { makeRequest } from '../../utils/axios';
+import { IProps } from './Post';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
-import Button from "../../components/common/Button";
-
+import Button from '../../components/common/Button';
 
 interface IReplyData {
   reply: string;
@@ -16,17 +15,12 @@ function PostFooter(props: IProps) {
   const { postData } = props;
 
   const [reply, setReply] = useState('');
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
     async (replyData: IReplyData) => {
-      try {
-        const comment = await makeRequest.post('/api/comments', replyData);
-        return comment.data;
-      } catch (err) {
-        console.log(err);
-      }
+      const comment = await makeRequest.post('/api/comments', replyData);
+      return comment.data;
     },
     {
       onSuccess: () => {
@@ -38,7 +32,6 @@ function PostFooter(props: IProps) {
   async function submitReply() {
     try {
       await mutation.mutate({ reply, postId: postData.id });
-
       setReply('');
     } catch (err) {
       console.log(err);

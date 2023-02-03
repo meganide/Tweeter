@@ -1,5 +1,6 @@
 import { createContext, ReactElement, useState } from 'react';
 import axios from 'axios';
+
 import { BASE_URL } from '../utils/baseUrl';
 
 export interface IAuthContext {
@@ -23,9 +24,7 @@ interface ICurrentUser {
 }
 
 interface ILoginInputs {
-  name?: string;
-  email: string;
-  password: string;
+  [key: string]: string;
 }
 
 interface iProps {
@@ -38,6 +37,7 @@ export function AuthContextProvider({ children }: iProps): ReactElement {
   const [currentUser, setCurrentUser] = useState<null | ICurrentUser>(null);
 
   async function login(inputs: ILoginInputs) {
+
     const res = await axios.post(BASE_URL + '/api/auth/login', inputs, {
       withCredentials: true,
     });
