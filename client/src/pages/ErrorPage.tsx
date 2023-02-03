@@ -1,5 +1,5 @@
 import { useRouteError } from 'react-router-dom';
-import Navbar from '../components/layout/Navbar';
+import Navbar from '../components/layout/Navbar/Navbar';
 
 interface IProps {
   setDarkToggle: () => void;

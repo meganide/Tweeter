@@ -30,8 +30,6 @@ async function getFollowedPosts(userId: string, skip: any) {
     skip: parseInt(skip),
   });
 
-  console.log(posts);
-
   return posts;
 }
 
