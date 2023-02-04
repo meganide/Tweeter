@@ -7,10 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { prisma } from "../services/db.services.js";
-function addRetweet(userId, postId) {
+import { prisma } from '../services/db.services.js';
+function addSave(userId, postId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const likes = yield prisma.retweet.create({
+        const likes = yield prisma.save.create({
             data: {
                 postId,
                 userId,
@@ -19,17 +19,17 @@ function addRetweet(userId, postId) {
         return likes;
     });
 }
-function deleteRetweet(userId, postId) {
+function deleteSave(userId, postId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const likes = yield prisma.retweet.delete({
+        const likes = yield prisma.save.delete({
             where: {
                 userId_postId: {
                     userId: userId,
                     postId: postId,
-                }
-            }
+                },
+            },
         });
         return likes;
     });
 }
-export { addRetweet, deleteRetweet };
+export { addSave, deleteSave };

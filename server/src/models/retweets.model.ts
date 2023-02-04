@@ -1,13 +1,25 @@
 import { prisma } from "../services/db.services.js"
 
-async function getRetweets(postId: string) {
-
-  const retweets = await prisma.like.findMany({
-    where: {postId},
-  })
-
-
-  return retweets;
+async function addRetweet(userId: string, postId: string) {
+  const likes = await prisma.retweet.create({
+    data: {
+      postId,
+      userId,
+    },
+  });
+  return likes;
 }
 
-export {getRetweets}
+async function deleteRetweet(userId: string, postId: string) {
+  const likes = await prisma.retweet.delete({
+    where: {
+      userId_postId: {
+        userId: userId,
+        postId: postId,
+      }
+    }
+  });
+  return likes;
+}
+
+export {addRetweet, deleteRetweet}

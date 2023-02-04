@@ -23,7 +23,6 @@ function Posts() {
     }
   );
 
-  console.log(data)
 
   return status === 'loading' ? (
     <Spinner />

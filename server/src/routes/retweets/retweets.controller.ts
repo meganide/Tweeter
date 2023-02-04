@@ -1,21 +1,34 @@
 import { Response, Request } from 'express';
 
-import { getRetweets } from '../../models/retweets.model.js';
+import { addRetweet, deleteRetweet } from '../../models/retweets.model.js';
 
-async function httpGetRetweets(req: Request, res: Response) {
+async function httpAddRetweet(req: any, res: Response) {
+  const userId = req.user;
   const postId = req.query.postId as string;
 
   try {
-    const retweets = await getRetweets(postId);
-    console.log(retweets);
+    const likes = await addRetweet(userId, postId);
 
-    return res.status(200).json(retweets);
+    return res.status(200).json(likes);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ error: 'Failed to get retweets.' });
+    return res.status(400).json({ error: 'Failed to add retweet.' });
   }
 }
 
-function httpAddRetweet() {}
+async function httpDeleteRetweet(req: any, res: Response) {
+  const userId = req.user;
+  const postId = req.query.postId as string;
 
-export { httpAddRetweet, httpGetRetweets };
+  try {
+    const likes = await deleteRetweet(userId, postId);
+
+    return res.status(200).json(likes);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error: 'Failed to remove retweet.' });
+  }
+}
+
+
+export { httpAddRetweet, httpDeleteRetweet };

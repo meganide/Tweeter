@@ -28,10 +28,10 @@ model User {
   profile    Profile?
   comments   Comment[]
   likes      Like[]
-  Followers  Followers[] @relation("FollowerUser")
+  followers  Followers[] @relation("FollowerUser")
   Following  Followers[] @relation("FollowedUser")
-  Retweet    Retweet[]
-  Save       Save[]
+  retweets   Retweet[]
+  saves      Save[]
 }
 
 model Followers {
@@ -106,6 +106,6 @@ model Post {
   authorId  String
   comments  Comment[]
   likes     Like[]
-  Retweet   Retweet[]
-  Save      Save[]
+  retweets  Retweet[]
+  saves     Save[]
 }

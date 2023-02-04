@@ -21,6 +21,8 @@ export interface IPostData {
   image?: string;
   id: string;
   likes: { userId: string }[];
+  retweets: { userId: string }[];
+  saves: { userId: string }[];
   comments: ICommentData[];
 }
 

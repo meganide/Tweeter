@@ -25,6 +25,8 @@ async function getFollowedPosts(userId: string, skip: any) {
         orderBy: { createdAt: 'asc' },
       },
       likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true } },
       author: { select: { name: true, profilePic: true } },
     },
     orderBy: { createdAt: 'desc' },

@@ -14,7 +14,6 @@ function useUpload() {
 
   function handleFileInputChange(e: React.ChangeEvent<HTMLInputElement>) {
 
-    console.log('wat')
 
     if (e.target.files) {
       const imgURL = URL.createObjectURL(e.target?.files[0]);

@@ -17,7 +17,7 @@ interface IOption {
   text: string;
   clickedText: string;
   color: string;
-  endpoint: string;
+  endpoint: 'likes' | 'saves' | 'retweets';
 }
 
 function PostOption(props: IProps) {
@@ -25,7 +25,8 @@ function PostOption(props: IProps) {
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
 
-  const clicked = postData.likes.some((like) => like.userId === currentUser?.id);
+  const endpoint = option.endpoint;
+  const clicked = postData[endpoint].some((optionStat: any) => optionStat.userId === currentUser?.id);
 
   const queryClient = useQueryClient();
 

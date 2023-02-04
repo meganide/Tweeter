@@ -7,20 +7,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getRetweets } from '../../models/retweets.model.js';
-function httpGetRetweets(req, res) {
+import { addRetweet, deleteRetweet } from '../../models/retweets.model.js';
+function httpAddRetweet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
         const postId = req.query.postId;
         try {
-            const retweets = yield getRetweets(postId);
-            console.log(retweets);
-            return res.status(200).json(retweets);
+            const likes = yield addRetweet(userId, postId);
+            return res.status(200).json(likes);
         }
         catch (error) {
             console.log(error);
-            return res.status(400).json({ error: 'Failed to get retweets.' });
+            return res.status(400).json({ error: 'Failed to add retweet.' });
         }
     });
 }
-function httpAddRetweet() { }
-export { httpAddRetweet, httpGetRetweets };
+function httpDeleteRetweet(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const postId = req.query.postId;
+        try {
+            const likes = yield deleteRetweet(userId, postId);
+            return res.status(200).json(likes);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(400).json({ error: 'Failed to remove retweet.' });
+        }
+    });
+}
+export { httpAddRetweet, httpDeleteRetweet };
