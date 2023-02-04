@@ -13,9 +13,12 @@ function useUpload() {
   }
 
   function handleFileInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+
+    console.log('wat')
+
     if (e.target.files) {
       const imgURL = URL.createObjectURL(e.target?.files[0]);
-      setPreviewImage && setPreviewImage(imgURL);
+      setPreviewImage(imgURL);
 
       const reader = new FileReader();
       reader.readAsDataURL(e.target?.files[0]);
@@ -35,8 +38,6 @@ function useUpload() {
         imgUrl = imageUploadResponse.data.url;
       }
 
-      // mutation.mutate({ tweet, image: imgUrl });
-      // setTweet('');
       setUploadFile('');
       setPreviewImage && setPreviewImage('');
       return imgUrl;

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+
 import Avatar from '../../components/common/Avatar';
 import { makeRequest } from '../../utils/axios';
 import { IProps } from './Post';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import Button from '../../components/common/Button';
+import { useUpload } from '../../hooks/useUpload';
 
 interface IReplyData {
   reply: string;
@@ -16,6 +18,9 @@ function PostFooter(props: IProps) {
 
   const [reply, setReply] = useState('');
   const [error, setError] = useState('');
+
+  // const { previewImage, inputFileRef, chooseImage, handleFileInputChange, submitUpload } = useUpload();
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -36,12 +41,14 @@ function PostFooter(props: IProps) {
       if (reply.length < 1) {
         return setError("Reply field can't be empty!");
       }
+      // const imgUrl = await submitUpload();
       await mutation.mutate({ reply, postId: postData.id });
       setReply('');
     } catch (err) {
       console.log(err);
     }
   }
+
 
   return (
     <section>
@@ -57,7 +64,10 @@ function PostFooter(props: IProps) {
             value={reply}
             onChange={(e) => setReply(e.target.value)}
           />
-          <ImageOutlinedIcon className="cursor-pointer text-gray-400 dark:text-neutral-500" />
+          {/* <img className="w-16 object-cover" src={previewImage} alt="" /> */}
+          {/* <ImageOutlinedIcon className="cursor-pointer text-gray-400 dark:text-neutral-500" onClick={chooseImage} />
+          <input className="hidden" type="file" name="commentPic" accept=".jpg, .jpeg, .png" ref={inputFileRef} onChange={handleFileInputChange} /> */}
+          {/* <input type="file" /> */}
           <Button type="button" text="Reply" styles="text-xs lg:text-base px-2" onClick={submitReply} />
         </article>
       </section>

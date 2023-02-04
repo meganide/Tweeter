@@ -1,6 +1,6 @@
 import Posts from '../features/Posts/Posts';
-import UserCard from '../features/Profile/UserCard';
-import UserOptions from '../features/Profile/UserOptions';
+import UserCard from '../features/Profile/User/UserCard';
+import UserOptions from '../features/Profile/User/UserOptions';
 
 function Profile() {
   return (

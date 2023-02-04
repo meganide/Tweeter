@@ -1,10 +1,12 @@
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 const imagePaths = {
   logo: 'images/icons/icon.png',
@@ -39,19 +41,28 @@ const postOptionsData = [
   //   color: '#4F4F4F',
   // },
   {
-    icon: <AutorenewOutlinedIcon className="text-[#27AE60]" />,
-    text: 'Retweeted',
-    color: '#27AE60',
-  },
-  {
-    icon: <FavoriteBorderOutlinedIcon className="text-[#EB5757]" />,
-    text: 'Liked',
+    icon: <FavoriteBorderOutlinedIcon className="text-[gray]" />,
+    clickedIcon: <FavoriteIcon className="text-[#EB5757]" />,
+    text: 'Like',
+    clickedText: 'Liked',
     color: '#EB5757',
+    endpoint: 'likes',
   },
   {
-    icon: <BookmarkBorderOutlinedIcon className="text-[#2D9CDB]" />,
-    text: 'Saved',
+    icon: <AutorenewOutlinedIcon className="text-[gray]" />,
+    clickedIcon: <AutorenewIcon className="text-[#27AE60]" />,
+    text: 'Retweet',
+    clickedText: 'Retweeted',
+    color: '#27AE60',
+    endpoint: 'retweets',
+  },
+  {
+    icon: <BookmarkBorderOutlinedIcon className="text-[gray]" />,
+    clickedIcon: <BookmarkIcon className="text-[#2D9CDB]" />,
+    text: 'Save',
+    clickedText: 'Saved',
     color: '#2D9CDB',
+    endpoint: 'saves',
   },
 ];
 
@@ -66,8 +77,7 @@ const postsData = [
     username: 'Jane Moe',
     date: '30 August at 15:20',
     text: '“We travel, some of us forever, to seek other places, other lives, other souls.” – Anais Nin',
-    image:
-      'https://images.pexels.com/photos/1007901/pexels-photo-1007901.jpeg?cs=srgb&dl=pexels-oleksandr-pidvalnyi-1007901.jpg&fm=jpg',
+    image: 'https://images.pexels.com/photos/1007901/pexels-photo-1007901.jpeg?cs=srgb&dl=pexels-oleksandr-pidvalnyi-1007901.jpg&fm=jpg',
   },
   {
     username: 'Mr Troll',
@@ -108,8 +118,7 @@ const followData = [
     username: 'Morty Smith',
     followers: 5,
     bio: "Rick's sidekick.",
-    backgroundImg:
-      'https://i5.walmartimages.com/asr/c56fb9dc-6748-427f-89d4-5a9bf8c7b2aa_1.de05d46b2d3b93a7f2ebdb2e8b092e27.jpeg',
+    backgroundImg: 'https://i5.walmartimages.com/asr/c56fb9dc-6748-427f-89d4-5a9bf8c7b2aa_1.de05d46b2d3b93a7f2ebdb2e8b092e27.jpeg',
   },
   {
     username: 'Homer Simpson',
