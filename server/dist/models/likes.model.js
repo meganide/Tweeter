@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { prisma } from '../services/db.services.js';
-function addLike(userId, postId) {
+function addLikeToPost(userId, postId) {
     return __awaiter(this, void 0, void 0, function* () {
         const likes = yield prisma.like.create({
             data: {
@@ -19,17 +19,41 @@ function addLike(userId, postId) {
         return likes;
     });
 }
-function deleteLike(userId, postId) {
+function addLikeToComment(userId, commentId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const likes = yield prisma.like.create({
+            data: {
+                commentId,
+                userId,
+            },
+        });
+        return likes;
+    });
+}
+function deleteLikeFromPost(userId, postId) {
     return __awaiter(this, void 0, void 0, function* () {
         const likes = yield prisma.like.delete({
             where: {
                 userId_postId: {
                     userId: userId,
                     postId: postId,
-                }
-            }
+                },
+            },
         });
         return likes;
     });
 }
-export { addLike, deleteLike };
+function deleteLikeFromComment(userId, commentId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const likes = yield prisma.like.delete({
+            where: {
+                userId_commentId: {
+                    userId: userId,
+                    commentId: commentId,
+                },
+            },
+        });
+        return likes;
+    });
+}
+export { addLikeToPost, addLikeToComment, deleteLikeFromComment, deleteLikeFromPost };

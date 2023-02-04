@@ -1,24 +1,50 @@
-import { useToggle } from '../../hooks/useToggle';
+import { useContext } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { AuthContext, IAuthContext } from '../../contexts/authContext';
+import { makeRequest } from '../../utils/axios';
 import { IProps } from './Comment';
+import { postOptionsData } from '../../utils/data';
 
 function CommentLikes(props: IProps) {
   const { commentData } = props;
 
-  const { toggle: likeToggle, toggleShow: toggleShowLike } = useToggle();
+  const { currentUser } = useContext(AuthContext) as IAuthContext;
+
+  const clicked = commentData.likes.some((like: any) => like.userId === currentUser?.id);
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    async () => {
+      let res;
+      if (clicked) {
+        res = await makeRequest.delete(`/api/likes/comment?commentId=${commentData.id}`);
+      } else {
+        res = await makeRequest.post(`/api/likes/comment?commentId=${commentData.id}`);
+      }
+      return res.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('followersPosts');
+      },
+    }
+  );
+
+  async function toggleLike() {
+    await mutation.mutate();
+  }
 
   return (
     <section className="mt-2 flex place-items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">
-      <section className={`${likeToggle && 'text-red-500'} flex gap-1`}>
-        <FavoriteBorderOutlinedIcon
-          className="cursor-pointer"
-          style={{ fontSize: '1.1rem' }}
-          onClick={toggleShowLike}
-        />
-        <p>{likeToggle ? 'Liked' : 'Like'}</p>
+      <section className={`${clicked && 'text-red-500'} flex place-items-center cursor-pointer gap-1`} onClick={toggleLike}>
+        {clicked ? postOptionsData[0].clickedIcon : postOptionsData[0].icon}
+        <p>{clicked ? 'Liked' : 'Like'}</p>
       </section>
       <p className="ml-3">
-        {likeToggle && commentData?.likes ? commentData?.likes + 1 : commentData?.likes}
+        {commentData.likes.length}
         &nbsp;Likes
       </p>
     </section>

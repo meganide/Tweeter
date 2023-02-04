@@ -1,6 +1,5 @@
 import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
-import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -35,11 +34,6 @@ const links = [
 ];
 
 const postOptionsData = [
-  // {
-  //   icon: <ModeCommentOutlinedIcon className="text-[#4F4F4F]" />,
-  //   text: 'Comment',
-  //   color: '#4F4F4F',
-  // },
   {
     icon: <FavoriteBorderOutlinedIcon className="text-[gray]" />,
     clickedIcon: <FavoriteIcon className="text-[#EB5757]" />,

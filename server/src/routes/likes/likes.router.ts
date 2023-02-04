@@ -1,9 +1,11 @@
 import express from 'express';
-import { httpAddLike, httpDeleteLike } from './likes.controller.js';
+import { httpAddLikeToComment, httpAddLikeToPost, httpDeleteLikeFromComment, httpDeleteLikeFromPost } from './likes.controller.js';
 
 const likesRouter = express.Router();
 
-likesRouter.post('/', httpAddLike);
-likesRouter.delete('/', httpDeleteLike);
+likesRouter.post('/', httpAddLikeToPost);
+likesRouter.post('/comment', httpAddLikeToComment);
+likesRouter.delete('/', httpDeleteLikeFromPost);
+likesRouter.delete('/comment', httpDeleteLikeFromComment);
 
 export { likesRouter };

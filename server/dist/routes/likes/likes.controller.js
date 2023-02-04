@@ -7,13 +7,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { addLike, deleteLike } from '../../models/likes.model.js';
-function httpAddLike(req, res) {
+import { addLikeToComment, addLikeToPost, deleteLikeFromComment, deleteLikeFromPost } from '../../models/likes.model.js';
+function httpAddLikeToPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
         const postId = req.query.postId;
         try {
-            const likes = yield addLike(userId, postId);
+            const likes = yield addLikeToPost(userId, postId);
             return res.status(200).json(likes);
         }
         catch (error) {
@@ -22,12 +22,26 @@ function httpAddLike(req, res) {
         }
     });
 }
-function httpDeleteLike(req, res) {
+function httpAddLikeToComment(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const commentId = req.query.commentId;
+        try {
+            const likes = yield addLikeToComment(userId, commentId);
+            return res.status(200).json(likes);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(400).json({ error: 'Failed to add like.' });
+        }
+    });
+}
+function httpDeleteLikeFromPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
         const postId = req.query.postId;
         try {
-            const likes = yield deleteLike(userId, postId);
+            const likes = yield deleteLikeFromPost(userId, postId);
             return res.status(200).json(likes);
         }
         catch (error) {
@@ -36,4 +50,18 @@ function httpDeleteLike(req, res) {
         }
     });
 }
-export { httpAddLike, httpDeleteLike };
+function httpDeleteLikeFromComment(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const commentId = req.query.commentId;
+        try {
+            const likes = yield deleteLikeFromComment(userId, commentId);
+            return res.status(200).json(likes);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(400).json({ error: 'Failed to remove like.' });
+        }
+    });
+}
+export { httpAddLikeToPost, httpAddLikeToComment, httpDeleteLikeFromPost, httpDeleteLikeFromComment };

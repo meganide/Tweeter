@@ -13,7 +13,7 @@ function PostOptions(props: IProps) {
 
   return (
     <section className="my-3 flex border-b border-t dark:border-border-dark">
-      {postOptionsData.map((option) => {
+      {postOptionsData.map((option: any) => {
         return <PostOption key={uuidv4()} option={option} postData={postData} />;
       })}
     </section>

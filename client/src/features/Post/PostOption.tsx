@@ -11,7 +11,7 @@ interface IProps {
   postData: IPostData;
 }
 
-interface IOption {
+export interface IOption {
   icon: JSX.Element;
   clickedIcon: JSX.Element;
   text: string;
