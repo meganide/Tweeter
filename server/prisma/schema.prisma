@@ -28,8 +28,10 @@ model User {
   profile    Profile?
   comments   Comment[]
   likes      Like[]
-  Followers  Followers[] @relation("FollowerUser")
+  followers  Followers[] @relation("FollowerUser")
   Following  Followers[] @relation("FollowedUser")
+  retweets   Retweet[]
+  saves      Save[]
 }
 
 model Followers {
@@ -58,14 +60,40 @@ model Comment {
   authorId  String
   post      Post     @relation(fields: [postId], references: [id])
   postId    String
+  likes     Like[]
 }
 
 model Like {
+  id        String   @id @default(uuid())
+  post      Post?    @relation(fields: [postId], references: [id])
+  postId    String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  commentId String?
+  likedBy   User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@unique([userId, postId])
+  @@unique([userId, commentId])
+}
+
+model Retweet {
+  id          String @id @default(uuid())
+  post        Post   @relation(fields: [postId], references: [id])
+  postId      String
+  retweetedBy User   @relation(fields: [userId], references: [id])
+  userId      String
+
+  @@unique([userId, postId])
+}
+
+model Save {
   id      String @id @default(uuid())
   post    Post   @relation(fields: [postId], references: [id])
   postId  String
-  likedBy User   @relation(fields: [userId], references: [id])
+  savedBy User   @relation(fields: [userId], references: [id])
   userId  String
+
+  @@unique([userId, postId])
 }
 
 model Post {
@@ -78,4 +106,6 @@ model Post {
   authorId  String
   comments  Comment[]
   likes     Like[]
+  retweets  Retweet[]
+  saves     Save[]
 }

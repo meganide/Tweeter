@@ -8,12 +8,13 @@ export interface IProps {
 }
 
 export interface ICommentData {
+  id: string;
   comment: string;
   createdAt: string;
   updatedAt: string;
   username: string;
   image?: string;
-  likes?: number;
+  likes: {userId: string}[] | [];
   user: IAuthor;
 }
 

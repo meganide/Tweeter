@@ -35,6 +35,7 @@ function TweetFooter(props: IProps) {
 
   const { toggle: showTooltip, toggleShow: toggleShowTooltip } = useToggle();
   const [replyStatus, setReplyStatus] = useState('Everyone can reply');
+  const [error, setError] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -51,6 +52,10 @@ function TweetFooter(props: IProps) {
 
   async function submitTweet() {
     try {
+      setError('');
+      if (tweet.length < 1) {
+        return setError("Text field can't be empty!");
+      }
       const imgUrl = await submitUpload();
       mutation.mutate({ tweet, image: imgUrl });
       setTweet('');
@@ -59,35 +64,26 @@ function TweetFooter(props: IProps) {
     }
   }
 
+
   return (
-    <section className="flex justify-between lg:ml-[64px]">
-      <section className="flex items-center gap-2">
-        <ImageIcon
-          className="cursor-pointer text-accent hover:text-sky-700"
-          onClick={chooseImage}
-        />
-        <input
-          className="hidden"
-          type="file"
-          name="profilePic"
-          accept=".jpg, .jpeg, .png"
-          ref={inputFileRef}
-          onChange={handleFileInputChange}
-        />
-        <article className="relative">
-          <PublicIcon
-            className="cursor-pointer text-accent hover:text-sky-700"
-            onClick={toggleShowTooltip}
-          />
-          {showTooltip && (
-            <OutsideClickHandler onOutsideClick={toggleShowTooltip}>
-              <ReplyToolTip setReplyStatus={setReplyStatus} />
-            </OutsideClickHandler>
-          )}
-        </article>
-        <span className="text-xs text-accent">{replyStatus}</span>
+    <section>
+      <section className="flex justify-between lg:ml-[64px]">
+        <section className="flex items-center gap-2">
+          <ImageIcon className="cursor-pointer text-accent hover:text-sky-700" onClick={chooseImage} />
+          <input className="hidden" type="file" name="profilePic" accept=".jpg, .jpeg, .png" ref={inputFileRef} onChange={handleFileInputChange} />
+          <article className="relative">
+            <PublicIcon className="cursor-pointer text-accent hover:text-sky-700" onClick={toggleShowTooltip} />
+            {showTooltip && (
+              <OutsideClickHandler onOutsideClick={toggleShowTooltip}>
+                <ReplyToolTip setReplyStatus={setReplyStatus} />
+              </OutsideClickHandler>
+            )}
+          </article>
+          <span className="text-xs text-accent">{replyStatus}</span>
+        </section>
+        <Button type="button" text="Tweet" onClick={submitTweet} />
       </section>
-      <Button type="button" text="Tweet" onClick={submitTweet} />
+      {error && <p className='text-red-600 text-sm mt-2 ml-[64px]'>{error}</p>}
     </section>
   );
 }

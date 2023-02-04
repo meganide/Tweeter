@@ -15,12 +15,14 @@ function Posts() {
     },
     {
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.length == 7) { // 7 is the amount of posts we fetch aka the limit/"take"
+        if (lastPage.length == 7) {
+          // 7 is the amount of posts we fetch aka the limit/"take"
           return allPages.length * 7;
         }
       },
     }
   );
+
 
   return status === 'loading' ? (
     <Spinner />
@@ -49,7 +51,7 @@ export function EndMessage() {
   return (
     <div className="px-4 py-3">
       <div className="flex flex-col items-center justify-center">
-        <p className="font-medium ">No more posts! Tweet something, follow people or  go to explore!</p>
+        <p className="font-medium ">No more posts! Tweet something, follow people or go to explore!</p>
       </div>
     </div>
   );

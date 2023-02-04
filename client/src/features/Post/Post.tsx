@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Card from '../../components/common/Card';
 import PostHeader from './PostHeader';
 import PostBody from './PostBody';
@@ -11,13 +13,16 @@ export interface IProps {
   postData: IPostData;
 }
 
-interface IPostData {
+export interface IPostData {
   author: IAuthor;
   createdAt: string;
   updatedAt: string;
   content: string;
   image?: string;
   id: string;
+  likes: { userId: string }[];
+  retweets: { userId: string }[];
+  saves: { userId: string }[];
   comments: ICommentData[];
 }
 
@@ -35,7 +40,7 @@ function Post(props: IProps) {
         <PostHeader postData={postData} />
         <PostBody postData={postData} />
         <PostInfo postData={postData} />
-        <PostOptions />
+        <PostOptions postData={postData} />
         <PostFooter postData={postData} />
         {<Comments postData={postData} />}
       </Card>
