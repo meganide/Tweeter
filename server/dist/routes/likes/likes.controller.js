@@ -7,20 +7,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getLikes } from '../../models/likes.model.js';
-function httpGetLikes(req, res) {
+import { addLike, deleteLike } from '../../models/likes.model.js';
+function httpAddLike(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
         const postId = req.query.postId;
         try {
-            const likes = yield getLikes(postId);
-            console.log(likes);
+            const likes = yield addLike(userId, postId);
             return res.status(200).json(likes);
         }
         catch (error) {
             console.log(error);
-            return res.status(400).json({ error: 'Failed to get likes.' });
+            return res.status(400).json({ error: 'Failed to add like.' });
         }
     });
 }
-function httpAddLike() { }
-export { httpAddLike, httpGetLikes };
+function httpDeleteLike(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const postId = req.query.postId;
+        try {
+            const likes = yield deleteLike(userId, postId);
+            return res.status(200).json(likes);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(400).json({ error: 'Failed to remove like.' });
+        }
+    });
+}
+export { httpAddLike, httpDeleteLike };

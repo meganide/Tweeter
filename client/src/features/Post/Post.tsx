@@ -38,7 +38,7 @@ function Post(props: IProps) {
         <PostHeader postData={postData} />
         <PostBody postData={postData} />
         <PostInfo postData={postData} />
-        <PostOptions postId={postData.id} />
+        <PostOptions postData={postData} />
         <PostFooter postData={postData} />
         {<Comments postData={postData} />}
       </Card>

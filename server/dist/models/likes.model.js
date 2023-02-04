@@ -7,13 +7,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { prisma } from "../services/db.services.js";
-function getLikes(postId) {
+import { prisma } from '../services/db.services.js';
+function addLike(userId, postId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const likes = yield prisma.like.findMany({
-            where: { postId },
+        const likes = yield prisma.like.create({
+            data: {
+                postId,
+                userId,
+            },
         });
         return likes;
     });
 }
-export { getLikes };
+function deleteLike(userId, postId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const likes = yield prisma.like.delete({
+            where: {
+                userId_postId: {
+                    userId: userId,
+                    postId: postId,
+                }
+            }
+        });
+        return likes;
+    });
+}
+export { addLike, deleteLike };

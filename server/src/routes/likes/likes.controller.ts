@@ -1,20 +1,33 @@
 import { Response, Request } from 'express';
-import { getLikes } from '../../models/likes.model.js';
 
-async function httpGetLikes(req: Request, res: Response) {
+import { addLike, deleteLike } from '../../models/likes.model.js';
+
+async function httpAddLike(req: any, res: Response) {
+  const userId = req.user;
   const postId = req.query.postId as string;
 
   try {
-    const likes = await getLikes(postId);
-    console.log(likes);
+    const likes = await addLike(userId, postId);
 
     return res.status(200).json(likes);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ error: 'Failed to get likes.' });
+    return res.status(400).json({ error: 'Failed to add like.' });
   }
 }
 
-function httpAddLike() {}
+async function httpDeleteLike(req: any, res: Response) {
+  const userId = req.user;
+  const postId = req.query.postId as string;
 
-export { httpAddLike, httpGetLikes };
+  try {
+    const likes = await deleteLike(userId, postId);
+
+    return res.status(200).json(likes);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error: 'Failed to remove like.' });
+  }
+}
+
+export { httpAddLike, httpDeleteLike };
