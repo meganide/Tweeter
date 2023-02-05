@@ -2,13 +2,14 @@ import { Response } from 'express';
 import { getUser } from '../../models/user.model.js';
 
 async function httpGetUser(req: any, res: Response) {
-  let userId: string;
+  let userId: string = req.user;
 
-  if (req.body.userId) {
-    userId = req.body.userId;
-  } else {
-    userId = req.user;
+  if (req.params.userId) {
+    userId = req.params.userId;
+    console.log('userid from params', userId);
   }
+  
+  console.log('req.user is ', userId)
 
   try {
     const user = await getUser(userId);
@@ -21,6 +22,5 @@ async function httpGetUser(req: any, res: Response) {
     });
   }
 }
-
 
 export { httpGetUser };

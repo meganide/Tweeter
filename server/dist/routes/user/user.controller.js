@@ -10,13 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { getUser } from '../../models/user.model.js';
 function httpGetUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        let userId;
-        if (req.body.userId) {
-            userId = req.body.userId;
+        let userId = req.user;
+        if (req.params.userId) {
+            userId = req.params.userId;
+            console.log('userid from params', userId);
         }
-        else {
-            userId = req.user;
-        }
+        console.log('req.user is ', userId);
         try {
             const user = yield getUser(userId);
             return res.status(200).json(user);
