@@ -1,6 +1,6 @@
 import { prisma } from '../services/db.services.js';
 
-async function getUserById(userId: string) {
+async function getUser(userId: string) {
   const user: any = await prisma.user.findUnique({
     where: { id: userId },
     include: {
@@ -13,4 +13,4 @@ async function getUserById(userId: string) {
   return userWithoutPassword;
 }
 
-export { getUserById };
+export { getUser };

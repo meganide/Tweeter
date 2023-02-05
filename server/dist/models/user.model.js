@@ -19,7 +19,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import { prisma } from '../services/db.services.js';
-function getUserById(userId) {
+function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield prisma.user.findUnique({
             where: { id: userId },
@@ -31,4 +31,4 @@ function getUserById(userId) {
         return userWithoutPassword;
     });
 }
-export { getUserById };
+export { getUser };

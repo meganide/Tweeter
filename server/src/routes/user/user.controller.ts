@@ -1,10 +1,17 @@
 import { Response } from 'express';
-import { getUserById } from '../../models/user.model.js';
+import { getUser } from '../../models/user.model.js';
 
-async function httpGetUserById(req: any, res: Response) {
-  const userId: string = req.user;
+async function httpGetUser(req: any, res: Response) {
+  let userId: string;
+
+  if (req.body.userId) {
+    userId = req.body.userId;
+  } else {
+    userId = req.user;
+  }
+
   try {
-    const user = await getUserById(userId);
+    const user = await getUser(userId);
 
     return res.status(200).json(user);
   } catch (error) {
@@ -15,4 +22,5 @@ async function httpGetUserById(req: any, res: Response) {
   }
 }
 
-export { httpGetUserById };
+
+export { httpGetUser };

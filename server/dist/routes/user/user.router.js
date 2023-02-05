@@ -1,5 +1,5 @@
 import express from "express";
-import { httpGetUserById } from "./user.controller.js";
+import { httpGetUser } from "./user.controller.js";
 const userRouter = express.Router();
-userRouter.get('/', httpGetUserById);
+userRouter.get('/find/:userId', httpGetUser);
 export { userRouter };

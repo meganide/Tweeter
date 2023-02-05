@@ -13,7 +13,7 @@ import { userRouter } from './user/user.router.js';
 const api = express.Router();
 
 api.use('/auth', authRouter)
-api.use('/user', jwtAuth, userRouter)
+api.use('/users', jwtAuth, userRouter)
 api.use('/posts', jwtAuth, postsRouter)
 api.use('/cloudinary', jwtAuth, cloudinaryRouter)
 api.use('/comments', jwtAuth, commentsRouter)

@@ -7,12 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getUserById } from '../../models/user.model.js';
-function httpGetUserById(req, res) {
+import { getUser } from '../../models/user.model.js';
+function httpGetUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
+        let userId;
+        if (req.body.userId) {
+            userId = req.body.userId;
+        }
+        else {
+            userId = req.user;
+        }
         try {
-            const user = yield getUserById(userId);
+            const user = yield getUser(userId);
             return res.status(200).json(user);
         }
         catch (error) {
@@ -23,4 +29,4 @@ function httpGetUserById(req, res) {
         }
     });
 }
-export { httpGetUserById };
+export { httpGetUser };

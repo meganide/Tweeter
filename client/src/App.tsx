@@ -27,7 +27,7 @@ function App() {
   useEffect(() => {
     async function getUser() {
       try {
-        const user = await axios.get(BASE_URL + '/api/user');
+        const user = await axios.get(BASE_URL + '/api/users/find');
         setCurrentUser(user.data);
       } catch (error) {
         console.log('error', error);
