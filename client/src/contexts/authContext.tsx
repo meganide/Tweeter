@@ -9,7 +9,7 @@ export interface IAuthContext {
   login(inputs: ILoginInputs): Promise<void>;
 }
 
-interface ICurrentUser {
+export interface ICurrentUser {
   id: string;
   name: string;
   email: string;

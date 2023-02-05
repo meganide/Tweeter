@@ -13,4 +13,17 @@ async function getUser(userId: string) {
   return userWithoutPassword;
 }
 
-export { getUser };
+async function getUserByName(name: string) {
+  const user: any = await prisma.user.findUnique({
+    where: { name: name },
+    include: {
+      profile: { select: { bio: true, backgroundImg: true } },
+    },
+  });
+
+  const { password, ...userWithoutPassword } = user;
+
+  return userWithoutPassword;
+}
+
+export { getUser, getUserByName };

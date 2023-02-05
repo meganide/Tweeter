@@ -31,4 +31,16 @@ function getUser(userId) {
         return userWithoutPassword;
     });
 }
-export { getUser };
+function getUserByName(name) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = yield prisma.user.findUnique({
+            where: { name: name },
+            include: {
+                profile: { select: { bio: true, backgroundImg: true } },
+            },
+        });
+        const { password } = user, userWithoutPassword = __rest(user, ["password"]);
+        return userWithoutPassword;
+    });
+}
+export { getUser, getUserByName };

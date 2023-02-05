@@ -15,6 +15,7 @@ export interface IProps {
 
 export interface IPostData {
   author: IAuthor;
+  authorId: string;
   createdAt: string;
   updatedAt: string;
   content: string;
