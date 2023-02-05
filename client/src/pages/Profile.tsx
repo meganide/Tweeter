@@ -14,7 +14,6 @@ function Profile() {
     return profile.data;
   });
 
-  console.log(userProfile);
 
   if (isLoading) {
     return <Spinner />;

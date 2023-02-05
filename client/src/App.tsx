@@ -28,7 +28,6 @@ function App() {
       try {
         const user = await axios.get(BASE_URL + '/api/users/find');
         setCurrentUser(user.data);
-        console.log('got user');
       } catch (error) {
         console.log('error', error);
       }
