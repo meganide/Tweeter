@@ -19,7 +19,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import { prisma } from '../services/db.services.js';
-function getUserById(userId) {
+function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield prisma.user.findUnique({
             where: { id: userId },
@@ -31,4 +31,22 @@ function getUserById(userId) {
         return userWithoutPassword;
     });
 }
-export { getUserById };
+function getUserByName(name) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = yield prisma.user.findUnique({
+            where: { name: name },
+            include: {
+                profile: { select: { bio: true, backgroundImg: true } },
+                followers: { select: { followerId: true } },
+                following: { select: { followedId: true } },
+                saves: true,
+                retweets: true,
+                likes: true,
+                comments: true,
+            },
+        });
+        const { password } = user, userWithoutPassword = __rest(user, ["password"]);
+        return userWithoutPassword;
+    });
+}
+export { getUser, getUserByName };

@@ -75,7 +75,7 @@ function TweetFooter(props: IProps) {
             <PublicIcon className="cursor-pointer text-accent hover:text-sky-700" onClick={toggleShowTooltip} />
             {showTooltip && (
               <OutsideClickHandler onOutsideClick={toggleShowTooltip}>
-                <ReplyToolTip setReplyStatus={setReplyStatus} />
+                <ReplyToolTip setReplyStatus={setReplyStatus} toggleShowTooltip={toggleShowTooltip}/>
               </OutsideClickHandler>
             )}
           </article>

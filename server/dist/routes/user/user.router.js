@@ -1,5 +1,6 @@
 import express from "express";
-import { httpGetUserById } from "./user.controller.js";
+import { httpGetUser, httpGetUserByName } from "./user.controller.js";
 const userRouter = express.Router();
-userRouter.get('/', httpGetUserById);
+userRouter.get('/find', httpGetUser);
+userRouter.get('/find/:name', httpGetUserByName);
 export { userRouter };

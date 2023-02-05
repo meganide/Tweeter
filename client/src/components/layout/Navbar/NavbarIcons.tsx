@@ -1,7 +1,7 @@
 import OutsideClickHandler from 'react-outside-click-handler';
 
 import { useToggle } from '../../../hooks/useToggle';
-import UserTooltip from '../../tooltips/UserTooltip';
+import UserTooltip from '../../tooltips/UserTooltip/UserTooltip';
 import { imagePaths } from '../../../utils/data';
 import Avatar from '../../common/Avatar';
 import { IProps } from './Navbar';
@@ -22,7 +22,7 @@ function NavbarIcons(props: IProps) {
       <Avatar toggleShowTooltip={toggleShowTooltip} />
       {showTooltip && (
         <OutsideClickHandler onOutsideClick={toggleShowTooltip}>
-          <UserTooltip />
+          <UserTooltip toggleShowTooltip={toggleShowTooltip}/>
         </OutsideClickHandler>
       )}
     </section>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate, useNavigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, useNavigate, ScrollRestoration } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import './app.css';
@@ -16,18 +16,17 @@ import Spinner from './components/common/Spinner';
 import { BASE_URL } from './utils/baseUrl';
 
 interface IChildren {
-  children: JSX.Element;
+  children: any;
 }
 
 function App() {
   const { currentUser, setCurrentUser } = useContext(AuthContext) as IAuthContext;
   const { toggle: darkToggle, toggleShow: setDarkToggle } = useToggle(true); //TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
 
-
   useEffect(() => {
     async function getUser() {
       try {
-        const user = await axios.get(BASE_URL + '/api/user');
+        const user = await axios.get(BASE_URL + '/api/users/find');
         setCurrentUser(user.data);
       } catch (error) {
         console.log('error', error);
@@ -44,6 +43,7 @@ function App() {
       path: '/',
       element: (
         <ProtectedRoute>
+          <ScrollRestoration />
           <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
         </ProtectedRoute>
       ),
@@ -67,12 +67,28 @@ function App() {
       path: '/profile',
       element: (
         <ProtectedRoute>
+          <ScrollRestoration />
           <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
         </ProtectedRoute>
       ),
       children: [
         {
           path: '/profile/',
+          element: <Profile />,
+        },
+      ],
+    },
+    {
+      path: '/profile/:name',
+      element: (
+        <ProtectedRoute>
+          <ScrollRestoration />
+          <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
+        </ProtectedRoute>
+      ),
+      children: [
+        {
+          path: '/profile/:name',
           element: <Profile />,
         },
       ],
@@ -92,9 +108,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className={`${darkToggle && 'dark'}`}>
-        <div className="min-h-screen bg-main-default dark:bg-main-dark">
-          {currentUser ? <RouterProvider router={router} /> : <Spinner />}
-        </div>
+        <div className="min-h-screen bg-main-default dark:bg-main-dark">{currentUser ? <RouterProvider router={router} /> : <Spinner />}</div>
       </div>
     </QueryClientProvider>
   );

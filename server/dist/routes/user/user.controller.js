@@ -7,12 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getUserById } from '../../models/user.model.js';
-function httpGetUserById(req, res) {
+import { getUser, getUserByName } from '../../models/user.model.js';
+function httpGetUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
+        let userId = req.user;
         try {
-            const user = yield getUserById(userId);
+            const user = yield getUser(userId);
             return res.status(200).json(user);
         }
         catch (error) {
@@ -23,4 +23,19 @@ function httpGetUserById(req, res) {
         }
     });
 }
-export { httpGetUserById };
+function httpGetUserByName(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let name = req.params.name;
+        try {
+            const user = yield getUserByName(name);
+            return res.status(200).json(user);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: 'There was an error getting user.',
+            });
+        }
+    });
+}
+export { httpGetUser, httpGetUserByName };

@@ -28,8 +28,8 @@ model User {
   profile    Profile?
   comments   Comment[]
   likes      Like[]
-  followers  Followers[] @relation("FollowerUser")
-  Following  Followers[] @relation("FollowedUser")
+  following  Followers[] @relation("FollowerUser")
+  followers  Followers[] @relation("FollowedUser")
   retweets   Retweet[]
   saves      Save[]
 }
@@ -40,6 +40,8 @@ model Followers {
   followerId String
   followed   User   @relation(name: "FollowedUser", fields: [followedId], references: [id])
   followedId String
+
+  @@unique([followerId, followedId])
 }
 
 model Profile {
