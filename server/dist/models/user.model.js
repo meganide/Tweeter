@@ -37,6 +37,12 @@ function getUserByName(name) {
             where: { name: name },
             include: {
                 profile: { select: { bio: true, backgroundImg: true } },
+                followers: { select: { followerId: true } },
+                following: { select: { followedId: true } },
+                saves: true,
+                retweets: true,
+                likes: true,
+                comments: true,
             },
         });
         const { password } = user, userWithoutPassword = __rest(user, ["password"]);

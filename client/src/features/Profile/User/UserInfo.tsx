@@ -2,16 +2,18 @@ import { useContext } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
-import Button from '../../../components/common/Button';
+import FollowButton from '../../../components/common/FollowButton';
 
 interface IProps {
   userProfile: ICurrentUser;
 }
 
 function UserInfo(props: IProps) {
-  const {userProfile} = props;
+  const { userProfile } = props;
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
+
+  console.log('userprof', userProfile);
 
   const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
@@ -22,21 +24,21 @@ function UserInfo(props: IProps) {
           <h2 className="text-2xl dark:text-white">{userProfile?.name}</h2>
           <section className="flex place-items-center justify-center gap-5 text-sm">
             <h3 className="text-xs dark:text-white lg:text-sm">
-              2580 <span className="text-neutral-500">Following</span>
+              {userProfile.following.length} <span className="text-neutral-500">Following</span>
             </h3>
             <h3 className="text-xs dark:text-white lg:text-sm">
-              10020 <span className="text-neutral-500">Followers</span>
+              {userProfile.followers.length} <span className="text-neutral-500">Followers</span>
             </h3>
-            {(!isBigScreen && currentUser?.name !== userProfile.name) && (
+            {!isBigScreen && currentUser?.name !== userProfile.name && (
               <section className="my-3">
-                <Button type="button" text="Follow" />
+                <FollowButton userProfile={userProfile} />
               </section>
             )}
           </section>
         </section>
-        {(isBigScreen && currentUser?.name !== userProfile.name) && (
+        {isBigScreen && currentUser?.name !== userProfile.name && (
           <section className="my-3">
-            <Button type="button" text="Follow" />
+            <FollowButton userProfile={userProfile} />
           </section>
         )}
       </section>

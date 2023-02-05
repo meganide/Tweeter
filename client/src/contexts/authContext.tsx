@@ -21,6 +21,8 @@ export interface ICurrentUser {
     bio: string | null;
     backgroundImg: string | null;
   } | null;
+  followers: { followerId: string }[];
+  following: { followedId: string }[];
 }
 
 interface ILoginInputs {
@@ -37,7 +39,6 @@ export function AuthContextProvider({ children }: iProps): ReactElement {
   const [currentUser, setCurrentUser] = useState<null | ICurrentUser>(null);
 
   async function login(inputs: ILoginInputs) {
-
     const res = await axios.post(BASE_URL + '/api/auth/login', inputs, {
       withCredentials: true,
     });

@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive';
 
 import Avatar from '../../../components/common/Avatar';
 import Card from '../../../components/common/Card';
-import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
+import { ICurrentUser } from '../../../contexts/authContext';
 import UserInfo from './UserInfo';
 
 interface IProps {
@@ -13,7 +13,6 @@ interface IProps {
 function UserCard(props: IProps) {
   const { userProfile } = props;
 
-  const { currentUser } = useContext(AuthContext) as IAuthContext;
   const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
   let imgHeight = 'w-[100px] h-[100px]';
