@@ -9,10 +9,12 @@ import { makeRequest } from '../utils/axios';
 function Profile() {
   const { name } = useParams();
 
-  const { isLoading, isError, data: userProfile } = useQuery('profile', async () => {
+  const { isLoading, isError, data: userProfile } = useQuery('profile' + name, async () => {
     const profile = await makeRequest.get('/api/users/find/' + name);
     return profile.data;
   });
+
+  console.log(userProfile)
 
 
   if (isLoading) {
