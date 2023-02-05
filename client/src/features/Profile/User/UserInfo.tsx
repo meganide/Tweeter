@@ -13,8 +13,6 @@ function UserInfo(props: IProps) {
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
 
-  console.log('userprof', userProfile);
-
   const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
   return (

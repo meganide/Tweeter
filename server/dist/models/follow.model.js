@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { prisma } from '../services/db.services.js';
 function follow(followerUserId, followedUserId) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('trying to add follow');
         const follower = yield prisma.followers.create({
             data: {
                 followerId: followerUserId,
@@ -23,7 +22,6 @@ function follow(followerUserId, followedUserId) {
 }
 function unfollow(followerUserId, followedUserId) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('trying to unfollow');
         const follower = yield prisma.followers.delete({
             where: {
                 followerId_followedId: {

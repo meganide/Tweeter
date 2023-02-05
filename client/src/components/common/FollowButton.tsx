@@ -15,7 +15,6 @@ interface IFollower {
 
 function FollowButton(props: IProps) {
   const { userProfile } = props;
-
   const { currentUser } = useContext(AuthContext) as IAuthContext;
 
   const isFollowing = userProfile.followers.some((follower: IFollower) => follower.followerId === currentUser?.id);
@@ -24,17 +23,21 @@ function FollowButton(props: IProps) {
 
   const mutation = useMutation(
     async () => {
-      let res;
-      if (isFollowing) {
-        res = await makeRequest.delete(`/api/followers?followedUserId=${userProfile.id}`);
-      } else {
-        res = await makeRequest.post(`/api/followers?followedUserId=${userProfile.id}`);
+      try {
+        let res;
+        if (isFollowing) {
+          res = await makeRequest.delete(`/api/followers?followedUserId=${userProfile.id}`);
+        } else {
+          res = await makeRequest.post(`/api/followers?followedUserId=${userProfile.id}`);
+        }
+        return res.data;
+      } catch (error) {
+        console.log(error);
       }
-      return res.data;
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('profile');
+        queryClient.invalidateQueries('profile' + userProfile.name);
       },
     }
   );
