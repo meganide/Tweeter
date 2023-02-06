@@ -75,7 +75,7 @@ function getRandomUsers(userId, amount) {
 }
 function getMostRecentUsers() {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = yield prisma.user.findMany({
+        const users = yield prisma.user.findMany({
             include: {
                 profile: { select: { bio: true, backgroundImg: true } },
                 followers: { select: { followerId: true } },
@@ -83,8 +83,10 @@ function getMostRecentUsers() {
             orderBy: { createdAt: 'desc' },
             take: 2,
         });
-        // const { password, ...userWithoutPassword } = user;
-        return user;
+        users.forEach((user, index) => {
+            delete users[index].password;
+        });
+        return users;
     });
 }
 export { getUser, getUserByName, getRandomUsers, getMostRecentUsers };

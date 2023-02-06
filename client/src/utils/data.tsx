@@ -27,7 +27,7 @@ const links = [
     icon: <ExploreIcon style={{ fontSize: '2rem' }} />,
   },
   {
-    pathname: '/boomarks',
+    pathname: '/bookmarks',
     name: 'Bookmarks',
     icon: <BookmarkIcon style={{ fontSize: '2rem' }} />,
   },
