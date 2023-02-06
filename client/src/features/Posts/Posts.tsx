@@ -5,12 +5,20 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../Post/Post';
 import Spinner from '../../components/common/Spinner';
 import { makeRequest } from '../../utils/axios';
+import { IPostData } from '../Post/Post';
 
-function Posts() {
+interface IProps {
+  selectedOption?: string;
+  name?:string;
+}
+
+function Posts(props: IProps) {
+  const { selectedOption, name } = props;
+
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
-    'followersPosts',
+    selectedOption ? ['followersPosts', selectedOption + name] : 'followersPosts',
     async ({ pageParam = 0 }) => {
-      const res = await makeRequest.get(`/api/posts/followed?skip=${pageParam}`);
+      const res = await makeRequest.get(selectedOption ? `/api/posts/${selectedOption}?skip=${pageParam}&name=${name}` : `/api/posts/followed?skip=${pageParam}`);
       return res.data;
     },
     {
@@ -22,7 +30,6 @@ function Posts() {
       },
     }
   );
-
 
   return status === 'loading' ? (
     <Spinner />
@@ -38,7 +45,7 @@ function Posts() {
         endMessage={<EndMessage />}
       >
         {data?.pages.map((pages: any) => {
-          return pages.map((post: any) => {
+          return pages.map((post: IPostData) => {
             return <Post key={uuidv4()} postData={post} />;
           });
         })}
@@ -51,7 +58,7 @@ export function EndMessage() {
   return (
     <div className="px-4 py-3">
       <div className="flex flex-col items-center justify-center">
-        <p className="font-medium ">No more posts! Tweet something, follow people or go to explore!</p>
+        <p>No more posts! Tweet something, follow people or go to explore!</p>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ export interface IProps {
 
 export interface ICommentData {
   id: string;
+  authorId: string;
   comment: string;
   createdAt: string;
   updatedAt: string;

@@ -64,4 +64,129 @@ function addPost(userId, tweetData) {
         return createdPost;
     });
 }
-export { getFollowedPosts, getAllPosts, addPost };
+function getOwnTweets(name, skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ownTweets = yield prisma.post.findMany({
+            where: {
+                author: { name },
+            },
+            include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                saves: { select: { userId: true } },
+                author: { select: { name: true, profilePic: true } },
+            },
+            orderBy: { createdAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        return ownTweets;
+    });
+}
+function getUserPostsWithReplies(name, skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ownTweets = yield prisma.post.findMany({
+            where: {
+                comments: { some: { user: { name } } },
+            },
+            include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                saves: { select: { userId: true } },
+                author: { select: { name: true, profilePic: true } },
+            },
+            orderBy: { createdAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        return ownTweets;
+    });
+}
+function getUserPostsWithMedia(name, skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ownTweets = yield prisma.post.findMany({
+            where: {
+                author: { name },
+                image: { not: '' },
+            },
+            include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                saves: { select: { userId: true } },
+                author: { select: { name: true, profilePic: true } },
+            },
+            orderBy: { createdAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        return ownTweets;
+    });
+}
+function getUserPostsWithLikes(name, skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ownTweets = yield prisma.post.findMany({
+            where: {
+                likes: { some: { likedBy: { name } } },
+            },
+            include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                saves: { select: { userId: true } },
+                author: { select: { name: true, profilePic: true } },
+            },
+            orderBy: { createdAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        return ownTweets;
+    });
+}
+export { getFollowedPosts, getAllPosts, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes };
