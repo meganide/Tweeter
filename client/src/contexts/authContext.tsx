@@ -38,6 +38,8 @@ export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 export function AuthContextProvider({ children }: IProps): ReactElement {
   const [currentUser, setCurrentUser] = useState<null | ICurrentUser>(null);
 
+
+
   async function login(inputs: ILoginInputs) {
     const res = await axios.post(BASE_URL + '/api/auth/login', inputs, {
       withCredentials: true,

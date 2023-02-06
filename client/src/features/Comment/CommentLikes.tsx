@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { AuthContext, IAuthContext } from '../../contexts/authContext';
 import { makeRequest } from '../../utils/axios';
 import { IProps } from './Comment';
@@ -39,7 +38,7 @@ function CommentLikes(props: IProps) {
 
   return (
     <section className="mt-2 flex place-items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">
-      <section className={`${clicked && 'text-red-500'} flex place-items-center cursor-pointer gap-1`} onClick={toggleLike}>
+      <section className={`${clicked && 'text-red-500'} flex cursor-pointer place-items-center gap-1`} onClick={toggleLike}>
         {clicked ? postOptionsData[0].clickedIcon : postOptionsData[0].icon}
         <p>{clicked ? 'Liked' : 'Like'}</p>
       </section>

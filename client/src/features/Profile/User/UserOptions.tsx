@@ -16,7 +16,7 @@ function UserOptions(props: IProps) {
       text: 'Tweets',
     },
     {
-      text: 'Tweets & replies',
+      text: 'Replies',
     },
     {
       text: 'Media',

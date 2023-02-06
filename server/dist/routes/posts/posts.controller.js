@@ -38,10 +38,10 @@ function httpAddPost(req, res) {
 }
 function httpGetOwnTweets(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
+        const name = req.query.name;
         const { skip } = req.query;
         try {
-            const ownTweets = yield getOwnTweets(userId, skip);
+            const ownTweets = yield getOwnTweets(name, skip);
             return res.status(200).json(ownTweets);
         }
         catch (error) {
@@ -52,10 +52,10 @@ function httpGetOwnTweets(req, res) {
 }
 function httpGetUserPostsWithReplies(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
+        const name = req.query.name;
         const { skip } = req.query;
         try {
-            const ownTweets = yield getUserPostsWithReplies(userId, skip);
+            const ownTweets = yield getUserPostsWithReplies(name, skip);
             return res.status(200).json(ownTweets);
         }
         catch (error) {
@@ -66,10 +66,10 @@ function httpGetUserPostsWithReplies(req, res) {
 }
 function httpGetUserPostsWithMedia(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
+        const name = req.query.name;
         const { skip } = req.query;
         try {
-            const ownTweets = yield getUserPostsWithMedia(userId, skip);
+            const ownTweets = yield getUserPostsWithMedia(name, skip);
             return res.status(200).json(ownTweets);
         }
         catch (error) {
@@ -80,10 +80,10 @@ function httpGetUserPostsWithMedia(req, res) {
 }
 function httpGetUserPostsWithLikes(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
+        const name = req.query.name;
         const { skip } = req.query;
         try {
-            const ownTweets = yield getUserPostsWithLikes(userId, skip);
+            const ownTweets = yield getUserPostsWithLikes(name, skip);
             return res.status(200).json(ownTweets);
         }
         catch (error) {

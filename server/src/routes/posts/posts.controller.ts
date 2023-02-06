@@ -34,11 +34,11 @@ async function httpAddPost(req: any, res: Response) {
 }
 
 async function httpGetOwnTweets(req: any, res: Response) {
-  const userId: string = req.user;
+  const name: string = req.query.name;
   const { skip }: any = req.query;
 
   try {
-    const ownTweets = await getOwnTweets(userId, skip);
+    const ownTweets = await getOwnTweets(name, skip);
     return res.status(200).json(ownTweets);
   } catch (error) {
     console.log(error);
@@ -47,11 +47,11 @@ async function httpGetOwnTweets(req: any, res: Response) {
 }
 
 async function httpGetUserPostsWithReplies(req: any, res: Response) {
-  const userId: string = req.user;
+  const name: string = req.query.name;
   const { skip }: any = req.query;
 
   try {
-    const ownTweets = await getUserPostsWithReplies(userId, skip);
+    const ownTweets = await getUserPostsWithReplies(name, skip);
     return res.status(200).json(ownTweets);
   } catch (error) {
     console.log(error);
@@ -60,11 +60,11 @@ async function httpGetUserPostsWithReplies(req: any, res: Response) {
 }
 
 async function httpGetUserPostsWithMedia(req: any, res: Response) {
-  const userId: string = req.user;
+  const name: string = req.query.name;
   const { skip }: any = req.query;
 
   try {
-    const ownTweets = await getUserPostsWithMedia(userId, skip);
+    const ownTweets = await getUserPostsWithMedia(name, skip);
     return res.status(200).json(ownTweets);
   } catch (error) {
     console.log(error);
@@ -73,11 +73,11 @@ async function httpGetUserPostsWithMedia(req: any, res: Response) {
 }
 
 async function httpGetUserPostsWithLikes(req: any, res: Response) {
-  const userId: string = req.user;
+  const name: string = req.query.name;
   const { skip }: any = req.query;
 
   try {
-    const ownTweets = await getUserPostsWithLikes(userId, skip);
+    const ownTweets = await getUserPostsWithLikes(name, skip);
     return res.status(200).json(ownTweets);
   } catch (error) {
     console.log(error);

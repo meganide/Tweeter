@@ -9,31 +9,16 @@ import { IPostData } from '../Post/Post';
 
 interface IProps {
   selectedOption?: string;
+  name?:string;
 }
 
 function Posts(props: IProps) {
-  const { selectedOption } = props;
-
-  let fetchUrl: string;
-  switch (selectedOption) {
-    case 'Tweets':
-      fetchUrl = 'tweets';
-      break;
-    case 'Tweets & replies':
-      fetchUrl = 'replies';
-      break;
-    case 'Media':
-      fetchUrl = 'media';
-      break;
-    case 'Likes':
-      fetchUrl = 'likes';
-      break;
-  }
+  const { selectedOption, name } = props;
 
   const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
-    selectedOption ? ['followersPosts', selectedOption] : 'followersPosts',
+    selectedOption ? ['followersPosts', selectedOption + name] : 'followersPosts',
     async ({ pageParam = 0 }) => {
-      const res = await makeRequest.get(fetchUrl ? `/api/posts/${fetchUrl}?skip=${pageParam}` : `/api/posts/followed?skip=${pageParam}`);
+      const res = await makeRequest.get(selectedOption ? `/api/posts/${selectedOption}?skip=${pageParam}&name=${name}` : `/api/posts/followed?skip=${pageParam}`);
       return res.data;
     },
     {

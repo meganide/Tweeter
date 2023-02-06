@@ -59,10 +59,10 @@ async function addPost(userId: string, tweetData: ITweetData) {
   return createdPost;
 }
 
-async function getOwnTweets(userId: string, skip: any) {
+async function getOwnTweets(name: string, skip: any) {
   const ownTweets = await prisma.post.findMany({
     where: {
-      authorId: userId,
+      author: { name },
     },
     include: {
       comments: {
@@ -90,10 +90,10 @@ async function getOwnTweets(userId: string, skip: any) {
   return ownTweets;
 }
 
-async function getUserPostsWithReplies(userId: string, skip: any) {
+async function getUserPostsWithReplies(name: string, skip: any) {
   const ownTweets = await prisma.post.findMany({
     where: {
-      OR: [{ comments: { some: { authorId: userId } } }, { authorId: userId }],
+      comments: { some: { user: { name } } },
     },
     include: {
       comments: {
@@ -121,10 +121,10 @@ async function getUserPostsWithReplies(userId: string, skip: any) {
   return ownTweets;
 }
 
-async function getUserPostsWithMedia(userId: string, skip: any) {
+async function getUserPostsWithMedia(name: string, skip: any) {
   const ownTweets = await prisma.post.findMany({
     where: {
-      authorId: userId,
+      author: {name},
       image: { not: '' },
     },
     include: {
@@ -153,10 +153,10 @@ async function getUserPostsWithMedia(userId: string, skip: any) {
   return ownTweets;
 }
 
-async function getUserPostsWithLikes(userId: string, skip: any) {
+async function getUserPostsWithLikes(name: string, skip: any) {
   const ownTweets = await prisma.post.findMany({
     where: {
-      likes: { some: { userId: userId } },
+      likes: { some: { likedBy: {name} } },
     },
     include: {
       comments: {

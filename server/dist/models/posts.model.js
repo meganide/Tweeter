@@ -64,11 +64,11 @@ function addPost(userId, tweetData) {
         return createdPost;
     });
 }
-function getOwnTweets(userId, skip) {
+function getOwnTweets(name, skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const ownTweets = yield prisma.post.findMany({
             where: {
-                authorId: userId,
+                author: { name },
             },
             include: {
                 comments: {
@@ -95,11 +95,11 @@ function getOwnTweets(userId, skip) {
         return ownTweets;
     });
 }
-function getUserPostsWithReplies(userId, skip) {
+function getUserPostsWithReplies(name, skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const ownTweets = yield prisma.post.findMany({
             where: {
-                OR: [{ comments: { some: { authorId: userId } } }, { authorId: userId }],
+                comments: { some: { user: { name } } },
             },
             include: {
                 comments: {
@@ -126,11 +126,11 @@ function getUserPostsWithReplies(userId, skip) {
         return ownTweets;
     });
 }
-function getUserPostsWithMedia(userId, skip) {
+function getUserPostsWithMedia(name, skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const ownTweets = yield prisma.post.findMany({
             where: {
-                authorId: userId,
+                author: { name },
                 image: { not: '' },
             },
             include: {
@@ -158,11 +158,11 @@ function getUserPostsWithMedia(userId, skip) {
         return ownTweets;
     });
 }
-function getUserPostsWithLikes(userId, skip) {
+function getUserPostsWithLikes(name, skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const ownTweets = yield prisma.post.findMany({
             where: {
-                likes: { some: { userId: userId } },
+                likes: { some: { likedBy: { name } } },
             },
             include: {
                 comments: {
