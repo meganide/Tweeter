@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { addPost, getFollowedPosts } from '../../models/posts.model.js';
+import { addPost, getFollowedPosts, getOwnTweets, getUserPostsWithLikes, getUserPostsWithMedia, getUserPostsWithReplies } from '../../models/posts.model.js';
 function httpGetFollowedPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
@@ -36,4 +36,60 @@ function httpAddPost(req, res) {
         }
     });
 }
-export { httpGetFollowedPosts, httpAddPost };
+function httpGetOwnTweets(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const { skip } = req.query;
+        try {
+            const ownTweets = yield getOwnTweets(userId, skip);
+            return res.status(200).json(ownTweets);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(404).json({ error: "Couldn't find any tweets" });
+        }
+    });
+}
+function httpGetUserPostsWithReplies(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const { skip } = req.query;
+        try {
+            const ownTweets = yield getUserPostsWithReplies(userId, skip);
+            return res.status(200).json(ownTweets);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(404).json({ error: "Couldn't find any tweets or replies" });
+        }
+    });
+}
+function httpGetUserPostsWithMedia(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const { skip } = req.query;
+        try {
+            const ownTweets = yield getUserPostsWithMedia(userId, skip);
+            return res.status(200).json(ownTweets);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(404).json({ error: "Couldn't find any tweets with media" });
+        }
+    });
+}
+function httpGetUserPostsWithLikes(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const { skip } = req.query;
+        try {
+            const ownTweets = yield getUserPostsWithLikes(userId, skip);
+            return res.status(200).json(ownTweets);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(404).json({ error: "Couldn't find any posts user has liked." });
+        }
+    });
+}
+export { httpGetFollowedPosts, httpAddPost, httpGetOwnTweets, httpGetUserPostsWithReplies, httpGetUserPostsWithMedia, httpGetUserPostsWithLikes };

@@ -59,4 +59,129 @@ async function addPost(userId: string, tweetData: ITweetData) {
   return createdPost;
 }
 
-export { getFollowedPosts, getAllPosts, addPost };
+async function getOwnTweets(userId: string, skip: any) {
+  const ownTweets = await prisma.post.findMany({
+    where: {
+      authorId: userId,
+    },
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+          likes: { select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+      likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true } },
+      author: { select: { name: true, profilePic: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
+  });
+
+  return ownTweets;
+}
+
+async function getUserPostsWithReplies(userId: string, skip: any) {
+  const ownTweets = await prisma.post.findMany({
+    where: {
+      OR: [{ comments: { some: { authorId: userId } } }, { authorId: userId }],
+    },
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+          likes: { select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+      likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true } },
+      author: { select: { name: true, profilePic: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
+  });
+
+  return ownTweets;
+}
+
+async function getUserPostsWithMedia(userId: string, skip: any) {
+  const ownTweets = await prisma.post.findMany({
+    where: {
+      authorId: userId,
+      image: { not: '' },
+    },
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+          likes: { select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+      likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true } },
+      author: { select: { name: true, profilePic: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
+  });
+
+  return ownTweets;
+}
+
+async function getUserPostsWithLikes(userId: string, skip: any) {
+  const ownTweets = await prisma.post.findMany({
+    where: {
+      likes: { some: { userId: userId } },
+    },
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+          likes: { select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+      likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true } },
+      author: { select: { name: true, profilePic: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
+  });
+
+  return ownTweets;
+}
+
+export { getFollowedPosts, getAllPosts, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes };

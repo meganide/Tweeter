@@ -60,6 +60,7 @@ function Routes() {
 
     return children;
   }
+
   return <RouterProvider router={router} />;
 }
 

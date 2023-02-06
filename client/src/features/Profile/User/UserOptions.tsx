@@ -1,10 +1,16 @@
-import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import Card from '../../../components/common/Card';
 import UserOption from './UserOption';
 
-function UserOptions() {
+interface IProps {
+  selectedOption: string;
+  setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function UserOptions(props: IProps) {
+  const { selectedOption, setSelectedOption } = props;
+
   const userOptionData = [
     {
       text: 'Tweets',
@@ -19,8 +25,6 @@ function UserOptions() {
       text: 'Likes',
     },
   ];
-
-  const [selectedOption, setSelectedOption] = useState('Tweets');
 
   return (
     <section>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
@@ -10,6 +11,8 @@ import ErrorPage from './ErrorPage';
 
 function Profile() {
   const { name } = useParams();
+
+  const [selectedOption, setSelectedOption] = useState('Tweets');
 
   const {
     isLoading,
@@ -32,9 +35,9 @@ function Profile() {
     <section>
       <UserCard userProfile={userProfile} />
       <section className="mx-auto max-w-7xl gap-x-6 py-4 px-3 pb-16 lg:grid lg:grid-cols-[1fr_2fr] lg:px-3 lg:pb-0 xl:px-0">
-        <UserOptions />
+        <UserOptions selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
         <section className="-mt-2 lg:-mt-7">
-          <Posts />
+          <Posts selectedOption={selectedOption}/>
         </section>
       </section>
     </section>
