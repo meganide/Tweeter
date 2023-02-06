@@ -56,8 +56,9 @@ function httpGetRandomUsers(req, res) {
 }
 function httpGetMostRecentUsers(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
         try {
-            const user = yield getMostRecentUsers();
+            const user = yield getMostRecentUsers(userId);
             return res.status(200).json(user);
         }
         catch (error) {
