@@ -22,7 +22,7 @@ function UserInfo(props: IProps) {
           <h2 className="text-2xl dark:text-white">{userProfile?.name}</h2>
           <section className="flex place-items-center justify-center gap-5 text-sm">
             <h3 className="text-xs dark:text-white lg:text-sm">
-              {userProfile.following.length} <span className="text-neutral-500">Following</span>
+              {userProfile?.following?.length} <span className="text-neutral-500">Following</span>
             </h3>
             <h3 className="text-xs dark:text-white lg:text-sm">
               {userProfile.followers.length} <span className="text-neutral-500">Followers</span>
