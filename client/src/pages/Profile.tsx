@@ -5,8 +5,15 @@ import Posts from '../features/Posts/Posts';
 import UserCard from '../features/Profile/User/UserCard';
 import UserOptions from '../features/Profile/User/UserOptions';
 import { makeRequest } from '../utils/axios';
+import ErrorPage from './ErrorPage';
 
-function Profile() {
+interface IProps {
+  setDarkToggle: () => void;
+  darkToggle: boolean;
+}
+
+function Profile(props: IProps) {
+  const { setDarkToggle, darkToggle } = props;
   const { name } = useParams();
 
   const {
@@ -23,7 +30,7 @@ function Profile() {
   }
 
   if (isError) {
-    return <p>Something went wrong, try refreshing!</p>;
+    return <ErrorPage setDarkToggle={setDarkToggle} darkToggle={darkToggle} />;
   }
 
   return (

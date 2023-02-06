@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate, useNavigate, ScrollRestoration } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, ScrollRestoration } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import './app.css';
@@ -52,6 +52,16 @@ function App() {
           path: '/',
           element: <Home />,
         },
+        {
+          path: 'profile',
+          element: <Profile setDarkToggle={setDarkToggle} darkToggle={darkToggle} />,
+          children: [
+            {
+              path: ':name',
+              element: <Profile setDarkToggle={setDarkToggle} darkToggle={darkToggle} />,
+            },
+          ],
+        },
       ],
       errorElement: <ErrorPage setDarkToggle={setDarkToggle} darkToggle={darkToggle} />,
     },
@@ -62,36 +72,6 @@ function App() {
     {
       path: '/register',
       element: <Register />,
-    },
-    {
-      path: '/profile',
-      element: (
-        <ProtectedRoute>
-          <ScrollRestoration />
-          <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
-        </ProtectedRoute>
-      ),
-      children: [
-        {
-          path: '/profile/',
-          element: <Profile />,
-        },
-      ],
-    },
-    {
-      path: '/profile/:name',
-      element: (
-        <ProtectedRoute>
-          <ScrollRestoration />
-          <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
-        </ProtectedRoute>
-      ),
-      children: [
-        {
-          path: '/profile/:name',
-          element: <Profile />,
-        },
-      ],
     },
   ]);
 
