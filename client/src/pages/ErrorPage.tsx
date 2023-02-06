@@ -1,20 +1,13 @@
 import { useRouteError } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar/Navbar';
 
-interface IProps {
-  setDarkToggle: () => void;
-  darkToggle: boolean;
-}
-
-function ErrorPage(props: IProps) {
-  const { setDarkToggle, darkToggle } = props;
-  
+function ErrorPage() {
   const error: any = useRouteError();
   console.error(error);
 
   return (
     <div className="flex min-h-screen w-screen flex-col">
-      <Navbar setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
+      <Navbar />
       <div className="flex flex-grow flex-col items-center justify-center dark:text-white">
         <h1 className="mb-1 text-2xl text-inherit">Oops!</h1>
         <p className="mb-1">Sorry, an unexpected error has occured.</p>

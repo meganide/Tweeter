@@ -29,13 +29,13 @@ interface ILoginInputs {
   [key: string]: string;
 }
 
-interface iProps {
+interface IProps {
   children: ReactElement;
 }
 
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
-export function AuthContextProvider({ children }: iProps): ReactElement {
+export function AuthContextProvider({ children }: IProps): ReactElement {
   const [currentUser, setCurrentUser] = useState<null | ICurrentUser>(null);
 
   async function login(inputs: ILoginInputs) {

@@ -1,27 +1,17 @@
-import axios from 'axios';
 import { useContext, useEffect } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate, ScrollRestoration } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import axios from 'axios';
 
 import './app.css';
-import Layout from './components/layout/Layout';
-import Profile from './pages/Profile';
-import { useToggle } from './hooks/useToggle';
-import ErrorPage from './pages/ErrorPage';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import { AuthContext, IAuthContext } from './contexts/authContext';
-import Spinner from './components/common/Spinner';
 import { BASE_URL } from './utils/baseUrl';
-
-interface IChildren {
-  children: any;
-}
+import { AuthContext, IAuthContext } from './contexts/authContext';
+import { IThemeContext, ThemeContext } from './contexts/themeContext';
+import Spinner from './components/common/Spinner';
+import Routes from './Routes';
 
 function App() {
   const { currentUser, setCurrentUser } = useContext(AuthContext) as IAuthContext;
-  const { toggle: darkToggle, toggleShow: setDarkToggle } = useToggle(true); //TO DO: add to context --> move to navbar component, also check local storage if dark mode is already set.
+  const { darkToggle } = useContext(ThemeContext) as IThemeContext;
 
   useEffect(() => {
     async function getUser() {
@@ -38,57 +28,12 @@ function App() {
     }
   }, [currentUser]);
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: (
-        <ProtectedRoute>
-          <ScrollRestoration />
-          <Layout setDarkToggle={setDarkToggle} darkToggle={darkToggle} />
-        </ProtectedRoute>
-      ),
-      children: [
-        {
-          path: '/',
-          element: <Home />,
-        },
-        {
-          path: 'profile',
-          element: <Profile setDarkToggle={setDarkToggle} darkToggle={darkToggle} />,
-          children: [
-            {
-              path: ':name',
-              element: <Profile setDarkToggle={setDarkToggle} darkToggle={darkToggle} />,
-            },
-          ],
-        },
-      ],
-      errorElement: <ErrorPage setDarkToggle={setDarkToggle} darkToggle={darkToggle} />,
-    },
-    {
-      path: '/login',
-      element: <Login />,
-    },
-    {
-      path: '/register',
-      element: <Register />,
-    },
-  ]);
-
-  function ProtectedRoute({ children }: IChildren) {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
-
-    return children;
-  }
-
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className={`${darkToggle && 'dark'}`}>
-        <div className="min-h-screen bg-main-default dark:bg-main-dark">{currentUser ? <RouterProvider router={router} /> : <Spinner />}</div>
+        <div className="min-h-screen bg-main-default dark:bg-main-dark">{currentUser ? <Routes /> : <Spinner />}</div>
       </div>
     </QueryClientProvider>
   );
