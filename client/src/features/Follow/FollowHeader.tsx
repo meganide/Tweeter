@@ -19,7 +19,7 @@ function FollowHeader(props: IProps) {
 
   return (
     <header className="flex place-items-center gap-5">
-      <Avatar />
+      <Avatar imgSrc={followerData.profilePic}/>
       <section className="mr-auto flex flex-col justify-between">
         <h3 className="dark:text-neutral-300">{followerData.name}</h3>
         <h4 className="mt-1 text-xs font-normal dark:text-neutral-500">{followerData.followers.length} followers</h4>

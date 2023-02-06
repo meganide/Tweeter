@@ -8,6 +8,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { AuthContext, IAuthContext } from './contexts/authContext';
+import Bookmarks from './pages/Bookmarks';
+import Explore from './pages/Explore';
 
 interface IChildren {
   children: any;
@@ -39,6 +41,14 @@ function Routes() {
               element: <Profile />,
             },
           ],
+        },
+        {
+          path: 'bookmarks',
+          element: <Bookmarks />,
+        },
+        {
+          path: 'explore',
+          element: <Explore />,
         },
       ],
       errorElement: <ErrorPage />,
