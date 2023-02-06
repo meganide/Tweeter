@@ -40,7 +40,7 @@ async function getRandomUsers(userId: string, amount: number) {
     randomIndexes.add(randomIndex);
   }
   const randomUsers = [];
-  
+
   for (const index of Array.from(randomIndexes)) {
     const user: any = await prisma.user.findFirst({
       where: { NOT: { id: userId } },
@@ -51,16 +51,18 @@ async function getRandomUsers(userId: string, amount: number) {
       skip: index,
     });
 
-    const { password, ...userWithoutPassword } = user;
-
-    randomUsers.push(userWithoutPassword);
+    if (user) {
+      const { password, ...userWithoutPassword } = user;
+      randomUsers.push(userWithoutPassword);
+    }
   }
 
   return randomUsers;
 }
 
-async function getMostRecentUsers() {
+async function getMostRecentUsers(userId: string) {
   const users: any = await prisma.user.findMany({
+    where: { NOT: { id: userId } },
     include: {
       profile: { select: { bio: true, backgroundImg: true } },
       followers: { select: { followerId: true } },

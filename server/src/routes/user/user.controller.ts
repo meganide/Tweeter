@@ -48,9 +48,10 @@ async function httpGetRandomUsers(req: any, res: Response) {
 }
 
 async function httpGetMostRecentUsers(req: any, res: Response) {
+  const userId: string = req.user;
 
   try {
-    const user = await getMostRecentUsers();
+    const user = await getMostRecentUsers(userId);
 
     return res.status(200).json(user);
   } catch (error) {

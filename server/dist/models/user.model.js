@@ -67,15 +67,18 @@ function getRandomUsers(userId, amount) {
                 },
                 skip: index,
             });
-            const { password } = user, userWithoutPassword = __rest(user, ["password"]);
-            randomUsers.push(userWithoutPassword);
+            if (user) {
+                const { password } = user, userWithoutPassword = __rest(user, ["password"]);
+                randomUsers.push(userWithoutPassword);
+            }
         }
         return randomUsers;
     });
 }
-function getMostRecentUsers() {
+function getMostRecentUsers(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         const users = yield prisma.user.findMany({
+            where: { NOT: { id: userId } },
             include: {
                 profile: { select: { bio: true, backgroundImg: true } },
                 followers: { select: { followerId: true } },
