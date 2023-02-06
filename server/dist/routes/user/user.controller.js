@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getUser, getUserByName } from '../../models/user.model.js';
+import { getMostRecentUsers, getRandomUsers, getUser, getUserByName } from '../../models/user.model.js';
 function httpGetUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let userId = req.user;
@@ -38,4 +38,34 @@ function httpGetUserByName(req, res) {
         }
     });
 }
-export { httpGetUser, httpGetUserByName };
+function httpGetRandomUsers(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        let amount = parseInt(req.query.amount);
+        try {
+            const user = yield getRandomUsers(userId, amount);
+            return res.status(200).json(user);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: 'There was an error getting users.',
+            });
+        }
+    });
+}
+function httpGetMostRecentUsers(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const user = yield getMostRecentUsers();
+            return res.status(200).json(user);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(400).json({
+                error: 'There was an error getting most recent users.',
+            });
+        }
+    });
+}
+export { httpGetUser, httpGetUserByName, httpGetRandomUsers, httpGetMostRecentUsers };

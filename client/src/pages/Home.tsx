@@ -14,7 +14,7 @@ function Home() {
       </section>
       <MediaQuery minWidth={1024}>
         <section className="flex flex-col gap-5">
-          <Trends />
+          {/* <Trends /> */}
           <Follow />
         </section>
       </MediaQuery>
