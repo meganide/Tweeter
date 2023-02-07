@@ -11,7 +11,7 @@ function Bookmarks() {
       <section className='mt-7'>
         <UserOptions selectedOption={selectedOption} setSelectedOption={setSelectedOption} userOptionData={userOptionDataBookmarks} />
       </section>
-      <Posts fetchUrl={`/api/posts/bookmarks/${selectedOption}?`} queryName={['followersPosts', 'bookmarks' + selectedOption]} />
+      <Posts fetchUrl={`/api/posts/bookmarks?sortOption=${selectedOption}&`} queryName={['followersPosts', 'bookmarks' + selectedOption]} />
     </section>
   );
 }

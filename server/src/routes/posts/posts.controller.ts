@@ -1,7 +1,11 @@
 import { Response } from 'express';
 
+import { sortBookmarks } from '../../utils/helpers.js';
 import {
   addPost,
+  getAllLatestPosts,
+  getAllOldestPosts,
+  getAllPostsWithMedia,
   getFollowedPosts,
   getOwnTweets,
   getUserBookmarks,
@@ -93,19 +97,14 @@ async function httpGetUserPostsWithLikes(req: any, res: Response) {
   }
 }
 
-async function httpGetLatestUserBookmarks(req: any, res: Response) {
+async function httpGetBookmarks(req: any, res: Response) {
   const userId: string = req.user;
-  const { skip }: any = req.query;
+  const { skip, sortOption }: any = req.query;
 
   try {
     const bookmarks = await getUserBookmarks(userId, skip);
 
-    const sortedPosts = bookmarks.sort((a: any, b: any) => {
-      const aSaveDate = a.saves[0].savedAt.getTime();
-      const bSaveDate = b.saves[0].savedAt.getTime();
-
-      return bSaveDate - aSaveDate;
-    });
+    const sortedPosts = sortBookmarks(bookmarks, sortOption);
 
     return res.status(200).json(sortedPosts);
   } catch (error) {
@@ -114,63 +113,25 @@ async function httpGetLatestUserBookmarks(req: any, res: Response) {
   }
 }
 
-async function httpGetOldestUserBookmarks(req: any, res: Response) {
-  const userId: string = req.user;
-  const { skip }: any = req.query;
+async function httpGetAllPosts(req: any, res: Response) {
+  const { skip, sortOption }: any = req.query;
+
+  console.log(sortOption);
 
   try {
-    const bookmarks = await getUserBookmarks(userId, skip);
+    let posts;
+    if (sortOption === 'Latest') {
+      posts = await getAllLatestPosts(skip);
+    } else if (sortOption === 'Oldest') {
+      posts = await getAllOldestPosts(skip);
+    } else if (sortOption === 'Media') {
+      posts = await getAllPostsWithMedia(skip);
+    }
 
-    const sortedPosts = bookmarks.sort((a: any, b: any) => {
-      const aSaveDate = a.saves[0].savedAt.getTime();
-      const bSaveDate = b.saves[0].savedAt.getTime();
-
-      return aSaveDate - bSaveDate;
-    });
-
-    return res.status(200).json(sortedPosts);
+    return res.status(200).json(posts);
   } catch (error) {
     console.log(error);
-    return res.status(404).json({ error: "Couldn't find any bookmarks" });
-  }
-}
-
-async function httpGetTopLikesBookmarks(req: any, res: Response) {
-  const userId: string = req.user;
-  const { skip }: any = req.query;
-
-  try {
-    const bookmarks = await getUserBookmarks(userId, skip);
-
-    const sortedPosts = bookmarks.sort((a: any, b: any) => {
-      const aAmountLikes = a.likes.length;
-      const bAmountLikes = b.likes.length;
-
-      return bAmountLikes - aAmountLikes;
-    });
-
-    return res.status(200).json(sortedPosts);
-  } catch (error) {
-    console.log(error);
-    return res.status(404).json({ error: "Couldn't find any bookmarks" });
-  }
-}
-
-async function httpGetMediaBookmarks(req: any, res: Response) {
-  const userId: string = req.user;
-  const { skip }: any = req.query;
-
-  try {
-    const bookmarks = await getUserBookmarks(userId, skip);
-
-    const filteredBookmarks = bookmarks.filter((bookmark: any) => {
-      return bookmark.image !== '';
-    });
-
-    return res.status(200).json(filteredBookmarks);
-  } catch (error) {
-    console.log(error);
-    return res.status(404).json({ error: "Couldn't find any bookmarks" });
+    return res.status(404).json({ error: "Couldn't find any posts" });
   }
 }
 
@@ -181,8 +142,6 @@ export {
   httpGetUserPostsWithReplies,
   httpGetUserPostsWithMedia,
   httpGetUserPostsWithLikes,
-  httpGetLatestUserBookmarks,
-  httpGetOldestUserBookmarks,
-  httpGetTopLikesBookmarks,
-  httpGetMediaBookmarks,
+  httpGetBookmarks,
+  httpGetAllPosts,
 };

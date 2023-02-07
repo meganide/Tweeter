@@ -7,7 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { addPost, getFollowedPosts, getOwnTweets, getUserBookmarks, getUserPostsWithLikes, getUserPostsWithMedia, getUserPostsWithReplies, } from '../../models/posts.model.js';
+import { sortBookmarks } from '../../utils/helpers.js';
+import { addPost, getAllLatestPosts, getAllOldestPosts, getAllPostsWithMedia, getFollowedPosts, getOwnTweets, getUserBookmarks, getUserPostsWithLikes, getUserPostsWithMedia, getUserPostsWithReplies, } from '../../models/posts.model.js';
 function httpGetFollowedPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
@@ -92,17 +93,13 @@ function httpGetUserPostsWithLikes(req, res) {
         }
     });
 }
-function httpGetLatestUserBookmarks(req, res) {
+function httpGetBookmarks(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
-        const { skip } = req.query;
+        const { skip, sortOption } = req.query;
         try {
             const bookmarks = yield getUserBookmarks(userId, skip);
-            const sortedPosts = bookmarks.sort((a, b) => {
-                const aSaveDate = a.saves[0].savedAt.getTime();
-                const bSaveDate = b.saves[0].savedAt.getTime();
-                return bSaveDate - aSaveDate;
-            });
+            const sortedPosts = sortBookmarks(bookmarks, sortOption);
             return res.status(200).json(sortedPosts);
         }
         catch (error) {
@@ -111,59 +108,27 @@ function httpGetLatestUserBookmarks(req, res) {
         }
     });
 }
-function httpGetOldestUserBookmarks(req, res) {
+function httpGetAllPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
-        const { skip } = req.query;
+        const { skip, sortOption } = req.query;
+        console.log(sortOption);
         try {
-            const bookmarks = yield getUserBookmarks(userId, skip);
-            const sortedPosts = bookmarks.sort((a, b) => {
-                const aSaveDate = a.saves[0].savedAt.getTime();
-                const bSaveDate = b.saves[0].savedAt.getTime();
-                return aSaveDate - bSaveDate;
-            });
-            return res.status(200).json(sortedPosts);
+            let posts;
+            if (sortOption === 'Latest') {
+                posts = yield getAllLatestPosts(skip);
+            }
+            else if (sortOption === 'Oldest') {
+                posts = yield getAllOldestPosts(skip);
+            }
+            else if (sortOption === 'Media') {
+                posts = yield getAllPostsWithMedia(skip);
+            }
+            return res.status(200).json(posts);
         }
         catch (error) {
             console.log(error);
-            return res.status(404).json({ error: "Couldn't find any bookmarks" });
+            return res.status(404).json({ error: "Couldn't find any posts" });
         }
     });
 }
-function httpGetTopLikesBookmarks(req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
-        const { skip } = req.query;
-        try {
-            const bookmarks = yield getUserBookmarks(userId, skip);
-            const sortedPosts = bookmarks.sort((a, b) => {
-                const aAmountLikes = a.likes.length;
-                const bAmountLikes = b.likes.length;
-                return bAmountLikes - aAmountLikes;
-            });
-            return res.status(200).json(sortedPosts);
-        }
-        catch (error) {
-            console.log(error);
-            return res.status(404).json({ error: "Couldn't find any bookmarks" });
-        }
-    });
-}
-function httpGetMediaBookmarks(req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const userId = req.user;
-        const { skip } = req.query;
-        try {
-            const bookmarks = yield getUserBookmarks(userId, skip);
-            const filteredBookmarks = bookmarks.filter((bookmark) => {
-                return bookmark.image !== '';
-            });
-            return res.status(200).json(filteredBookmarks);
-        }
-        catch (error) {
-            console.log(error);
-            return res.status(404).json({ error: "Couldn't find any bookmarks" });
-        }
-    });
-}
-export { httpGetFollowedPosts, httpAddPost, httpGetOwnTweets, httpGetUserPostsWithReplies, httpGetUserPostsWithMedia, httpGetUserPostsWithLikes, httpGetLatestUserBookmarks, httpGetOldestUserBookmarks, httpGetTopLikesBookmarks, httpGetMediaBookmarks, };
+export { httpGetFollowedPosts, httpAddPost, httpGetOwnTweets, httpGetUserPostsWithReplies, httpGetUserPostsWithMedia, httpGetUserPostsWithLikes, httpGetBookmarks, httpGetAllPosts, };

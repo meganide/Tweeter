@@ -60,7 +60,6 @@ const postOptionsData = [
   },
 ];
 
-
 const trendsData = [
   {
     name: '#programming',
@@ -110,5 +109,16 @@ const userOptionDataBookmarks = [
   },
 ];
 
+const userOptionDataExplore = [
+  {
+    text: 'Latest',
+  },
+  {
+    text: 'Oldest',
+  },
+  {
+    text: 'Media',
+  },
+];
 
-export { imagePaths, links, postOptionsData, trendsData, userOptionDataProfile, userOptionDataBookmarks };
+export { imagePaths, links, postOptionsData, trendsData, userOptionDataProfile, userOptionDataBookmarks, userOptionDataExplore };
