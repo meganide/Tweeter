@@ -1,8 +1,10 @@
 import { useContext } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
 
 import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
 import FollowButton from '../../../components/common/FollowButton';
+import Button from '../../../components/common/Button';
 
 interface IProps {
   userProfile: ICurrentUser;
@@ -13,7 +15,9 @@ function UserInfo(props: IProps) {
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
 
-  const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
+  const navigate = useNavigate();
+
+  // const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
   return (
     <section className="flex w-full -translate-y-10 flex-col">
@@ -27,18 +31,26 @@ function UserInfo(props: IProps) {
             <h3 className="text-xs dark:text-white lg:text-sm">
               {userProfile.followers.length} <span className="text-neutral-500">Followers</span>
             </h3>
-            {!isBigScreen && currentUser?.name !== userProfile.name && (
-              <section className="my-3">
-                <FollowButton userProfile={userProfile} />
-              </section>
-            )}
+            <MediaQuery maxWidth={1024}>
+              {currentUser?.name !== userProfile.name ? (
+                <section className="my-3">
+                  <FollowButton userProfile={userProfile} />
+                </section>
+              ) : (
+                <Button type="button" text="Edit" onClick={() => navigate('/profile/edit')} />
+              )}
+            </MediaQuery>
           </section>
         </section>
-        {isBigScreen && currentUser?.name !== userProfile.name && (
-          <section className="my-3">
-            <FollowButton userProfile={userProfile} />
-          </section>
-        )}
+        <MediaQuery minWidth={1024}>
+          {currentUser?.name !== userProfile.name ? (
+            <section className="my-3">
+              <FollowButton userProfile={userProfile} />
+            </section>
+          ) : (
+            <Button type="button" text="Edit" onClick={() => navigate('/profile/edit')} />
+          )}
+        </MediaQuery>
       </section>
       <p className="mt-2 text-sm dark:text-neutral-400 lg:max-w-[60%] lg:text-base">{userProfile?.profile?.bio}</p>
     </section>

@@ -13,7 +13,7 @@ export interface ICurrentUser {
   id: string;
   name: string;
   email: string;
-  profilePic: string | null;
+  profilePic: string;
   provider: string;
   createdAt: Date;
   role: string;
