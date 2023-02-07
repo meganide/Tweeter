@@ -78,4 +78,20 @@ async function getMostRecentUsers(userId: string) {
   return users;
 }
 
-export { getUser, getUserByName, getRandomUsers, getMostRecentUsers };
+async function editUserProfile(userId: string, payload: any) {
+  const { bio, backgroundImg, profilePic } = payload;
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      ...(profilePic && { profilePic }),
+      profile: {
+        update: { ...(backgroundImg && { backgroundImg }), ...(bio && { bio }) },
+      },
+    },
+  });
+
+  return { message: 'Successfully updated user!' };
+}
+
+export { getUser, getUserByName, getRandomUsers, getMostRecentUsers, editUserProfile };

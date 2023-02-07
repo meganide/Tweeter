@@ -20,16 +20,19 @@ const links = [
     pathname: '/',
     name: 'Home',
     icon: <HomeIcon style={{ fontSize: '2rem' }} />,
+    clickedIcon: <HomeIcon style={{ fontSize: '2rem' }} className="text-[#2D9CDB]" />,
   },
   {
     pathname: '/explore',
     name: 'Explore',
     icon: <ExploreIcon style={{ fontSize: '2rem' }} />,
+    clickedIcon: <ExploreIcon style={{ fontSize: '2rem' }} className="text-[#2D9CDB]" />,
   },
   {
     pathname: '/bookmarks',
     name: 'Bookmarks',
     icon: <BookmarkIcon style={{ fontSize: '2rem' }} />,
+    clickedIcon: <BookmarkIcon style={{ fontSize: '2rem' }} className="text-[#2D9CDB]" />,
   },
 ];
 

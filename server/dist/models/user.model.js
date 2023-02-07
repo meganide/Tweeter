@@ -92,4 +92,16 @@ function getMostRecentUsers(userId) {
         return users;
     });
 }
-export { getUser, getUserByName, getRandomUsers, getMostRecentUsers };
+function editUserProfile(userId, payload) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { bio, backgroundImg, profilePic } = payload;
+        yield prisma.user.update({
+            where: { id: userId },
+            data: Object.assign(Object.assign({}, (profilePic && { profilePic })), { profile: {
+                    update: Object.assign(Object.assign({}, (backgroundImg && { backgroundImg })), (bio && { bio })),
+                } }),
+        });
+        return { message: 'Successfully updated user!' };
+    });
+}
+export { getUser, getUserByName, getRandomUsers, getMostRecentUsers, editUserProfile };

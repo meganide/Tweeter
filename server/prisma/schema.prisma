@@ -20,7 +20,7 @@ model User {
   name       String      @unique
   email      String      @unique
   password   String?
-  profilePic String?     @default("https://variety.com/wp-content/uploads/2022/11/Screen-Shot-2022-11-02-at-8.33.52-AM.png?w=681&h=383&crop=1")
+  profilePic String      @default("https://variety.com/wp-content/uploads/2022/11/Screen-Shot-2022-11-02-at-8.33.52-AM.png?w=681&h=383&crop=1")
   provider   String      @default("local")
   createdAt  DateTime    @default(now())
   role       Role        @default(USER)
@@ -45,11 +45,11 @@ model Followers {
 }
 
 model Profile {
-  id            String  @id @default(uuid())
-  bio           String? @default("No bio assigned yet...")
-  backgroundImg String? @default("http://wallpaperset.com/w/full/9/3/b/224224.jpg")
-  user          User    @relation(fields: [userId], references: [id])
-  userId        String  @unique
+  id            String @id @default(uuid())
+  bio           String @default("No bio assigned yet...")
+  backgroundImg String @default("http://wallpaperset.com/w/full/9/3/b/224224.jpg")
+  user          User   @relation(fields: [userId], references: [id])
+  userId        String @unique
 }
 
 model Comment {

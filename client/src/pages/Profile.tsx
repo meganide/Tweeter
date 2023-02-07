@@ -38,7 +38,7 @@ function Profile() {
 
   return (
     <section>
-      <UserCard userProfile={userProfile} />
+      <UserCard userProfile={userProfile} name={name}/>
       <section className="mx-auto max-w-7xl gap-x-6 py-4 px-3 pb-16 lg:grid lg:grid-cols-[1fr_2fr] lg:px-3 lg:pb-0 xl:px-0">
         <UserOptions selectedOption={selectedOption} setSelectedOption={setSelectedOption} userOptionData={userOptionDataProfile} />
         <section className="-mt-2 lg:-mt-7">

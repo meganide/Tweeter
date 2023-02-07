@@ -13,8 +13,6 @@ function useUpload() {
   }
 
   function handleFileInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-
-
     if (e.target.files) {
       const imgURL = URL.createObjectURL(e.target?.files[0]);
       setPreviewImage(imgURL);
@@ -28,21 +26,26 @@ function useUpload() {
   }
 
   async function submitUpload() {
-      let imgUrl = '';
+    let imgUrl = '';
 
-      if (uploadFile) {
-        const imageUploadResponse = await makeRequest.post('/api/cloudinary/upload', {
-          data: uploadFile,
-        });
-        imgUrl = imageUploadResponse.data.url;
-      }
+    if (uploadFile) {
+      const imageUploadResponse = await makeRequest.post('/api/cloudinary/upload', {
+        data: uploadFile,
+      });
+      imgUrl = imageUploadResponse.data.url;
+    }
 
-      setUploadFile('');
-      setPreviewImage && setPreviewImage('');
-      return imgUrl;
+    setUploadFile('');
+    setPreviewImage && setPreviewImage('');
+    return imgUrl;
   }
 
-  return {previewImage, inputFileRef, chooseImage, handleFileInputChange, submitUpload}
+  function resetUploadStates() {
+    setUploadFile('');
+    setPreviewImage('');
+  }
+
+  return { previewImage, inputFileRef, chooseImage, handleFileInputChange, submitUpload, resetUploadStates };
 }
 
 export { useUpload };

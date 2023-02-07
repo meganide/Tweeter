@@ -1,10 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import { v4 as uuidv4 } from 'uuid';
 
 import { links } from '../../../utils/data';
 
 function MobileBottomBar() {
+  const location = useLocation();
+
+
   return (
     <MediaQuery maxWidth={768}>
       <section className="fixed bottom-0 flex h-[60px] w-full items-center justify-center bg-main-default p-1 px-3 shadow-sm shadow-black dark:bg-main-dark dark:shadow-white">
@@ -13,7 +16,7 @@ function MobileBottomBar() {
             {links.map((link) => {
               return (
                 <Link key={uuidv4()} to={link.pathname}>
-                  {link.icon}
+                  {location.pathname == link.pathname ? link.clickedIcon : link.icon}
                 </Link>
               );
             })}
