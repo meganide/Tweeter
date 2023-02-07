@@ -10,7 +10,6 @@ import Register from './pages/Register';
 import { AuthContext, IAuthContext } from './contexts/authContext';
 import Bookmarks from './pages/Bookmarks';
 import Explore from './pages/Explore';
-import EditProfile from './pages/EditProfile';
 
 interface IChildren {
   children: any;
@@ -32,10 +31,6 @@ function Routes() {
         {
           path: '/',
           element: <Home />,
-        },
-        {
-          path: '/profile/edit',
-          element: <EditProfile />,
         },
         {
           path: 'profile',

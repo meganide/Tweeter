@@ -1,10 +1,8 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 
 import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
 import FollowButton from '../../../components/common/FollowButton';
-import Button from '../../../components/common/Button';
 
 interface IProps {
   userProfile: ICurrentUser;
@@ -14,10 +12,6 @@ function UserInfo(props: IProps) {
   const { userProfile } = props;
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
-
-  const navigate = useNavigate();
-
-  // const isBigScreen = useMediaQuery({ query: '(min-width: 1024px)' });
 
   return (
     <section className="flex w-full -translate-y-10 flex-col">
@@ -32,23 +26,19 @@ function UserInfo(props: IProps) {
               {userProfile.followers.length} <span className="text-neutral-500">Followers</span>
             </h3>
             <MediaQuery maxWidth={1024}>
-              {currentUser?.name !== userProfile.name ? (
+              {currentUser?.name !== userProfile.name && (
                 <section className="my-3">
                   <FollowButton userProfile={userProfile} />
                 </section>
-              ) : (
-                <Button type="button" text="Edit" onClick={() => navigate('/profile/edit')} />
               )}
             </MediaQuery>
           </section>
         </section>
         <MediaQuery minWidth={1024}>
-          {currentUser?.name !== userProfile.name ? (
+          {currentUser?.name !== userProfile.name && (
             <section className="my-3">
               <FollowButton userProfile={userProfile} />
             </section>
-          ) : (
-            <Button type="button" text="Edit" onClick={() => navigate('/profile/edit')} />
           )}
         </MediaQuery>
       </section>
