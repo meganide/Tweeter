@@ -1,21 +1,25 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import MediaQuery from 'react-responsive';
 
 import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
 import FollowButton from '../../../components/common/FollowButton';
 import EditIcon from '@mui/icons-material/Edit';
-import { useToggle } from '../../../hooks/useToggle';
 
 interface IProps {
   userProfile: ICurrentUser;
+  bioProps: {
+    setBio: React.Dispatch<React.SetStateAction<string>>;
+    bio: string;
+    changeBio: boolean;
+    toggleChangeBio: () => void;
+  };
 }
 
 function UserInfo(props: IProps) {
-  const { userProfile } = props;
+  const { userProfile, bioProps } = props;
+  const {setBio, bio, changeBio, toggleChangeBio} = bioProps;
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
-  const { toggle: changeBio, toggleShow: toggleChangeBio } = useToggle();
-  const [bio, setBio] = useState(userProfile.profile.bio);
 
   function handleEditBio() {
     setBio(userProfile.profile.bio);

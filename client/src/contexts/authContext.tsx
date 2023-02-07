@@ -1,4 +1,4 @@
-import { createContext, ReactElement, useState } from 'react';
+import { createContext, ReactElement, useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { BASE_URL } from '../utils/baseUrl';
@@ -7,6 +7,7 @@ export interface IAuthContext {
   currentUser: null | ICurrentUser;
   setCurrentUser: React.Dispatch<React.SetStateAction<ICurrentUser | null>>;
   login(inputs: ILoginInputs): Promise<void>;
+  getUser(): Promise<void>;
 }
 
 export interface ICurrentUser {
@@ -46,10 +47,20 @@ export function AuthContextProvider({ children }: IProps): ReactElement {
     setCurrentUser(res.data);
   }
 
+  async function getUser() {
+    try {
+      const user = await axios.get(BASE_URL + '/api/users/find');
+      setCurrentUser(user.data);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
+
   const value = {
     currentUser,
     setCurrentUser,
     login,
+    getUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
