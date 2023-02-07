@@ -42,12 +42,87 @@ function getFollowedPosts(userId, skip) {
         return posts;
     });
 }
-function getAllPosts() {
+function getAllLatestPosts(skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const posts = yield prisma.post.findMany({
             include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                saves: { select: { userId: true, savedAt: true } },
                 author: { select: { name: true, profilePic: true } },
             },
+            orderBy: { createdAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        return posts;
+    });
+}
+function getAllOldestPosts(skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const posts = yield prisma.post.findMany({
+            include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                saves: { select: { userId: true, savedAt: true } },
+                author: { select: { name: true, profilePic: true } },
+            },
+            orderBy: { createdAt: 'asc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        return posts;
+    });
+}
+function getAllPostsWithMedia(skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const posts = yield prisma.post.findMany({
+            where: { NOT: { image: '' } },
+            include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                saves: { select: { userId: true, savedAt: true } },
+                author: { select: { name: true, profilePic: true } },
+            },
+            orderBy: { createdAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
         });
         return posts;
     });
@@ -227,4 +302,4 @@ function getUserBookmarks(userId, skip) {
         return bookmarks;
     });
 }
-export { getFollowedPosts, getAllPosts, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes, getUserBookmarks, };
+export { getFollowedPosts, getAllLatestPosts, getAllOldestPosts, getAllPostsWithMedia, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes, getUserBookmarks, };

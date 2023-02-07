@@ -37,11 +37,86 @@ async function getFollowedPosts(userId: string, skip: any) {
   return posts;
 }
 
-async function getAllPosts() {
+async function getAllLatestPosts(skip: any) {
   const posts = await prisma.post.findMany({
     include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+          likes: { select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+      likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true, savedAt: true } },
       author: { select: { name: true, profilePic: true } },
     },
+    orderBy: { createdAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
+  });
+
+  return posts;
+}
+
+async function getAllOldestPosts(skip: any) {
+  const posts = await prisma.post.findMany({
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+          likes: { select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+      likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true, savedAt: true } },
+      author: { select: { name: true, profilePic: true } },
+    },
+    orderBy: { createdAt: 'asc' },
+    take: 7,
+    skip: parseInt(skip),
+  });
+
+  return posts;
+}
+
+async function getAllPostsWithMedia(skip: any) {
+  const posts = await prisma.post.findMany({
+    where: {NOT: {image: ''}},
+    include: {
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+              profilePic: true,
+            },
+          },
+          likes: { select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+      likes: { select: { userId: true } },
+      retweets: { select: { userId: true } },
+      saves: { select: { userId: true, savedAt: true } },
+      author: { select: { name: true, profilePic: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
   });
 
   return posts;
@@ -219,14 +294,14 @@ async function getUserBookmarks(userId: string, skip: any) {
     skip: parseInt(skip),
   });
 
-
-
   return bookmarks;
 }
 
 export {
   getFollowedPosts,
-  getAllPosts,
+  getAllLatestPosts,
+  getAllOldestPosts,
+  getAllPostsWithMedia,
   addPost,
   getOwnTweets,
   getUserPostsWithReplies,
