@@ -116,8 +116,6 @@ async function httpGetBookmarks(req: any, res: Response) {
 async function httpGetAllPosts(req: any, res: Response) {
   const { skip, sortOption }: any = req.query;
 
-  console.log(sortOption);
-
   try {
     let posts;
     if (sortOption === 'Latest') {

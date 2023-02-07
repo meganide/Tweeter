@@ -111,7 +111,6 @@ function httpGetBookmarks(req, res) {
 function httpGetAllPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { skip, sortOption } = req.query;
-        console.log(sortOption);
         try {
             let posts;
             if (sortOption === 'Latest') {
