@@ -71,7 +71,7 @@ function TweetFooter(props: IProps) {
         <section className="flex items-center gap-2">
           <ImageIcon className="cursor-pointer text-accent hover:text-sky-700" onClick={chooseImage} />
           <input className="hidden" type="file" name="profilePic" accept=".jpg, .jpeg, .png" ref={inputFileRef} onChange={handleFileInputChange} />
-          <article className="relative">
+          {/* <article className="relative">
             <PublicIcon className="cursor-pointer text-accent hover:text-sky-700" onClick={toggleShowTooltip} />
             {showTooltip && (
               <OutsideClickHandler onOutsideClick={toggleShowTooltip}>
@@ -79,7 +79,7 @@ function TweetFooter(props: IProps) {
               </OutsideClickHandler>
             )}
           </article>
-          <span className="text-xs text-accent">{replyStatus}</span>
+          <span className="text-xs text-accent">{replyStatus}</span> */}
         </section>
         <Button type="button" text="Tweet" onClick={submitTweet} />
       </section>

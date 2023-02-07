@@ -22,11 +22,11 @@ function UserTooltip(props: IProps) {
       link: '/profile/' + currentUser?.name,
       text: 'My Profile',
     },
-    {
-      icon: <SettingsIcon className="h-[30px]" />,
-      link: '/settings',
-      text: 'Settings',
-    },
+    // {
+    //   icon: <SettingsIcon className="h-[30px]" />,
+    //   link: '/settings',
+    //   text: 'Settings',
+    // },
     {
       icon: <LogoutIcon className="h-[30px] text-red-500" />,
       link: '/login',
