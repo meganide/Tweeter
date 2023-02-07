@@ -6,25 +6,13 @@ import UserOption from './UserOption';
 interface IProps {
   selectedOption: string;
   setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
+  userOptionData: {
+    text: string;
+  }[];
 }
 
 function UserOptions(props: IProps) {
-  const { selectedOption, setSelectedOption } = props;
-
-  const userOptionData = [
-    {
-      text: 'Tweets',
-    },
-    {
-      text: 'Replies',
-    },
-    {
-      text: 'Media',
-    },
-    {
-      text: 'Likes',
-    },
-  ];
+  const { selectedOption, setSelectedOption, userOptionData } = props;
 
   return (
     <section>

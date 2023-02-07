@@ -8,17 +8,17 @@ import { makeRequest } from '../../utils/axios';
 import { IPostData } from '../Post/Post';
 
 interface IProps {
-  selectedOption?: string;
-  name?:string;
+  fetchUrl: string;
+  queryName: string[] | string;
 }
 
 function Posts(props: IProps) {
-  const { selectedOption, name } = props;
+  const { fetchUrl, queryName } = props;
 
-  const { data, fetchNextPage, hasNextPage, status } = useInfiniteQuery(
-    selectedOption ? ['followersPosts', selectedOption + name] : 'followersPosts',
+  const { data, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(
+    queryName,
     async ({ pageParam = 0 }) => {
-      const res = await makeRequest.get(selectedOption ? `/api/posts/${selectedOption}?skip=${pageParam}&name=${name}` : `/api/posts/followed?skip=${pageParam}`);
+      const res = await makeRequest.get(fetchUrl + `skip=${pageParam}`);
       return res.data;
     },
     {
@@ -31,9 +31,9 @@ function Posts(props: IProps) {
     }
   );
 
-  return status === 'loading' ? (
+  return isLoading ? (
     <Spinner />
-  ) : status === 'error' ? (
+  ) : isError ? (
     <p>Something went wrong!</p>
   ) : (
     <section>

@@ -189,4 +189,42 @@ function getUserPostsWithLikes(name, skip) {
         return ownTweets;
     });
 }
-export { getFollowedPosts, getAllPosts, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes };
+function getUserBookmarks(userId, skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const bookmarks = yield prisma.post.findMany({
+            where: {
+                saves: { some: { savedBy: { id: userId } } },
+            },
+            include: {
+                comments: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                profilePic: true,
+                            },
+                        },
+                        likes: { select: { userId: true } },
+                    },
+                    orderBy: { createdAt: 'asc' },
+                },
+                saves: {
+                    select: {
+                        savedAt: true,
+                        userId: true,
+                    },
+                    orderBy: {
+                        savedAt: 'desc',
+                    },
+                },
+                likes: { select: { userId: true } },
+                retweets: { select: { userId: true } },
+                author: { select: { name: true, profilePic: true } },
+            },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        return bookmarks;
+    });
+}
+export { getFollowedPosts, getAllPosts, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes, getUserBookmarks, };
