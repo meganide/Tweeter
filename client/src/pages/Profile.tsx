@@ -17,7 +17,7 @@ function Profile() {
 
   useEffect(() => {
     setSelectedOption('Tweets');
-  }, [name])
+  }, [name]);
 
   const {
     isLoading,
@@ -42,7 +42,7 @@ function Profile() {
       <section className="mx-auto max-w-7xl gap-x-6 py-4 px-3 pb-16 lg:grid lg:grid-cols-[1fr_2fr] lg:px-3 lg:pb-0 xl:px-0">
         <UserOptions selectedOption={selectedOption} setSelectedOption={setSelectedOption} userOptionData={userOptionDataProfile} />
         <section className="-mt-2 lg:-mt-7">
-          <Posts selectedOption={selectedOption} name={name}/>
+          <Posts fetchUrl={`/api/posts/${selectedOption}?name=${name}&`} queryName={['followersPosts', selectedOption + name]} />
         </section>
       </section>
     </section>
