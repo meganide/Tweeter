@@ -6,7 +6,6 @@ import Card from '../../../components/common/Card';
 import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
 import { useUpload } from '../../../hooks/useUpload';
 import UserInfo from './UserInfo';
-
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 interface IProps {
@@ -43,16 +42,13 @@ function UserCard(props: IProps) {
         src={previewBgImage ? previewBgImage : userProfile?.profile?.backgroundImg}
         alt="background"
       />
-
       <section className='-translate-y-8" relative m-auto max-w-7xl px-3 pb-4 lg:px-3 xl:px-0'>
         {currentUser?.name === userProfile.name && (
           <CameraAltIcon
             className="absolute right-3 -top-5 cursor-pointer rounded-[50%] bg-neutral-600 p-[6px] text-white"
             style={{ fontSize: '2.3rem' }}
             onClick={ChooseBgImage}
-          >
-            Change
-          </CameraAltIcon>
+          ></CameraAltIcon>
         )}
         <Card>
           <section className="flex flex-col place-items-center gap-5 p-4 pb-0 lg:flex-row lg:p-10 lg:pb-0">

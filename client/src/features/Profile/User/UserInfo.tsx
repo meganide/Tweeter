@@ -1,8 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import MediaQuery from 'react-responsive';
 
 import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
 import FollowButton from '../../../components/common/FollowButton';
+import EditIcon from '@mui/icons-material/Edit';
+import { useToggle } from '../../../hooks/useToggle';
 
 interface IProps {
   userProfile: ICurrentUser;
@@ -12,6 +14,13 @@ function UserInfo(props: IProps) {
   const { userProfile } = props;
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
+  const { toggle: changeBio, toggleShow: toggleChangeBio } = useToggle();
+  const [bio, setBio] = useState(userProfile.profile.bio);
+
+  function handleEditBio() {
+    setBio(userProfile.profile.bio);
+    toggleChangeBio();
+  }
 
   return (
     <section className="flex w-full -translate-y-10 flex-col">
@@ -42,7 +51,26 @@ function UserInfo(props: IProps) {
           )}
         </MediaQuery>
       </section>
-      <p className="mt-2 text-sm dark:text-neutral-400 lg:max-w-[60%] lg:text-base">{userProfile?.profile?.bio}</p>
+      <section className="mt-2 flex place-items-end gap-6">
+        {changeBio ? (
+          <textarea
+            className="h-[100px] w-full resize-none rounded-lg border bg-transparent p-2 dark:text-neutral-400"
+            maxLength={300}
+            autoFocus
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          ></textarea>
+        ) : (
+          <p className="mt-2 text-sm dark:text-neutral-400 lg:max-w-[60%] lg:text-base">{userProfile?.profile?.bio}</p>
+        )}
+        {currentUser?.name === userProfile.name && !changeBio && (
+          <EditIcon
+            className="cursor-pointer rounded-[50%] bg-neutral-600 p-[5px] text-white"
+            style={{ fontSize: '1.7rem' }}
+            onClick={handleEditBio}
+          />
+        )}
+      </section>
     </section>
   );
 }
