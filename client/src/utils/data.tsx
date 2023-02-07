@@ -80,5 +80,35 @@ const trendsData = [
   },
 ];
 
+const userOptionDataProfile = [
+  {
+    text: 'Tweets',
+  },
+  {
+    text: 'Replies',
+  },
+  {
+    text: 'Media',
+  },
+  {
+    text: 'Likes',
+  },
+];
 
-export { imagePaths, links, postOptionsData, trendsData, };
+const userOptionDataBookmarks = [
+  {
+    text: 'Latest',
+  },
+  {
+    text: 'Oldest',
+  },
+  {
+    text: 'Top',
+  },
+  {
+    text: 'Media',
+  },
+];
+
+
+export { imagePaths, links, postOptionsData, trendsData, userOptionDataProfile, userOptionDataBookmarks };
