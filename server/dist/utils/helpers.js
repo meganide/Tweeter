@@ -26,7 +26,7 @@ function sortBookmarks(bookmarks, sortOption) {
             break;
     }
 }
-function sortPostsAndRetweets(postsAndRetweets) {
+function sortPostsAndRetweets(postsAndRetweets, option = 'latest') {
     return postsAndRetweets.sort((a, b) => {
         let aCreatedAtDate;
         let bCreatedAtDate;
@@ -38,7 +38,12 @@ function sortPostsAndRetweets(postsAndRetweets) {
         if (b.retweetedAt) {
             bCreatedAtDate = b.retweetedAt.getTime();
         }
-        return bCreatedAtDate - aCreatedAtDate;
+        if (option == 'latest') {
+            return bCreatedAtDate - aCreatedAtDate;
+        }
+        else if (option == 'oldest') {
+            return aCreatedAtDate - bCreatedAtDate;
+        }
     });
 }
 export { sortBookmarks, sortPostsAndRetweets };

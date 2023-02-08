@@ -44,7 +44,8 @@ function httpGetOwnTweets(req, res) {
         const { skip } = req.query;
         try {
             const ownTweets = yield getOwnTweets(name, skip);
-            return res.status(200).json(ownTweets);
+            const sortedTweets = sortPostsAndRetweets(ownTweets);
+            return res.status(200).json(sortedTweets);
         }
         catch (error) {
             console.log(error);
@@ -72,7 +73,8 @@ function httpGetUserPostsWithMedia(req, res) {
         const { skip } = req.query;
         try {
             const ownTweets = yield getUserPostsWithMedia(name, skip);
-            return res.status(200).json(ownTweets);
+            const sortedTweets = sortPostsAndRetweets(ownTweets);
+            return res.status(200).json(sortedTweets);
         }
         catch (error) {
             console.log(error);
@@ -116,12 +118,15 @@ function httpGetAllPosts(req, res) {
             let posts;
             if (sortOption === 'Latest') {
                 posts = yield getAllLatestPosts(skip);
+                posts = sortPostsAndRetweets(posts);
             }
             else if (sortOption === 'Oldest') {
                 posts = yield getAllOldestPosts(skip);
+                posts = sortPostsAndRetweets(posts, 'oldest');
             }
             else if (sortOption === 'Media') {
                 posts = yield getAllPostsWithMedia(skip);
+                posts = sortPostsAndRetweets(posts);
             }
             return res.status(200).json(posts);
         }

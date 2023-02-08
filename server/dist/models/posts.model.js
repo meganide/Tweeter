@@ -20,6 +20,83 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import { getFollowers } from './followers.model.js';
 import { prisma } from '../services/db.services.js';
+function getRetweets(skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const retweets = yield prisma.retweet.findMany({
+            select: {
+                post: {
+                    include: {
+                        comments: {
+                            include: {
+                                user: {
+                                    select: {
+                                        name: true,
+                                        profilePic: true,
+                                    },
+                                },
+                                likes: { select: { userId: true } },
+                            },
+                            orderBy: { createdAt: 'asc' },
+                        },
+                        likes: { select: { userId: true } },
+                        saves: { select: { userId: true, savedAt: true } },
+                        author: { select: { name: true, profilePic: true } },
+                        retweets: { select: { userId: true } },
+                    },
+                },
+                retweetedBy: { select: { name: true } },
+                retweetedAt: true,
+            },
+            orderBy: { retweetedAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        const retweetsFlat = retweets.map((_a) => {
+            var { post } = _a, rest = __rest(_a, ["post"]);
+            return (Object.assign(Object.assign({}, post), rest));
+        });
+        return retweetsFlat;
+    });
+}
+function getRetweetsWithMedia(skip) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const retweetsWithMedia = yield prisma.retweet.findMany({
+            where: { post: { image: { not: '' } } },
+            select: {
+                post: {
+                    include: {
+                        comments: {
+                            include: {
+                                user: {
+                                    select: {
+                                        name: true,
+                                        profilePic: true,
+                                    },
+                                },
+                                likes: { select: { userId: true } },
+                            },
+                            orderBy: { createdAt: 'asc' },
+                        },
+                        likes: { select: { userId: true } },
+                        saves: { select: { userId: true, savedAt: true } },
+                        author: { select: { name: true, profilePic: true } },
+                        retweets: { select: { userId: true } },
+                    },
+                },
+                retweetedBy: { select: { name: true } },
+                retweetedAt: true,
+            },
+            orderBy: { retweetedAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        const retweetsFlat = retweetsWithMedia.map((_a) => {
+            var { post } = _a, rest = __rest(_a, ["post"]);
+            return (Object.assign(Object.assign({}, post), rest));
+        });
+        return retweetsFlat;
+    });
+}
 function getFollowedPosts(userId, skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const followedUsers = yield getFollowers(userId);
@@ -115,7 +192,9 @@ function getAllLatestPosts(skip) {
             take: 7,
             skip: parseInt(skip),
         });
-        return posts;
+        const retweetsFlat = yield getRetweets(skip);
+        const postsandRetweets = [...posts, ...retweetsFlat];
+        return postsandRetweets;
     });
 }
 function getAllOldestPosts(skip) {
@@ -143,7 +222,9 @@ function getAllOldestPosts(skip) {
             take: 7,
             skip: parseInt(skip),
         });
-        return posts;
+        const retweetsFlat = yield getRetweets(skip);
+        const postsandRetweets = [...posts, ...retweetsFlat];
+        return postsandRetweets;
     });
 }
 function getAllPostsWithMedia(skip) {
@@ -172,7 +253,9 @@ function getAllPostsWithMedia(skip) {
             take: 7,
             skip: parseInt(skip),
         });
-        return posts;
+        const retweetsWithMedia = yield getRetweetsWithMedia(skip);
+        const postsandRetweets = [...posts, ...retweetsWithMedia];
+        return postsandRetweets;
     });
 }
 function addPost(userId, tweetData) {
@@ -215,7 +298,44 @@ function getOwnTweets(name, skip) {
             take: 7,
             skip: parseInt(skip),
         });
-        return ownTweets;
+        const retweets = yield prisma.retweet.findMany({
+            where: {
+                retweetedBy: { name },
+            },
+            select: {
+                post: {
+                    include: {
+                        comments: {
+                            include: {
+                                user: {
+                                    select: {
+                                        name: true,
+                                        profilePic: true,
+                                    },
+                                },
+                                likes: { select: { userId: true } },
+                            },
+                            orderBy: { createdAt: 'asc' },
+                        },
+                        likes: { select: { userId: true } },
+                        saves: { select: { userId: true, savedAt: true } },
+                        author: { select: { name: true, profilePic: true } },
+                        retweets: { select: { userId: true } },
+                    },
+                },
+                retweetedBy: { select: { name: true } },
+                retweetedAt: true,
+            },
+            orderBy: { retweetedAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        const retweetsFlat = retweets.map((_a) => {
+            var { post } = _a, rest = __rest(_a, ["post"]);
+            return (Object.assign(Object.assign({}, post), rest));
+        });
+        const OwnTweetsAndRetweets = [...ownTweets, ...retweetsFlat];
+        return OwnTweetsAndRetweets;
     });
 }
 function getUserPostsWithReplies(name, skip) {
@@ -278,7 +398,42 @@ function getUserPostsWithMedia(name, skip) {
             take: 7,
             skip: parseInt(skip),
         });
-        return ownTweets;
+        const retweetsWithMedia = yield prisma.retweet.findMany({
+            where: { post: { image: { not: '' } } },
+            select: {
+                post: {
+                    include: {
+                        comments: {
+                            include: {
+                                user: {
+                                    select: {
+                                        name: true,
+                                        profilePic: true,
+                                    },
+                                },
+                                likes: { select: { userId: true } },
+                            },
+                            orderBy: { createdAt: 'asc' },
+                        },
+                        likes: { select: { userId: true } },
+                        saves: { select: { userId: true, savedAt: true } },
+                        author: { select: { name: true, profilePic: true } },
+                        retweets: { select: { userId: true } },
+                    },
+                },
+                retweetedBy: { select: { name: true } },
+                retweetedAt: true,
+            },
+            orderBy: { retweetedAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        const retweetsFlat = retweetsWithMedia.map((_a) => {
+            var { post } = _a, rest = __rest(_a, ["post"]);
+            return (Object.assign(Object.assign({}, post), rest));
+        });
+        const OwnTweetsAndRetweets = [...ownTweets, ...retweetsFlat];
+        return OwnTweetsAndRetweets;
     });
 }
 function getUserPostsWithLikes(name, skip) {

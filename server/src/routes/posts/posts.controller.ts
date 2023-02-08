@@ -52,7 +52,8 @@ async function httpGetOwnTweets(req: any, res: Response) {
 
   try {
     const ownTweets = await getOwnTweets(name, skip);
-    return res.status(200).json(ownTweets);
+    const sortedTweets = sortPostsAndRetweets(ownTweets);
+    return res.status(200).json(sortedTweets);
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: "Couldn't find any tweets" });
@@ -78,7 +79,8 @@ async function httpGetUserPostsWithMedia(req: any, res: Response) {
 
   try {
     const ownTweets = await getUserPostsWithMedia(name, skip);
-    return res.status(200).json(ownTweets);
+    const sortedTweets = sortPostsAndRetweets(ownTweets);
+    return res.status(200).json(sortedTweets);
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: "Couldn't find any tweets with media" });
@@ -104,7 +106,6 @@ async function httpGetBookmarks(req: any, res: Response) {
 
   try {
     const bookmarks = await getUserBookmarks(userId, skip);
-
     const sortedPosts = sortBookmarks(bookmarks, sortOption);
 
     return res.status(200).json(sortedPosts);
@@ -121,10 +122,13 @@ async function httpGetAllPosts(req: any, res: Response) {
     let posts;
     if (sortOption === 'Latest') {
       posts = await getAllLatestPosts(skip);
+      posts = sortPostsAndRetweets(posts);
     } else if (sortOption === 'Oldest') {
       posts = await getAllOldestPosts(skip);
+      posts = sortPostsAndRetweets(posts, 'oldest');
     } else if (sortOption === 'Media') {
       posts = await getAllPostsWithMedia(skip);
+      posts = sortPostsAndRetweets(posts);
     }
 
     return res.status(200).json(posts);
