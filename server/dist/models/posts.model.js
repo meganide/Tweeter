@@ -7,8 +7,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { prisma } from '../services/db.services.js';
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 import { getFollowers } from './followers.model.js';
+import { prisma } from '../services/db.services.js';
 function getFollowedPosts(userId, skip) {
     return __awaiter(this, void 0, void 0, function* () {
         const followedUsers = yield getFollowers(userId);
@@ -39,7 +50,44 @@ function getFollowedPosts(userId, skip) {
             take: 7,
             skip: parseInt(skip),
         });
-        return posts;
+        const retweets = yield prisma.retweet.findMany({
+            where: {
+                OR: [{ userId: { in: followedUserIds } }, { userId: userId }],
+            },
+            select: {
+                post: {
+                    include: {
+                        comments: {
+                            include: {
+                                user: {
+                                    select: {
+                                        name: true,
+                                        profilePic: true,
+                                    },
+                                },
+                                likes: { select: { userId: true } },
+                            },
+                            orderBy: { createdAt: 'asc' },
+                        },
+                        likes: { select: { userId: true } },
+                        saves: { select: { userId: true, savedAt: true } },
+                        author: { select: { name: true, profilePic: true } },
+                        retweets: { select: { userId: true } },
+                    },
+                },
+                retweetedBy: { select: { name: true } },
+                retweetedAt: true,
+            },
+            orderBy: { retweetedAt: 'desc' },
+            take: 7,
+            skip: parseInt(skip),
+        });
+        const retweetsFlat = retweets.map((_a) => {
+            var { post } = _a, rest = __rest(_a, ["post"]);
+            return (Object.assign(Object.assign({}, post), rest));
+        });
+        const postsandRetweets = [...posts, ...retweetsFlat];
+        return postsandRetweets;
     });
 }
 function getAllLatestPosts(skip) {

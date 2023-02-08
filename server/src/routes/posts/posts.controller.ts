@@ -1,6 +1,3 @@
-import { Response } from 'express';
-
-import { sortBookmarks } from '../../utils/helpers.js';
 import {
   addPost,
   getAllLatestPosts,
@@ -13,6 +10,9 @@ import {
   getUserPostsWithMedia,
   getUserPostsWithReplies,
 } from '../../models/posts.model.js';
+import { sortBookmarks, sortPostsAndRetweets } from '../../utils/helpers.js';
+
+import { Response } from 'express';
 
 export interface ITweetData {
   tweet: string;
@@ -25,7 +25,8 @@ async function httpGetFollowedPosts(req: any, res: Response) {
 
   try {
     const followedPosts = await getFollowedPosts(userId, skip);
-    return res.status(200).json(followedPosts);
+    const sortedPosts = sortPostsAndRetweets(followedPosts);
+    return res.status(200).json(sortedPosts);
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: "Couldn't find any posts" });

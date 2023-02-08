@@ -26,4 +26,19 @@ function sortBookmarks(bookmarks, sortOption) {
             break;
     }
 }
-export { sortBookmarks };
+function sortPostsAndRetweets(postsAndRetweets) {
+    return postsAndRetweets.sort((a, b) => {
+        let aCreatedAtDate;
+        let bCreatedAtDate;
+        aCreatedAtDate = a.createdAt.getTime();
+        bCreatedAtDate = b.createdAt.getTime();
+        if (a.retweetedAt) {
+            aCreatedAtDate = a.retweetedAt.getTime();
+        }
+        if (b.retweetedAt) {
+            bCreatedAtDate = b.retweetedAt.getTime();
+        }
+        return bCreatedAtDate - aCreatedAtDate;
+    });
+}
+export { sortBookmarks, sortPostsAndRetweets };

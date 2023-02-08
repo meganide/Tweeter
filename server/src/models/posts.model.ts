@@ -1,6 +1,6 @@
 import { ITweetData } from '../routes/posts/posts.controller.js';
-import { prisma } from '../services/db.services.js';
 import { getFollowers } from './followers.model.js';
+import { prisma } from '../services/db.services.js';
 
 async function getFollowedPosts(userId: string, skip: any) {
   const followedUsers = await getFollowers(userId);
@@ -34,7 +34,43 @@ async function getFollowedPosts(userId: string, skip: any) {
     skip: parseInt(skip),
   });
 
-  return posts;
+  const retweets = await prisma.retweet.findMany({
+    where: {
+      OR: [{ userId: { in: followedUserIds } }, { userId: userId }],
+    },
+    select: {
+      post: {
+        include: {
+          comments: {
+            include: {
+              user: {
+                select: {
+                  name: true,
+                  profilePic: true,
+                },
+              },
+              likes: { select: { userId: true } },
+            },
+            orderBy: { createdAt: 'asc' },
+          },
+          likes: { select: { userId: true } },
+          saves: { select: { userId: true, savedAt: true } },
+          author: { select: { name: true, profilePic: true } },
+          retweets: { select: { userId: true } },
+        },
+      },
+      retweetedBy: { select: { name: true } },
+      retweetedAt: true,
+    },
+    orderBy: { retweetedAt: 'desc' },
+    take: 7,
+    skip: parseInt(skip),
+  });
+
+  const retweetsFlat = retweets.map(({ post, ...rest }) => ({ ...post, ...rest }));
+  const postsandRetweets = [...posts, ...retweetsFlat];
+
+  return postsandRetweets;
 }
 
 async function getAllLatestPosts(skip: any) {
@@ -95,7 +131,7 @@ async function getAllOldestPosts(skip: any) {
 
 async function getAllPostsWithMedia(skip: any) {
   const posts = await prisma.post.findMany({
-    where: {NOT: {image: ''}},
+    where: { NOT: { image: '' } },
     include: {
       comments: {
         include: {

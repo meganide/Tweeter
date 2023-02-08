@@ -7,15 +7,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { sortBookmarks } from '../../utils/helpers.js';
 import { addPost, getAllLatestPosts, getAllOldestPosts, getAllPostsWithMedia, getFollowedPosts, getOwnTweets, getUserBookmarks, getUserPostsWithLikes, getUserPostsWithMedia, getUserPostsWithReplies, } from '../../models/posts.model.js';
+import { sortBookmarks, sortPostsAndRetweets } from '../../utils/helpers.js';
 function httpGetFollowedPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = req.user;
         const { skip } = req.query;
         try {
             const followedPosts = yield getFollowedPosts(userId, skip);
-            return res.status(200).json(followedPosts);
+            const sortedPosts = sortPostsAndRetweets(followedPosts);
+            return res.status(200).json(sortedPosts);
         }
         catch (error) {
             console.log(error);
