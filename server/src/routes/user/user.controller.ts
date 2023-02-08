@@ -1,5 +1,6 @@
+import { editUserProfile, getMostRecentUsers, getRandomUsers, getUser, getUserByName, getUsers } from '../../models/user.model.js';
+
 import { Response } from 'express';
-import { editUserProfile, getMostRecentUsers, getRandomUsers, getUser, getUserByName } from '../../models/user.model.js';
 
 async function httpGetUser(req: any, res: Response) {
   let userId: string = req.user;
@@ -7,9 +8,24 @@ async function httpGetUser(req: any, res: Response) {
   try {
     const user = await getUser(userId);
 
-    console.log('received user', user)
+    console.log('received user', user);
 
     return res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: 'There was an error getting user.',
+    });
+  }
+}
+
+async function httpGetUsers(req: any, res: Response) {
+  const name: string = req.query.name;
+
+  try {
+    const users = await getUsers(name);
+
+    return res.status(200).json(users);
   } catch (error) {
     console.log(error);
     return res.status(400).json({
@@ -80,4 +96,4 @@ async function httpEditUserProfile(req: any, res: Response) {
   }
 }
 
-export { httpGetUser, httpGetUserByName, httpGetRandomUsers, httpGetMostRecentUsers, httpEditUserProfile };
+export { httpGetUser, httpGetUserByName, httpGetRandomUsers, httpGetMostRecentUsers, httpEditUserProfile, httpGetUsers };
