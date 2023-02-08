@@ -3,7 +3,9 @@ import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authC
 import EditIcon from '@mui/icons-material/Edit';
 import FollowButton from '../../../components/common/FollowButton';
 import MediaQuery from 'react-responsive';
+import UserFollowing from './UserFollowing';
 import { useContext } from 'react';
+import { useToggle } from '../../../hooks/useToggle';
 
 export interface IProps {
   userProfile: ICurrentUser;
@@ -13,13 +15,15 @@ export interface IProps {
     changeBio: boolean;
     toggleChangeBio: () => void;
   };
+  setOpenFollowing: () => void;
 }
 
 function UserInfo(props: IProps) {
-  const { userProfile, bioProps } = props;
+  const { userProfile, bioProps, setOpenFollowing } = props;
   const { setBio, bio, changeBio, toggleChangeBio } = bioProps;
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
+
 
   function handleEditBio() {
     setBio(userProfile.profile.bio);
@@ -32,10 +36,10 @@ function UserInfo(props: IProps) {
         <section className="flex flex-col place-items-center text-center lg:flex-row lg:gap-7">
           <h2 className="text-2xl dark:text-white">{userProfile?.name}</h2>
           <section className="flex place-items-center justify-center gap-5 text-sm">
-            <h3 className="text-xs dark:text-white lg:text-sm">
+            <h3 className="cursor-pointer text-xs dark:text-white lg:text-sm" onClick={setOpenFollowing}>
               {userProfile?.following?.length} <span className="text-neutral-500">Following</span>
             </h3>
-            <h3 className="text-xs dark:text-white lg:text-sm">
+            <h3 className="text-xs cursor-pointer dark:text-white lg:text-sm">
               {userProfile.followers.length} <span className="text-neutral-500">Followers</span>
             </h3>
             <MediaQuery maxWidth={1024}>
