@@ -1,4 +1,4 @@
-import Avatar from "../../components/common/Avatar";
+import Avatar from '../../components/common/Avatar';
 
 interface IProps {
   setTweet: React.Dispatch<React.SetStateAction<string>>;
@@ -27,4 +27,4 @@ function TweetBody(props: IProps) {
   );
 }
 
-export default TweetBody
+export default TweetBody;

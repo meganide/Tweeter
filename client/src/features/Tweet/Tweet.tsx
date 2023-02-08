@@ -1,9 +1,8 @@
-import { useState } from 'react';
-
 import Card from '../../components/common/Card';
-import { useUpload } from '../../hooks/useUpload';
 import TweetBody from './TweetBody';
 import TweetFooter from './TweetFooter';
+import { useState } from 'react';
+import { useUpload } from '../../hooks/useUpload';
 
 function Tweet() {
   const [tweet, setTweet] = useState('');

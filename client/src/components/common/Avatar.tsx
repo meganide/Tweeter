@@ -1,7 +1,7 @@
-import { useContext } from 'react';
-
 import { AuthContext, IAuthContext } from '../../contexts/authContext';
+
 import { imagePaths } from '../../utils/data';
+import { useContext } from 'react';
 
 interface IProps {
   toggleShowTooltip?: () => void;

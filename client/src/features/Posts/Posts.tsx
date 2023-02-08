@@ -1,11 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
-import { useInfiniteQuery } from 'react-query';
+import { IPostData } from '../Post/Post';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
 import Post from '../Post/Post';
 import Spinner from '../../components/common/Spinner';
 import { makeRequest } from '../../utils/axios';
-import { IPostData } from '../Post/Post';
+import { useInfiniteQuery } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
   fetchUrl: string;

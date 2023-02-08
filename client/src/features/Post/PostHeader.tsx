@@ -1,8 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-
-import { convertToLocaleTimezone } from '../../utils/helpers';
 import Avatar from '../../components/common/Avatar';
 import { IProps } from './Post';
+import { convertToLocaleTimezone } from '../../utils/helpers';
+import { useNavigate } from 'react-router-dom';
 
 function PostHeader(props: IProps) {
   const { postData } = props;

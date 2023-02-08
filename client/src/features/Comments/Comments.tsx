@@ -1,7 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import Comment from '../Comment/Comment';
 import { IProps } from '../Post/Post';
+import { v4 as uuidv4 } from 'uuid';
 
 function Comments(props: IProps) {
   const { postData } = props;

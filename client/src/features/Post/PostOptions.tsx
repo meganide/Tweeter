@@ -1,8 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
-
-import { postOptionsData } from '../../utils/data';
 import { IPostData } from './Post';
 import PostOption from './PostOption';
+import { postOptionsData } from '../../utils/data';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
   postData: IPostData;

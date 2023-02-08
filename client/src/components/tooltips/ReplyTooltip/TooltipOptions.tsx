@@ -1,9 +1,8 @@
-import { v4 as uuidv4 } from 'uuid';
-
-import PublicIcon from '@mui/icons-material/Public';
-import PeopleIcon from '@mui/icons-material/People';
 import { IProps } from './ReplyTooltip';
+import PeopleIcon from '@mui/icons-material/People';
+import PublicIcon from '@mui/icons-material/Public';
 import ReplyTooltipOption from './ReplyTooltipOption';
+import { v4 as uuidv4 } from 'uuid';
 
 function TooltipOptions(props: IProps) {
   const { setReplyStatus, toggleShowTooltip } = props;

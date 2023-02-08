@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import Spinner from '../components/common/Spinner';
+import ErrorPage from './ErrorPage';
 import Posts from '../features/Posts/Posts';
-import UserCard from '../features/Profile/User/UserCard';
+import Spinner from '../components/common/Spinner';
+import UserCard from '../features/Profile/User/User';
 import UserOptions from '../features/Profile/User/UserOptions';
 import { makeRequest } from '../utils/axios';
+import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { userOptionDataProfile } from '../utils/data';
-import ErrorPage from './ErrorPage';
 
 function Profile() {
   const { name } = useParams();

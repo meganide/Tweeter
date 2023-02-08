@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import MediaQuery from 'react-responsive';
-
 import { AuthContext, IAuthContext } from '../../contexts/authContext';
-import { makeRequest } from '../../utils/axios';
+import { useMutation, useQueryClient } from 'react-query';
+
 import { IPostData } from './Post';
+import MediaQuery from 'react-responsive';
+import { makeRequest } from '../../utils/axios';
+import { useContext } from 'react';
 
 interface IProps {
   option: IOption;

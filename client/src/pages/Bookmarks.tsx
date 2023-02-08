@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
-
 import Posts from '../features/Posts/Posts';
 import UserOptions from '../features/Profile/User/UserOptions';
+import { useMediaQuery } from 'react-responsive';
+import { useState } from 'react';
 import { userOptionDataBookmarks } from '../utils/data';
 
 function Bookmarks() {

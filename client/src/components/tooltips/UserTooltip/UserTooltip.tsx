@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { AuthContext, IAuthContext } from '../../../contexts/authContext';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { AuthContext, IAuthContext } from '../../../contexts/authContext';
 import UserTooltipLink from './UserTooltipLink';
+import { useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
   toggleShowTooltip: () => void;
@@ -22,11 +21,6 @@ function UserTooltip(props: IProps) {
       link: '/profile/' + currentUser?.name,
       text: 'My Profile',
     },
-    // {
-    //   icon: <SettingsIcon className="h-[30px]" />,
-    //   link: '/settings',
-    //   text: 'Settings',
-    // },
     {
       icon: <LogoutIcon className="h-[30px] text-red-500" />,
       link: '/login',

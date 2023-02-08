@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Card from '../../components/common/Card';
 import PostHeader from './PostHeader';
 import PostBody from './PostBody';

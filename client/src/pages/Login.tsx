@@ -1,9 +1,8 @@
-import { useMediaQuery } from 'react-responsive';
-
 import HorizontalLine from '../components/common/HorizontalLine';
-import SocialLogins from '../components/common/SocialLogins';
 import LoginHeader from '../features/Login/LoginHeader';
 import LoginInputs from '../features/Login/LoginInputs';
+import SocialLogins from '../components/common/SocialLogins';
+import { useMediaQuery } from 'react-responsive';
 
 function Login() {
   const isDesktopOrLaptop = useMediaQuery({
