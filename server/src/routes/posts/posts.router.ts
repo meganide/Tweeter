@@ -1,7 +1,7 @@
-import express from 'express';
-
 import {
   httpAddPost,
+  httpDeletePost,
+  httpEditPost,
   httpGetAllPosts,
   httpGetBookmarks,
   httpGetFollowedPosts,
@@ -11,8 +11,9 @@ import {
   httpGetUserPostsWithReplies,
 } from './posts.controller.js';
 
-const postsRouter = express.Router();
+import express from 'express';
 
+const postsRouter = express.Router();
 
 postsRouter.get('/', httpGetAllPosts);
 postsRouter.get('/followed', httpGetFollowedPosts);
@@ -22,5 +23,7 @@ postsRouter.get('/media', httpGetUserPostsWithMedia);
 postsRouter.get('/likes', httpGetUserPostsWithLikes);
 postsRouter.get('/bookmarks', httpGetBookmarks);
 postsRouter.post('/', httpAddPost);
+postsRouter.put('/', httpEditPost);
+postsRouter.delete('/', httpDeletePost);
 
 export { postsRouter };

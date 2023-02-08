@@ -485,6 +485,38 @@ async function getUserBookmarks(userId: string, skip: any) {
   return bookmarks;
 }
 
+async function editPost(payload: any) {
+  const { content, postId } = payload;
+  await prisma.post.update({
+    where: { id: postId },
+    data: { content },
+  });
+}
+
+async function deletePost(postId: string) {
+  await prisma.$transaction([
+    prisma.comment.deleteMany({
+      where: { postId },
+    }),
+
+    prisma.like.deleteMany({
+      where: { postId },
+    }),
+
+    prisma.retweet.deleteMany({
+      where: { postId },
+    }),
+
+    prisma.save.deleteMany({
+      where: { postId },
+    }),
+
+    prisma.post.delete({
+      where: { id: postId },
+    }),
+  ]);
+}
+
 export {
   getFollowedPosts,
   getAllLatestPosts,
@@ -496,4 +528,6 @@ export {
   getUserPostsWithMedia,
   getUserPostsWithLikes,
   getUserBookmarks,
+  editPost,
+  deletePost,
 };

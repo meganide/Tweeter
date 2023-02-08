@@ -2,6 +2,7 @@ import { makeRequest } from '../../../utils/axios';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 function Search() {
   const [searchUserQuery, setSearchUserQuery] = useState('');
@@ -33,7 +34,11 @@ function Search() {
         <ul className="absolute w-full rounded-md border bg-white dark:border-neutral-700 dark:bg-secondary-dark">
           {usersData?.map((user: { name: string }) => {
             return (
-              <li className="cursor-pointer rounded-md p-2 hover:bg-gray-200 dark:hover:bg-neutral-800" onClick={() => navigateToProfile(user.name)}>
+              <li
+                key={uuidv4()}
+                className="cursor-pointer rounded-md p-2 hover:bg-gray-200 dark:hover:bg-neutral-800"
+                onClick={() => navigateToProfile(user.name)}
+              >
                 {user.name}
               </li>
             );

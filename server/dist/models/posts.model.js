@@ -505,4 +505,34 @@ function getUserBookmarks(userId, skip) {
         return bookmarks;
     });
 }
-export { getFollowedPosts, getAllLatestPosts, getAllOldestPosts, getAllPostsWithMedia, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes, getUserBookmarks, };
+function editPost(payload) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { content, postId } = payload;
+        yield prisma.post.update({
+            where: { id: postId },
+            data: { content },
+        });
+    });
+}
+function deletePost(postId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield prisma.$transaction([
+            prisma.comment.deleteMany({
+                where: { postId },
+            }),
+            prisma.like.deleteMany({
+                where: { postId },
+            }),
+            prisma.retweet.deleteMany({
+                where: { postId },
+            }),
+            prisma.save.deleteMany({
+                where: { postId },
+            }),
+            prisma.post.delete({
+                where: { id: postId },
+            }),
+        ]);
+    });
+}
+export { getFollowedPosts, getAllLatestPosts, getAllOldestPosts, getAllPostsWithMedia, addPost, getOwnTweets, getUserPostsWithReplies, getUserPostsWithMedia, getUserPostsWithLikes, getUserBookmarks, editPost, deletePost, };
