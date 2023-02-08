@@ -7,6 +7,7 @@ import PostHeader from './PostHeader';
 import PostInfo from './PostInfo';
 import PostOptions from './PostOptions';
 import PostRetweet from './PostRetweet';
+import { useState } from 'react';
 
 export interface IProps {
   postData: IPostData;
@@ -36,12 +37,15 @@ export interface IAuthor {
 function Post(props: IProps) {
   const { postData } = props;
 
+  const [editPostQuery, setEditPostQuery] = useState(postData.content);
+  const [editPost, setEditPost] = useState(false);
+
   return (
     <section className="my-7">
       {postData.retweetedAt && <PostRetweet postData={postData} />}
       <Card>
-        <PostHeader postData={postData} />
-        <PostBody postData={postData} />
+        <PostHeader postData={postData} editPostProps={{ editPostQuery, editPost, setEditPost }} />
+        <PostBody postData={postData} editPostProps={{ setEditPostQuery, editPostQuery, editPost }} />
         <PostInfo postData={postData} />
         <PostOptions postData={postData} />
         <PostFooter postData={postData} />

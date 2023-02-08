@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { addPost, getAllLatestPosts, getAllOldestPosts, getAllPostsWithMedia, getFollowedPosts, getOwnTweets, getUserBookmarks, getUserPostsWithLikes, getUserPostsWithMedia, getUserPostsWithReplies, } from '../../models/posts.model.js';
+import { addPost, deletePost, editPost, getAllLatestPosts, getAllOldestPosts, getAllPostsWithMedia, getFollowedPosts, getOwnTweets, getUserBookmarks, getUserPostsWithLikes, getUserPostsWithMedia, getUserPostsWithReplies, } from '../../models/posts.model.js';
 import { sortBookmarks, sortPostsAndRetweets } from '../../utils/helpers.js';
 function httpGetFollowedPosts(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -136,4 +136,38 @@ function httpGetAllPosts(req, res) {
         }
     });
 }
-export { httpGetFollowedPosts, httpAddPost, httpGetOwnTweets, httpGetUserPostsWithReplies, httpGetUserPostsWithMedia, httpGetUserPostsWithLikes, httpGetBookmarks, httpGetAllPosts, };
+function httpEditPost(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const payload = req.body;
+        const currentUserId = req.body.userId;
+        if (currentUserId === userId) {
+            try {
+                yield editPost(payload);
+                return res.status(200).json({ message: 'Successfully edited post!' });
+            }
+            catch (error) {
+                console.log(error);
+                return res.status(404).json({ error: 'Failed to edit post.' });
+            }
+        }
+    });
+}
+function httpDeletePost(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const userId = req.user;
+        const postId = req.query.postId;
+        const currentUserId = req.query.userId;
+        if (currentUserId === userId) {
+            try {
+                yield deletePost(postId);
+                return res.status(200).json({ message: 'Successfully removed post!' });
+            }
+            catch (error) {
+                console.log(error);
+                return res.status(404).json({ error: 'Failed to delete post.' });
+            }
+        }
+    });
+}
+export { httpGetFollowedPosts, httpAddPost, httpGetOwnTweets, httpGetUserPostsWithReplies, httpGetUserPostsWithMedia, httpGetUserPostsWithLikes, httpGetBookmarks, httpGetAllPosts, httpEditPost, httpDeletePost, };

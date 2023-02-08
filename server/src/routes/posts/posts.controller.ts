@@ -1,5 +1,7 @@
 import {
   addPost,
+  deletePost,
+  editPost,
   getAllLatestPosts,
   getAllOldestPosts,
   getAllPostsWithMedia,
@@ -138,6 +140,39 @@ async function httpGetAllPosts(req: any, res: Response) {
   }
 }
 
+async function httpEditPost(req: any, res: Response) {
+  const userId: string = req.user;
+  const payload = req.body;
+  const currentUserId = req.body.userId;
+
+  if (currentUserId === userId) {
+    try {
+      await editPost(payload);
+
+      return res.status(200).json({ message: 'Successfully edited post!' });
+    } catch (error) {
+      console.log(error);
+      return res.status(404).json({ error: 'Failed to edit post.' });
+    }
+  }
+}
+
+async function httpDeletePost(req: any, res: Response) {
+  const userId: string = req.user;
+  const postId: string = req.query.postId;
+  const currentUserId: string = req.query.userId;
+
+  if (currentUserId === userId) {
+    try {
+      await deletePost(postId);
+      return res.status(200).json({ message: 'Successfully removed post!' });
+    } catch (error) {
+      console.log(error);
+      return res.status(404).json({ error: 'Failed to delete post.' });
+    }
+  }
+}
+
 export {
   httpGetFollowedPosts,
   httpAddPost,
@@ -147,4 +182,6 @@ export {
   httpGetUserPostsWithLikes,
   httpGetBookmarks,
   httpGetAllPosts,
+  httpEditPost,
+  httpDeletePost,
 };
