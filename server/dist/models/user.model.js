@@ -31,6 +31,16 @@ function getUser(userId) {
         return userWithoutPassword;
     });
 }
+function getUsers(name) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const users = yield prisma.user.findMany({
+            where: { name: { contains: name } },
+            select: { name: true },
+            take: 5,
+        });
+        return users;
+    });
+}
 function getUserByName(name) {
     return __awaiter(this, void 0, void 0, function* () {
         const user = yield prisma.user.findUnique({
@@ -104,4 +114,4 @@ function editUserProfile(userId, payload) {
         return { message: 'Successfully updated user!' };
     });
 }
-export { getUser, getUserByName, getRandomUsers, getMostRecentUsers, editUserProfile };
+export { getUser, getUserByName, getRandomUsers, getMostRecentUsers, editUserProfile, getUsers };

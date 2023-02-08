@@ -13,6 +13,16 @@ async function getUser(userId: string) {
   return userWithoutPassword;
 }
 
+async function getUsers(name: string) {
+  const users: any = await prisma.user.findMany({
+    where: { name: { contains: name } },
+    select: { name: true },
+    take: 5,
+  });
+
+  return users;
+}
+
 async function getUserByName(name: string) {
   const user: any = await prisma.user.findUnique({
     where: { name: name },
@@ -94,4 +104,4 @@ async function editUserProfile(userId: string, payload: any) {
   return { message: 'Successfully updated user!' };
 }
 
-export { getUser, getUserByName, getRandomUsers, getMostRecentUsers, editUserProfile };
+export { getUser, getUserByName, getRandomUsers, getMostRecentUsers, editUserProfile, getUsers };
