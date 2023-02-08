@@ -1,13 +1,12 @@
-import { useState } from 'react';
-
 import Card from '../../components/common/Card';
-import PostHeader from './PostHeader';
-import PostBody from './PostBody';
-import PostInfo from './PostInfo';
-import PostOptions from './PostOptions';
-import PostFooter from './PostFooter';
 import Comments from '../Comments/Comments';
 import { ICommentData } from '../Comment/Comment';
+import PostBody from './PostBody';
+import PostFooter from './PostFooter';
+import PostHeader from './PostHeader';
+import PostInfo from './PostInfo';
+import PostOptions from './PostOptions';
+import PostRetweet from './PostRetweet';
 
 export interface IProps {
   postData: IPostData;
@@ -25,6 +24,8 @@ export interface IPostData {
   retweets: { userId: string }[];
   saves: { userId: string }[];
   comments: ICommentData[];
+  retweetedAt?: string;
+  retweetedBy?: { name: string };
 }
 
 export interface IAuthor {
@@ -37,6 +38,7 @@ function Post(props: IProps) {
 
   return (
     <section className="my-7">
+      {postData.retweetedAt && <PostRetweet postData={postData} />}
       <Card>
         <PostHeader postData={postData} />
         <PostBody postData={postData} />

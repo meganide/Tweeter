@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import MediaQuery from 'react-responsive';
-import { v4 as uuidv4 } from 'uuid';
 
+import MediaQuery from 'react-responsive';
 import { links } from '../../../utils/data';
+import { v4 as uuidv4 } from 'uuid';
 
 function MobileBottomBar() {
   const location = useLocation();

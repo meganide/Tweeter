@@ -1,6 +1,3 @@
-import { Response } from 'express';
-
-import { sortBookmarks } from '../../utils/helpers.js';
 import {
   addPost,
   getAllLatestPosts,
@@ -13,6 +10,9 @@ import {
   getUserPostsWithMedia,
   getUserPostsWithReplies,
 } from '../../models/posts.model.js';
+import { sortBookmarks, sortPostsAndRetweets } from '../../utils/helpers.js';
+
+import { Response } from 'express';
 
 export interface ITweetData {
   tweet: string;
@@ -25,7 +25,8 @@ async function httpGetFollowedPosts(req: any, res: Response) {
 
   try {
     const followedPosts = await getFollowedPosts(userId, skip);
-    return res.status(200).json(followedPosts);
+    const sortedPosts = sortPostsAndRetweets(followedPosts);
+    return res.status(200).json(sortedPosts);
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: "Couldn't find any posts" });
@@ -51,7 +52,8 @@ async function httpGetOwnTweets(req: any, res: Response) {
 
   try {
     const ownTweets = await getOwnTweets(name, skip);
-    return res.status(200).json(ownTweets);
+    const sortedTweets = sortPostsAndRetweets(ownTweets);
+    return res.status(200).json(sortedTweets);
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: "Couldn't find any tweets" });
@@ -77,7 +79,8 @@ async function httpGetUserPostsWithMedia(req: any, res: Response) {
 
   try {
     const ownTweets = await getUserPostsWithMedia(name, skip);
-    return res.status(200).json(ownTweets);
+    const sortedTweets = sortPostsAndRetweets(ownTweets);
+    return res.status(200).json(sortedTweets);
   } catch (error) {
     console.log(error);
     return res.status(404).json({ error: "Couldn't find any tweets with media" });
@@ -103,7 +106,6 @@ async function httpGetBookmarks(req: any, res: Response) {
 
   try {
     const bookmarks = await getUserBookmarks(userId, skip);
-
     const sortedPosts = sortBookmarks(bookmarks, sortOption);
 
     return res.status(200).json(sortedPosts);
@@ -120,10 +122,13 @@ async function httpGetAllPosts(req: any, res: Response) {
     let posts;
     if (sortOption === 'Latest') {
       posts = await getAllLatestPosts(skip);
+      posts = sortPostsAndRetweets(posts);
     } else if (sortOption === 'Oldest') {
       posts = await getAllOldestPosts(skip);
+      posts = sortPostsAndRetweets(posts, 'oldest');
     } else if (sortOption === 'Media') {
       posts = await getAllPostsWithMedia(skip);
+      posts = sortPostsAndRetweets(posts);
     }
 
     return res.status(200).json(posts);

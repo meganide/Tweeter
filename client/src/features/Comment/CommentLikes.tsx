@@ -1,10 +1,10 @@
-import { useContext } from 'react';
+import { AuthContext, IAuthContext } from '../../contexts/authContext';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { AuthContext, IAuthContext } from '../../contexts/authContext';
-import { makeRequest } from '../../utils/axios';
 import { IProps } from './Comment';
+import { makeRequest } from '../../utils/axios';
 import { postOptionsData } from '../../utils/data';
+import { useContext } from 'react';
 
 function CommentLikes(props: IProps) {
   const { commentData } = props;

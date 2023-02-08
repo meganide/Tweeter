@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-
 import { AuthContext, IAuthContext } from '../../contexts/authContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+
 import { BASE_URL } from '../../utils/baseUrl';
 import Button from '../../components/common/Button';
+import axios from 'axios';
 import useInputs from '../../hooks/useInputs';
 
 function RegisterInputs() {

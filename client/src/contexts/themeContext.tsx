@@ -1,4 +1,5 @@
-import { createContext, ReactElement } from 'react';
+import { ReactElement, createContext } from 'react';
+
 import { useToggle } from '../hooks/useToggle';
 
 interface IProps {

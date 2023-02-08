@@ -1,6 +1,6 @@
+import { BASE_URL } from '../../../utils/baseUrl';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/baseUrl';
 
 interface IProps {
   link: ILink;

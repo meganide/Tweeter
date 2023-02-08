@@ -1,8 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-
 import Avatar from '../../components/common/Avatar';
 import Button from '../../components/common/Button';
 import { ICurrentUser } from '../../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 
 export interface IProps {
   followerData: ICurrentUser;

@@ -1,11 +1,10 @@
-import { useQuery } from 'react-query';
-import { v4 as uuidv4 } from 'uuid';
-
-import Spinner from '../../components/common/Spinner';
-import { ICurrentUser } from '../../contexts/authContext';
-import { makeRequest } from '../../utils/axios';
 import FollowBody from './FollowBody';
 import FollowHeader from './FollowHeader';
+import { ICurrentUser } from '../../contexts/authContext';
+import Spinner from '../../components/common/Spinner';
+import { makeRequest } from '../../utils/axios';
+import { useQuery } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
   apiUrl?: string;

@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { AuthContext, IAuthContext, ICurrentUser } from '../../contexts/authContext';
 import { useMutation, useQueryClient } from 'react-query';
 
-import { AuthContext, IAuthContext, ICurrentUser } from '../../contexts/authContext';
-import { makeRequest } from '../../utils/axios';
 import Button from './Button';
+import { makeRequest } from '../../utils/axios';
+import { useContext } from 'react';
 
 interface IProps {
   userProfile: ICurrentUser;

@@ -1,13 +1,12 @@
-import { useContext, useEffect } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import axios from 'axios';
-
 import './app.css';
-import { BASE_URL } from './utils/baseUrl';
+
 import { AuthContext, IAuthContext } from './contexts/authContext';
 import { IThemeContext, ThemeContext } from './contexts/themeContext';
-import Spinner from './components/common/Spinner';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { useContext, useEffect } from 'react';
+
 import Routes from './Routes';
+import Spinner from './components/common/Spinner';
 
 function App() {
   const { currentUser, getUser } = useContext(AuthContext) as IAuthContext;

@@ -1,7 +1,7 @@
-import { IAuthor } from '../Post/Post';
 import Avatar from '../../components/common/Avatar';
 import CommentInfo from './CommentInfo';
 import CommentLikes from './CommentLikes';
+import { IAuthor } from '../Post/Post';
 import { useNavigate } from 'react-router-dom';
 
 export interface IProps {

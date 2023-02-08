@@ -1,11 +1,11 @@
-import HomeIcon from '@mui/icons-material/Home';
-import ExploreIcon from '@mui/icons-material/Explore';
-import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import ExploreIcon from '@mui/icons-material/Explore';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import HomeIcon from '@mui/icons-material/Home';
 
 const imagePaths = {
   logo: '/images/icons/icon.png',
@@ -63,25 +63,6 @@ const postOptionsData = [
   },
 ];
 
-const trendsData = [
-  {
-    name: '#programming',
-    tweets: 5120,
-  },
-  {
-    name: '#frontend',
-    tweets: 3000,
-  },
-  {
-    name: '#learntocode',
-    tweets: 1000,
-  },
-  {
-    name: '#stoicism',
-    tweets: 1201,
-  },
-];
-
 const userOptionDataProfile = [
   {
     text: 'Tweets',
@@ -124,4 +105,4 @@ const userOptionDataExplore = [
   },
 ];
 
-export { imagePaths, links, postOptionsData, trendsData, userOptionDataProfile, userOptionDataBookmarks, userOptionDataExplore };
+export { imagePaths, links, postOptionsData, userOptionDataProfile, userOptionDataBookmarks, userOptionDataExplore };

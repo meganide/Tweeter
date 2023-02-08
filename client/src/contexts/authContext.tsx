@@ -1,7 +1,7 @@
-import { createContext, ReactElement, useState, useEffect } from 'react';
-import axios from 'axios';
+import { ReactElement, createContext, useState } from 'react';
 
 import { BASE_URL } from '../utils/baseUrl';
+import axios from 'axios';
 
 export interface IAuthContext {
   currentUser: null | ICurrentUser;

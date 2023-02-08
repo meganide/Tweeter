@@ -1,7 +1,7 @@
-import Logo from '../../common/Logo';
 import DesktopLinks from './DesktopLinks';
-import NavbarIcons from './NavbarIcons';
+import Logo from '../../common/Logo';
 import MobileBottomBar from './MobileBottomBar';
+import NavbarIcons from './NavbarIcons';
 
 function Navbar() {
   return (

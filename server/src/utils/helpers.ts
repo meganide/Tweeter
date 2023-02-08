@@ -30,5 +30,28 @@ function sortBookmarks(bookmarks: any, sortOption: string) {
   }
 }
 
+function sortPostsAndRetweets(postsAndRetweets: any, option = 'latest') {
+  return postsAndRetweets.sort((a: any, b: any) => {
+    let aCreatedAtDate: any;
+    let bCreatedAtDate: any;
 
-export { sortBookmarks };
+    aCreatedAtDate = a.createdAt.getTime();
+    bCreatedAtDate = b.createdAt.getTime();
+
+    if (a.retweetedAt) {
+      aCreatedAtDate = a.retweetedAt.getTime();
+    }
+
+    if (b.retweetedAt) {
+      bCreatedAtDate = b.retweetedAt.getTime();
+    }
+
+    if (option == 'latest') {
+      return bCreatedAtDate - aCreatedAtDate;
+    } else if (option == 'oldest') {
+      return aCreatedAtDate - bCreatedAtDate;
+    }
+  });
+}
+
+export { sortBookmarks, sortPostsAndRetweets };

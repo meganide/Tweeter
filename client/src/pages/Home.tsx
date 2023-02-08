@@ -1,8 +1,7 @@
-import MediaQuery from 'react-responsive';
 import CreatedBy from '../components/common/CreatedBy';
 import Follow from '../features/Follow/Follow';
+import MediaQuery from 'react-responsive';
 import Posts from '../features/Posts/Posts';
-import Trends from '../features/Trends/Trends';
 import Tweet from '../features/Tweet/Tweet';
 
 function Home() {
@@ -14,7 +13,6 @@ function Home() {
       </section>
       <MediaQuery minWidth={1024}>
         <section className="flex flex-col gap-5">
-          {/* <Trends /> */}
           <Follow />
         </section>
       </MediaQuery>

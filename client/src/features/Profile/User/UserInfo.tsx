@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import MediaQuery from 'react-responsive';
-
 import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
-import FollowButton from '../../../components/common/FollowButton';
-import EditIcon from '@mui/icons-material/Edit';
 
-interface IProps {
+import EditIcon from '@mui/icons-material/Edit';
+import FollowButton from '../../../components/common/FollowButton';
+import MediaQuery from 'react-responsive';
+import { useContext } from 'react';
+
+export interface IProps {
   userProfile: ICurrentUser;
   bioProps: {
     setBio: React.Dispatch<React.SetStateAction<string>>;
@@ -17,7 +17,7 @@ interface IProps {
 
 function UserInfo(props: IProps) {
   const { userProfile, bioProps } = props;
-  const {setBio, bio, changeBio, toggleChangeBio} = bioProps;
+  const { setBio, bio, changeBio, toggleChangeBio } = bioProps;
 
   const { currentUser } = useContext(AuthContext) as IAuthContext;
 
@@ -60,7 +60,6 @@ function UserInfo(props: IProps) {
           <textarea
             className="h-[100px] w-full resize-none rounded-lg border bg-transparent p-2 dark:text-neutral-400"
             maxLength={300}
-            autoFocus
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           ></textarea>

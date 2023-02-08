@@ -1,5 +1,5 @@
-import { convertToLocaleTimezone } from '../../utils/helpers';
 import { IProps } from './Comment';
+import { convertToLocaleTimezone } from '../../utils/helpers';
 
 function CommentInfo(props: IProps) {
   const { commentData } = props;

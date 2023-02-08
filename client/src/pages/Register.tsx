@@ -1,9 +1,8 @@
-import { useMediaQuery } from 'react-responsive';
-
 import HorizontalLine from '../components/common/HorizontalLine';
-import SocialLogins from '../components/common/SocialLogins';
 import RegisterHeader from '../features/Register/RegisterHeader';
 import RegisterInputs from '../features/Register/RegisterInputs';
+import SocialLogins from '../components/common/SocialLogins';
+import { useMediaQuery } from 'react-responsive';
 
 function Register() {
   const isDesktopOrLaptop = useMediaQuery({

@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import OutsideClickHandler from 'react-outside-click-handler';
+import { IThemeContext, ThemeContext } from '../../../contexts/themeContext';
 
-import { useToggle } from '../../../hooks/useToggle';
+import Avatar from '../../common/Avatar';
+import OutsideClickHandler from 'react-outside-click-handler';
 import UserTooltip from '../../tooltips/UserTooltip/UserTooltip';
 import { imagePaths } from '../../../utils/data';
-import Avatar from '../../common/Avatar';
-import { IThemeContext, ThemeContext } from '../../../contexts/themeContext';
+import { useContext } from 'react';
+import { useToggle } from '../../../hooks/useToggle';
 
 function NavbarIcons() {
   const { darkToggle, toggleTheme } = useContext(ThemeContext) as IThemeContext;
