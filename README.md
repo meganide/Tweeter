@@ -1,7 +1,7 @@
 
 <h1 align="center">Tweeter - In Progress</h1>
 
-<p align="center">Tweeter is a full-stack chat application which is a Twitter clone.</p>
+<p align="center">Tweeter is a full-stack social media application heavily inspired by Twitter.</p>
 
 <div align="center">
   <h3>
