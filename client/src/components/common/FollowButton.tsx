@@ -1,9 +1,9 @@
 import { AuthContext, IAuthContext, ICurrentUser } from '../../contexts/authContext';
-import { useMutation, useQueryClient } from 'react-query';
 
 import Button from './Button';
-import { makeRequest } from '../../utils/axios';
+import { httpFollowOrUnfollow } from '../../hooks/requests';
 import { useContext } from 'react';
+import { useCustomMutation } from '../../hooks/useCustomMutation';
 
 interface IProps {
   userProfile: ICurrentUser;
@@ -19,28 +19,7 @@ function FollowButton(props: IProps) {
 
   const isFollowing = userProfile.followers.some((follower: IFollower) => follower.followerId === currentUser?.id);
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(
-    async () => {
-      try {
-        let res;
-        if (isFollowing) {
-          res = await makeRequest.delete(`/api/followers?followedUserId=${userProfile.id}`);
-        } else {
-          res = await makeRequest.post(`/api/followers?followedUserId=${userProfile.id}`);
-        }
-        return res.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('profile' + userProfile.name);
-      },
-    }
-  );
+  const mutation = useCustomMutation(() => httpFollowOrUnfollow(isFollowing, userProfile.id), 'profile' + userProfile.name);
 
   async function handleFollow() {
     await mutation.mutate();

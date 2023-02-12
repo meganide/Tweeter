@@ -1,10 +1,10 @@
 import { AuthContext, IAuthContext } from '../../contexts/authContext';
-import { useMutation, useQueryClient } from 'react-query';
 
 import { IPostData } from './Post';
 import MediaQuery from 'react-responsive';
-import { makeRequest } from '../../utils/axios';
+import { httpAddOrDeleteOption } from '../../hooks/requests';
 import { useContext } from 'react';
+import { useCustomMutation } from '../../hooks/useCustomMutation';
 
 interface IProps {
   option: IOption;
@@ -26,25 +26,18 @@ function PostOption(props: IProps) {
   const { currentUser } = useContext(AuthContext) as IAuthContext;
 
   const endpoint = option.endpoint;
-  const clicked = postData[endpoint].some((optionStat: any) => optionStat.userId === currentUser?.id);
+  const clicked = postData[endpoint].some(
+    (optionStat: any) => optionStat.userId === currentUser?.id
+  );
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(
-    async () => {
-      let res;
-      if (clicked) {
-        res = await makeRequest.delete(`/api/${option.endpoint}?postId=${postData.id}`);
-      } else {
-        res = await makeRequest.post(`/api/${option.endpoint}?postId=${postData.id}`);
-      }
-      return res.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('followersPosts');
-      },
-    }
+  const mutation = useCustomMutation(
+    () =>
+      httpAddOrDeleteOption({
+        clicked,
+        optionEndpoint: option.endpoint,
+        postDataId: postData.id,
+      }),
+    'followersPosts'
   );
 
   async function handleOnClick() {
@@ -58,7 +51,9 @@ function PostOption(props: IProps) {
     >
       {clicked ? option.clickedIcon : option.icon}
       <MediaQuery minWidth={640}>
-        <p className={`text-[${clicked ? option.color : 'gray-400'}]`}>{clicked ? option.clickedText : option.text}</p>
+        <p className={`text-[${clicked ? option.color : 'gray-400'}]`}>
+          {clicked ? option.clickedText : option.text}
+        </p>
       </MediaQuery>
     </article>
   );

@@ -1,4 +1,4 @@
-import Card from '../../components/common/Card';
+import Card from '../../components/common/Card/Card';
 import TweetBody from './TweetBody';
 import TweetFooter from './TweetFooter';
 import { useState } from 'react';

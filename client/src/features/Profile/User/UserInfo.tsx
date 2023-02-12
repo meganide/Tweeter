@@ -1,4 +1,8 @@
-import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
+import {
+  AuthContext,
+  IAuthContext,
+  ICurrentUser,
+} from '../../../contexts/authContext';
 
 import EditIcon from '@mui/icons-material/Edit';
 import FollowButton from '../../../components/common/FollowButton';
@@ -33,10 +37,12 @@ function UserInfo(props: IProps) {
           <h2 className="text-2xl dark:text-white">{userProfile?.name}</h2>
           <section className="flex place-items-center justify-center gap-5 text-sm">
             <h3 className="text-xs dark:text-white lg:text-sm">
-              {userProfile?.following?.length} <span className="text-neutral-500">Following</span>
+              {userProfile?.following?.length}{' '}
+              <span className="text-neutral-500">Following</span>
             </h3>
             <h3 className="text-xs dark:text-white lg:text-sm">
-              {userProfile.followers.length} <span className="text-neutral-500">Followers</span>
+              {userProfile.followers.length}{' '}
+              <span className="text-neutral-500">Followers</span>
             </h3>
             <MediaQuery maxWidth={1024}>
               {currentUser?.name !== userProfile.name && (
@@ -64,7 +70,9 @@ function UserInfo(props: IProps) {
             onChange={(e) => setBio(e.target.value)}
           ></textarea>
         ) : (
-          <p className="mt-2 text-sm dark:text-neutral-400 lg:max-w-[60%] lg:text-base">{userProfile?.profile?.bio}</p>
+          <p className="mt-2 text-sm dark:text-neutral-400 lg:max-w-[60%] lg:text-base">
+            {userProfile?.profile?.bio}
+          </p>
         )}
         {currentUser?.name === userProfile.name && !changeBio && (
           <EditIcon

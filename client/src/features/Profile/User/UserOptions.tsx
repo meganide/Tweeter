@@ -1,4 +1,4 @@
-import Card from '../../../components/common/Card';
+import Card from '../../../components/common/Card/Card';
 import UserOption from './UserOption';
 import { v4 as uuidv4 } from 'uuid';
 
