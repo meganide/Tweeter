@@ -74,9 +74,6 @@ $ npm install
 
 # Copy the code in .env.example and paste in .env and fill in the missing credentials
 
-# Create a key.pem and cert.pem file in server root folder for a self signed https certificate with openssl.
-$ openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365
-
 # Run the app
 $ node dist/server.js
 
