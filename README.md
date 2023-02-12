@@ -9,7 +9,7 @@
       Link to live website!
     </a>
   </h3>
-    <p>Login with your google account, register a new account, or use the following credentials:</p>
+    <p>Login with below credentials or register a new account:</p>
     <p>Email: test@gmail.com</p>
     <p>Password: test</p>
 </div>
