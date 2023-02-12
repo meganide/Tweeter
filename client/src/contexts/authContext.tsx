@@ -23,7 +23,7 @@ export interface ICurrentUser {
     backgroundImg: string;
   };
   followers: { followerId: string }[];
-  following?: { followedId: string }[];
+  following: { followedId: string }[];
 }
 
 interface ILoginInputs {
