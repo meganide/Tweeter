@@ -1,12 +1,16 @@
-import { AuthContext, IAuthContext, ICurrentUser } from '../../../contexts/authContext';
+import {
+  AuthContext,
+  IAuthContext,
+  ICurrentUser,
+} from '../../../contexts/authContext';
 import { useContext, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 
-import Alert from '../../../components/common/Alert';
-import ErrorAlert from '../../../components/common/ErrorAlert';
+import Alert from '../../../components/common/Alerts/Alert';
+import ErrorAlert from '../../../components/common/Alerts/ErrorAlert';
 import SuccessAlert from '../../../components/common/SuccessAlert';
 import UserCard from './UserCard';
-import { makeRequest } from '../../../utils/axios';
+import { httpEditUser } from '../../../hooks/requests';
+import { useCustomMutation } from '../../../hooks/useCustomMutation';
 import { useToggle } from '../../../hooks/useToggle';
 import { useUpload } from '../../../hooks/useUpload';
 
@@ -21,12 +25,23 @@ function User(props: IProps) {
   const { getUser } = useContext(AuthContext) as IAuthContext;
 
   const [bio, setBio] = useState(userProfile.profile.bio);
-  const { toggle: changeBio, toggleShow: toggleChangeBio, setToggle: setChangeBio } = useToggle();
+  const {
+    toggle: changeBio,
+    toggleShow: toggleChangeBio,
+    setToggle: setChangeBio,
+  } = useToggle();
   const { toggle: error, setToggle: setError } = useToggle();
   const { toggle: loading, setToggle: setLoading } = useToggle();
   const { toggle: success, setToggle: setSuccess } = useToggle();
 
-  const { inputFileRef, chooseImage, submitUpload, handleFileInputChange, previewImage, resetUploadStates } = useUpload();
+  const {
+    inputFileRef,
+    chooseImage,
+    submitUpload,
+    handleFileInputChange,
+    previewImage,
+    resetUploadStates,
+  } = useUpload();
   const {
     inputFileRef: inputFileRefBg,
     chooseImage: chooseBgImage,
@@ -44,18 +59,7 @@ function User(props: IProps) {
     setLoading(false);
   }
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(
-    async (payload: any) => {
-      return await makeRequest.put('/api/users', payload);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('profile' + name);
-      },
-    }
-  );
+  const mutation = useCustomMutation(httpEditUser, 'profile' + name);
 
   async function saveOnClick() {
     try {
@@ -70,7 +74,11 @@ function User(props: IProps) {
         profileBgUrl = await submitBgUpload();
       }
 
-      await mutation.mutate({ bio, backgroundImg: profileBgUrl, profilePic: profileImgUrl });
+      await mutation.mutate({
+        bio,
+        backgroundImg: profileBgUrl,
+        profilePic: profileImgUrl,
+      });
       cancelOnClick();
       setSuccess(true);
       setTimeout(async () => {
@@ -87,16 +95,37 @@ function User(props: IProps) {
     <section>
       {success && <SuccessAlert closeOnClick={() => setSuccess(false)} />}
       {error && <ErrorAlert closeOnClick={() => setError(false)} />}
-      {(previewBgImage || previewImage || changeBio) && <Alert cancelOnClick={cancelOnClick} saveOnClick={saveOnClick} loading={loading} />}
-      <input className="hidden" type="file" name="profilePic" accept=".jpg, .jpeg, .png" ref={inputFileRefBg} onChange={handleFileInputChangeBg} />
+      {(previewBgImage || previewImage || changeBio) && (
+        <Alert
+          cancelOnClick={cancelOnClick}
+          saveOnClick={saveOnClick}
+          loading={loading}
+        />
+      )}
+      <input
+        className="hidden"
+        type="file"
+        name="profilePic"
+        accept=".jpg, .jpeg, .png"
+        ref={inputFileRefBg}
+        onChange={handleFileInputChangeBg}
+      />
       <img
         className="max-h-[200px] w-full object-cover object-center md:max-h-[320px]"
-        src={previewBgImage ? previewBgImage : userProfile?.profile?.backgroundImg}
+        src={
+          previewBgImage ? previewBgImage : userProfile?.profile?.backgroundImg
+        }
         alt="background"
       />
       <UserCard
         userProfile={userProfile}
-        fileUploadProps={{ chooseBgImage, previewImage, chooseImage, inputFileRef, handleFileInputChange }}
+        fileUploadProps={{
+          chooseBgImage,
+          previewImage,
+          chooseImage,
+          inputFileRef,
+          handleFileInputChange,
+        }}
         bioProps={{ bio, setBio, changeBio, toggleChangeBio }}
       />
     </section>

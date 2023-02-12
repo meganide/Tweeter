@@ -1,4 +1,4 @@
-import Card from '../../components/common/Card';
+import Card from '../../components/common/Card/Card';
 import FollowList from './FollowList';
 
 function Follow() {

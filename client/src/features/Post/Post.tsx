@@ -1,4 +1,4 @@
-import Card from '../../components/common/Card';
+import Card from '../../components/common/Card/Card';
 import Comments from '../Comments/Comments';
 import { ICommentData } from '../Comment/Comment';
 import PostBody from './PostBody';

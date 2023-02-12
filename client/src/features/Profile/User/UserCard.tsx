@@ -1,7 +1,7 @@
 import { AuthContext, IAuthContext } from '../../../contexts/authContext';
 
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import Card from '../../../components/common/Card';
+import Card from '../../../components/common/Card/Card';
 import { IFileUploadProps as IProfileUploadProps } from './UserProfilePic';
 import { IProps as IUserInfoProps } from './UserInfo';
 import UserInfo from './UserInfo';

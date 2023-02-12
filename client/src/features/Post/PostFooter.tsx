@@ -1,15 +1,9 @@
-import { useMutation, useQueryClient } from 'react-query';
-
 import Avatar from '../../components/common/Avatar';
 import Button from '../../components/common/Button';
 import { IProps } from './Post';
-import { makeRequest } from '../../utils/axios';
+import { httpAddComment } from '../../hooks/requests';
+import { useCustomMutation } from '../../hooks/useCustomMutation';
 import { useState } from 'react';
-
-interface IReplyData {
-  reply: string;
-  postId: string;
-}
 
 function PostFooter(props: IProps) {
   const { postData } = props;
@@ -17,19 +11,7 @@ function PostFooter(props: IProps) {
   const [reply, setReply] = useState('');
   const [error, setError] = useState('');
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(
-    async (replyData: IReplyData) => {
-      const comment = await makeRequest.post('/api/comments', replyData);
-      return comment.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('followersPosts');
-      },
-    }
-  );
+  const mutation = useCustomMutation(httpAddComment, 'followersPosts');
 
   async function submitReply() {
     try {
@@ -58,7 +40,12 @@ function PostFooter(props: IProps) {
             value={reply}
             onChange={(e) => setReply(e.target.value)}
           />
-          <Button type="button" text="Reply" styles="text-xs lg:text-base px-2" onClick={submitReply} />
+          <Button
+            type="button"
+            text="Reply"
+            styles="text-xs lg:text-base px-2"
+            onClick={submitReply}
+          />
         </article>
       </section>
       {error && <p className="mt-2 ml-[64px] text-sm text-red-600">{error}</p>}
