@@ -1,4 +1,4 @@
-import { ReactElement, createContext, useState } from 'react';
+import { ReactElement, createContext, useEffect, useState } from 'react';
 
 import { BASE_URL } from '../utils/baseUrl';
 import axios from 'axios';
@@ -38,6 +38,12 @@ export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 export function AuthContextProvider({ children }: IProps): ReactElement {
   const [currentUser, setCurrentUser] = useState<null | ICurrentUser>(null);
+
+  useEffect(() => {
+    if (!currentUser) {
+      getUser();
+    }
+  }, [currentUser]);
 
   async function login(inputs: ILoginInputs) {
     const res = await axios.post(BASE_URL + '/api/auth/login', inputs, {
