@@ -3,20 +3,14 @@ import './app.css';
 import { AuthContext, IAuthContext } from './contexts/authContext';
 import { IThemeContext, ThemeContext } from './contexts/themeContext';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useContext, useEffect } from 'react';
 
 import Routes from './Routes';
 import Spinner from './components/common/Spinner';
+import { useContext } from 'react';
 
 function App() {
-  const { currentUser, getUser } = useContext(AuthContext) as IAuthContext;
+  const { currentUser } = useContext(AuthContext) as IAuthContext;
   const { darkToggle } = useContext(ThemeContext) as IThemeContext;
-
-  useEffect(() => {
-    if (!currentUser) {
-      getUser();
-    }
-  }, [currentUser]);
 
   const queryClient = new QueryClient();
 
