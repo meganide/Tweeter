@@ -1,5 +1,5 @@
 
-<h1 align="center">Tweeter - In Progress</h1>
+<h1 align="center">Tweeter</h1>
 
 <p align="center">Tweeter is a full-stack social media application heavily inspired by Twitter.</p>
 
