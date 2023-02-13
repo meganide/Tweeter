@@ -30,10 +30,21 @@
 
 ## Overview
 
-![screenshot]()
-![screenshot]()
-![screenshot]()
-![screenshot]()
+Login:
+![screenshot](https://i.gyazo.com/b507490a6d32f7998a676a091c59f96d.png)
+Register:
+![screenshot](https://i.gyazo.com/0cb2a8796d94a99858d2652b810a1fc2.png)
+Home:
+![screenshot](https://i.gyazo.com/8da67f07e0b6d37c7ce76a78b6d9bb45.png)
+Explore:
+![screenshot](https://i.gyazo.com/1a5d70bb59b96aa701b995a4c9584914.jpg)
+Profile:
+![screenshot](https://i.gyazo.com/f2631761f3672abbb981b1271b645d91.jpg)
+Light Mode:
+![screenshot](https://i.gyazo.com/dd628a57180b904d3a4426951e7af088.png)
+Mobile:
+![screenshot](https://i.gyazo.com/8c61300249b90a4208aeb54edd5059ff.png)
+
 
 
 
